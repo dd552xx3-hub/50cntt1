@@ -1,286 +1,737 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premium Presentation - 50CNTT1 TRAVEL</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/black.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/monokai.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Cinematic Showcase - 50CNTT1 TRAVEL</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1',    /* Indigo */
+                        secondary: '#fd6600',  /* Orange */
+                        accent: '#10b981',     /* Emerald */
+                        darkbg: '#020617',     /* Navy slate */
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        :root {
-            --primary: #3b82f6; /* Blue */
-            --secondary: #fd6600; /* Orange */
-            --accent: #10b981; /* Green */
-            --glass: rgba(15, 23, 42, 0.7);
-            --border: rgba(255, 255, 255, 0.15);
+        /* Ambient Glow Blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+            transition: all 2s ease-in-out;
         }
 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; }
-
-        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800; text-transform: none; letter-spacing: -0.02em;
+        /* Slide Transition CSS */
+        .slide-container {
+            perspective: 1500px;
+        }
+        .slide-card {
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .slide-inactive {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateZ(-200px) rotateY(15deg) scale(0.95);
+        }
+        .slide-active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateZ(0px) rotateY(0deg) scale(1);
         }
 
-        .reveal h1 { font-size: 3.5em; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .reveal h2 { color: var(--primary); }
-        .reveal p, .reveal li { font-size: 0.9em; color: #cbd5e1; }
-
-        /* Glassmorphism Card */
-        .glass-card {
-            background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border); border-radius: 24px;
-            padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        /* Glassmorphism */
+        .glass {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .tech-icon { font-size: 2em; margin-bottom: 15px; color: var(--primary); }
-        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
-        .feature-item { padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); transition: all 0.3s; }
-        .feature-item:hover { transform: translateY(-5px); border-color: var(--secondary); background: rgba(253, 102, 0, 0.1); }
-        
-        .accent-text { color: var(--accent); font-weight: 600; }
-        .highlight { color: var(--secondary); font-weight: 800; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.02);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
 
-        /* Chat UI Mockup */
-        .chat-container { border-radius: 20px; background: #1e293b; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: left;}
-        .chat-header { background: #0f172a; padding: 15px 20px; border-b: 1px solid var(--border); display: flex; align-items: center; gap: 10px;}
-        .chat-body { padding: 20px; display: flex; flex-direction: column; gap: 15px; height: 300px; overflow-y: auto;}
-        .msg { padding: 12px 18px; border-radius: 18px; max-width: 80%; font-size: 0.8em; line-height: 1.4;}
-        .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .msg-bot { background: #334155; color: white; align-self: flex-start; border-bottom-left-radius: 4px; }
-        
-        /* Auto-animate Custom */
-        .badge { display: inline-block; padding: 8px 16px; border-radius: 30px; background: rgba(59, 130, 246, 0.2); border: 1px solid var(--primary); color: #60a5fa; font-size: 0.6em; font-weight: bold; margin: 5px; }
+        /* Typing cursor animation */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+            color: #fd6600;
+        }
     </style>
 </head>
-<body>
-    <div class="reveal">
-        <div class="slides">
-            
-            <!-- SLIDE 1: INTRO (CÓ BACKGROUND ẢNH MỜ DẦN) -->
-            <section data-background-image="https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1920" data-background-opacity="0.3" data-transition="zoom">
-                <div class="glass-card fragment fade-up">
-                    <p style="letter-spacing: 4px; color: #94a3b8; font-weight: 600; font-size: 0.7em;">ĐỒ ÁN TỐT NGHIỆP 2026</p>
-                    <h1>50CNTT1 <span class="highlight">TRAVEL</span></h1>
-                    <h3 style="color: white; font-weight: 400;">Hệ sinh thái Quản lý & Đặt Tour Du Lịch</h3>
-                    <div class="badge">Serverless Architecture</div>
-                    <div class="badge" style="border-color: var(--secondary); color: var(--secondary); background: rgba(253,102,0,0.1);">AI Integrated</div>
-                    <p style="font-size: 0.6em; opacity: 0.7; margin-top: 40px;">GVHD: Ths. Lê Thị Vân Hồng</p>
-                </div>
-            </section>
+<body class="bg-darkbg text-slate-100 overflow-hidden min-h-screen relative font-sans antialiased">
 
-            <!-- SLIDE 2: NỖI ĐAU THỊ TRƯỜNG (FRAGMENT STAGGER) -->
-            <section data-background-color="#020617" data-transition="slide">
-                <h2 style="color: white;">Nỗi đau của thị trường OTA</h2>
-                <div class="feature-grid" style="margin-top: 40px;">
-                    <div class="feature-item fragment fade-right">
-                        <i class="fa-solid fa-hourglass-half accent-text" style="font-size: 1.5em; margin-bottom: 10px;"></i>
-                        <h4>Khủng hoảng thông tin</h4>
-                        <p style="font-size: 0.7em;">Mất trung bình 5-7 ngày để tra cứu, đối chiếu giá cả trên hàng chục website khác nhau.</p>
-                    </div>
-                    <div class="feature-item fragment fade-left">
-                        <i class="fa-solid fa-robot" style="color: var(--secondary); font-size: 1.5em; margin-bottom: 10px;"></i>
-                        <h4>Thiếu tính Cá nhân hóa</h4>
-                        <p style="font-size: 0.7em;">Bộ lọc tĩnh (chọn nơi đi, nơi đến) không hiểu được "cảm xúc" và nhu cầu phức tạp của khách.</p>
-                    </div>
-                    <div class="feature-item fragment fade-right">
-                        <i class="fa-solid fa-layer-group text-blue-400" style="color: #60a5fa; font-size: 1.5em; margin-bottom: 10px;"></i>
-                        <h4>Quy trình rời rạc</h4>
-                        <p style="font-size: 0.7em;">Tách biệt giữa Đặt Tour, Đặt Phòng, Đặt Xe khiến quản lý hành trình trở nên mệt mỏi.</p>
-                    </div>
-                    <div class="feature-item fragment fade-left">
-                        <i class="fa-solid fa-server text-red-400" style="color: #f87171; font-size: 1.5em; margin-bottom: 10px;"></i>
-                        <h4>Hiệu năng Server cũ</h4>
-                        <p style="font-size: 0.7em;">Mô hình Client-Server truyền thống thường xuyên giật lag, sập web vào mùa du lịch cao điểm.</p>
-                    </div>
-                </div>
-            </section>
+    <!-- Canvas Hạt Công Nghệ Chạy Theo Chuột -->
+    <canvas id="particleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
 
-            <!-- SLIDE 3: KIẾN TRÚC HỆ THỐNG (AUTO-ANIMATE) -->
-            <section data-auto-animate>
-                <h2 data-id="tech-title">Giải pháp: Kiến trúc Serverless</h2>
-                <p>Loại bỏ hoàn toàn máy chủ vật lý, tăng tốc độ phản hồi lên <span class="accent-text">Real-time</span></p>
-                
-                <div style="display: flex; justify-content: space-around; margin-top: 50px;">
-                    <div class="glass-card" style="width: 30%;">
-                        <i class="fa-brands fa-html5 tech-icon"></i>
-                        <h4>Frontend</h4>
-                        <p style="font-size: 0.7em;">HTML5, Vanilla JS, Tailwind CSS, Chart.js</p>
-                    </div>
-                    <div class="glass-card" style="width: 30%; border-color: var(--secondary);">
-                        <i class="fa-solid fa-database tech-icon" style="color: var(--secondary);"></i>
-                        <h4>BaaS (Firebase)</h4>
-                        <p style="font-size: 0.7em;">Firestore (NoSQL), Firebase Auth, Hosting</p>
-                    </div>
-                    <div class="glass-card" style="width: 30%; border-color: var(--accent);">
-                        <i class="fa-solid fa-microchip tech-icon" style="color: var(--accent);"></i>
-                        <h4>Third-party APIs</h4>
-                        <p style="font-size: 0.7em;">LLM AI, Leaflet Map, OpenWeatherMap</p>
-                    </div>
-                </div>
-            </section>
+    <!-- Ambient Glow Blobs -->
+    <div id="blob1" class="blob w-[500px] h-[500px] bg-primary top-[-10%] left-[-10%] animate-pulse"></div>
+    <div id="blob2" class="blob w-[600px] h-[600px] bg-secondary bottom-[-10%] right-[-10%]"></div>
+    <div id="blob3" class="blob w-[400px] h-[400px] bg-accent top-[40%] left-[50%]"></div>
 
-            <!-- SLIDE 4: UI SHOWCASE BẰNG R-STACK (CHỒNG ẢNH LÊN NHAU) -->
-            <section data-transition="convex">
-                <h2>Giao diện Tối ưu hóa UI/UX</h2>
-                <div class="r-stack" style="margin-top: 30px;">
-                    <!-- Ảnh 1: Hiện đầu tiên -->
-                    <img class="fragment fade-in-then-out" src="https://images.unsplash.com/photo-1559592442-7e182c9405db?w=800&q=80" style="border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 2px solid #334155; width: 800px; height: 450px; object-fit: cover;">
-                    <!-- Ảnh 2: Đè lên ảnh 1 -->
-                    <img class="fragment fade-in-then-out" src="https://images.unsplash.com/photo-1504457047772-27faf1c00561?w=800&q=80" style="border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 2px solid var(--primary); width: 800px; height: 450px; object-fit: cover;">
-                    <!-- Ảnh 3: Đè lên ảnh 2 -->
-                    <div class="fragment fade-in glass-card" style="width: 700px;">
-                        <h3 class="highlight">Trải nghiệm Seamless</h3>
-                        <p><i class="fa-solid fa-check text-green-400"></i> Thiết kế Responsive đa nền tảng (Mobile-First).</p>
-                        <p><i class="fa-solid fa-check text-green-400"></i> LocalStorage: Giỏ hàng không độ trễ.</p>
-                        <p><i class="fa-solid fa-check text-green-400"></i> Skeleton Loading & Lazy Load hình ảnh.</p>
-                    </div>
+    <!-- Khung Trình Chiếu -->
+    <div class="relative z-20 flex flex-col justify-between h-screen w-full p-6 lg:p-10 select-none">
+        
+        <!-- Header Thanh Điều Hướng -->
+        <header class="flex justify-between items-center border-b border-white/5 pb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-plane-departure text-white text-lg"></i>
                 </div>
-            </section>
+                <div>
+                    <h2 class="font-display font-bold tracking-tight text-lg leading-tight">50CNTT1 TRAVEL</h2>
+                    <p class="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">Hệ Thống Trình Chiếu Đồ Án</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-bold text-slate-400">
+                <span class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hidden md:inline-block">DỰ ÁN TỐT NGHIỆP CÔNG NGHỆ THÔNG TIN</span>
+                <span id="slide-index" class="text-secondary">01 / 10</span>
+            </div>
+        </header>
 
-            <!-- SLIDE 5: DEMO CHAT AI ĐỘNG (RẤT ẤN TƯỢNG) -->
-            <section data-background-color="#0f172a">
-                <div style="display: flex; gap: 40px; align-items: center;">
-                    <div style="flex: 1; text-align: left;">
-                        <h2 style="color: white;">Trợ lý AI <span class="highlight">Thông Minh</span></h2>
-                        <p class="accent-text" style="font-size: 1.2em;">Contextual Prompting Algorithm</p>
-                        <p style="font-size: 0.8em; margin-bottom: 20px;">AI không chỉ chat phiếm, mà được "nhồi" trực tiếp dữ liệu (Giá, Lịch trình) từ Database vào não bộ (Prompt) trước khi trả lời khách.</p>
-                        <div class="badge">Natural Language Processing (NLP)</div>
-                        <div class="badge">Real-time Fetching</div>
-                    </div>
+        <!-- Container slide chính -->
+        <div class="slide-container flex-1 my-6 relative flex items-center justify-center">
+
+            <!-- ================= SLIDE 1: TRANG BÌA CINEMATIC ================= -->
+            <div id="slide-1" class="slide-card slide-active absolute w-full max-w-6xl h-full flex flex-col justify-center items-center text-center">
+                <div class="glass p-10 lg:p-16 rounded-[2.5rem] border border-white/10 relative overflow-hidden w-full max-w-4xl shadow-2xl">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary/20 rounded-full blur-2xl"></div>
+                    <span class="text-xs lg:text-sm font-bold text-primary tracking-[0.3em] uppercase mb-4 block">BÁO CÁO ĐỒ ÁN TỐT NGHIỆP</span>
+                    <h1 class="font-display font-black text-4xl lg:text-6xl tracking-tight text-white mb-6 leading-[1.1]">
+                        XÂY DỰNG WEBSITE QUẢN LÝ & <br>ĐẶT TOUR <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">TÍCH HỢP AI</span>
+                    </h1>
+                    <p class="text-slate-400 max-w-2xl mx-auto text-sm lg:text-base mb-10 leading-relaxed">
+                        Nền tảng thương mại điện tử lữ hành tối ưu hóa trải nghiệm cá nhân hóa bằng Trí tuệ nhân tạo và Kiến trúc đám mây Serverless BaaS.
+                    </p>
                     
-                    <!-- Khung Chat Mô phỏng -->
-                    <div style="flex: 1;" class="fragment fade-left">
-                        <div class="chat-container">
-                            <div class="chat-header">
-                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--secondary); display: flex; justify-content: center; align-items: center;"><i class="fa-solid fa-robot text-white"></i></div>
-                                <div><p style="margin: 0; font-weight: bold; font-size: 0.9em; color: white;">Travel Bot</p><p style="margin: 0; font-size: 0.6em; color: #10b981;">Đang hoạt động</p></div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-left border-t border-white/5 pt-8">
+                        <div>
+                            <p class="text-[10px] uppercase font-bold text-slate-400">Sinh viên thực hiện</p>
+                            <p class="text-xs font-semibold text-white mt-1">Vũ Tiến Đạt</p>
+                            <p class="text-xs font-semibold text-white">Nguyễn Doãn Tùng</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase font-bold text-slate-400">Thành viên đồng hành</p>
+                            <p class="text-xs font-semibold text-white mt-1">Đặng Thái Long</p>
+                            <p class="text-xs font-semibold text-white">Nguyễn Như Đăng</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase font-bold text-slate-400">Giảng viên hướng dẫn</p>
+                            <p class="text-xs font-bold text-secondary mt-1">Ths. Lê Thị Vân Hồng</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase font-bold text-slate-400">Đơn vị đào tạo</p>
+                            <p class="text-xs font-semibold text-white mt-1">Khoa CNTT - CĐ ĐTĐT Hà Nội</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SLIDE 2: ĐỘI NGŨ THỰC HIỆN ================= -->
+            <div id="slide-2" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="text-center mb-8">
+                    <span class="text-xs font-bold text-secondary tracking-widest uppercase">TEAM MEMBERS</span>
+                    <h2 class="font-display font-extrabold text-3xl lg:text-4xl text-white mt-2">Đội Ngũ Thực Hiện & Vai Trò</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 w-full max-w-5xl mx-auto">
+                    <!-- Thành viên 1 -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center group hover:border-primary/50 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 text-primary flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-lg">Vũ Tiến Đạt</h4>
+                        <p class="text-xs text-slate-400 mt-1">Trưởng nhóm / Fullstack dev</p>
+                        <p class="text-[10px] bg-indigo-500/10 text-indigo-300 py-1 px-3 rounded-full mt-4 inline-block">Kiến trúc hệ thống</p>
+                    </div>
+                    <!-- Thành viên 2 -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center group hover:border-primary/50 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 text-primary flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-lg">N. Doãn Tùng</h4>
+                        <p class="text-xs text-slate-400 mt-1">Database & API dev</p>
+                        <p class="text-[10px] bg-indigo-500/10 text-indigo-300 py-1 px-3 rounded-full mt-4 inline-block">Xử lý cơ sở dữ liệu</p>
+                    </div>
+                    <!-- Thành viên 3 -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center group hover:border-secondary/50 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-orange-500/10 text-secondary flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-lg">Đặng Thái Long</h4>
+                        <p class="text-xs text-slate-400 mt-1">AI & Integration engineer</p>
+                        <p class="text-[10px] bg-orange-500/10 text-orange-300 py-1 px-3 rounded-full mt-4 inline-block">Nghiên cứu Prompt AI</p>
+                    </div>
+                    <!-- Thành viên 4 -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center group hover:border-secondary/50 transition-all">
+                        <div class="w-16 h-16 rounded-2xl bg-orange-500/10 text-secondary flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-lg">N. Như Đăng</h4>
+                        <p class="text-xs text-slate-400 mt-1">UI/UX & Tester</p>
+                        <p class="text-[10px] bg-orange-500/10 text-orange-300 py-1 px-3 rounded-full mt-4 inline-block">Thiết kế giao diện</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SLIDE 3: BÀI TOÁN & GIẢI PHÁP ================= -->
+            <div id="slide-3" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-5xl mx-auto">
+                    <div>
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase">THE CORE PROBLEM</span>
+                        <h2 class="font-display font-extrabold text-3xl lg:text-4xl text-white mt-2 mb-6">Thách Thức Của Ngành Du Lịch Trực Tuyến</h2>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                                <div class="w-10 h-10 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-circle-exclamation"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">Quá tải thông tin (Information Overload)</h4>
+                                    <p class="text-xs text-slate-400 mt-1">Du khách trung bình mất tới 5-7 ngày lướt qua hàng chục trang web chỉ để so sánh, chốt lịch trình.</p>
+                                </div>
                             </div>
-                            <div class="chat-body">
-                                <div class="msg msg-user fragment fade-up">Tôi muốn đi du lịch biển 3 ngày, ngân sách khoảng 4 triệu có tour nào không?</div>
-                                <div class="msg msg-bot fragment fade-up" style="transition-delay: 0.5s;">
-                                    Chào bạn, dựa trên dữ liệu công ty hiện tại, mình gợi ý cho bạn:<br><br>
-                                    <strong style="color: #60a5fa;">Đà Nẵng - Hội An (3N2Đ)</strong><br>
-                                    - Giá: 3.500.000đ<br>
-                                    - Lịch trình: Tắm biển Mỹ Khê, Phố cổ Hội An.<br>
-                                    Bạn có muốn đặt ngay không?
+                            <div class="flex gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                                <div class="w-10 h-10 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-filter"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">Các bộ lọc tĩnh quá nghèo nàn</h4>
+                                    <p class="text-xs text-slate-400 mt-1">Hệ thống lọc thông thường chỉ chọn được Giá và Địa điểm tĩnh, không hiểu được nhu cầu cá nhân hóa thực tế.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="glass p-8 rounded-3xl border border-white/10 relative overflow-hidden">
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-accent/10 rounded-full blur-2xl"></div>
+                        <h3 class="font-display font-bold text-xl text-accent flex items-center gap-2 mb-4"><i class="fa-solid fa-circle-check"></i> Giải Pháp Toàn Diện Từ 50CNTT1 TRAVEL</h3>
+                        <p class="text-slate-300 text-sm mb-6 leading-relaxed">Chúng tôi tích hợp trực tiếp **AI Chatbot trợ lý lữ hành**, đồng thời xử lý gộp nhóm **Tùy chọn khách sạn & Phương tiện (Add-ons)** ngay trong một luồng đặt hàng Real-time duy nhất.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                                <h5 class="font-bold text-white text-xs uppercase text-slate-400">Tốc độ tải trang</h5>
+                                <p class="text-2xl font-black text-accent mt-1">98/100</p>
+                                <p class="text-[9px] text-slate-500 mt-1">Đánh giá bởi Lighthouse</p>
+                            </div>
+                            <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                                <h5 class="font-bold text-white text-xs uppercase text-slate-400">Độ trễ đồng bộ</h5>
+                                <p class="text-2xl font-black text-accent mt-1">&lt; 200ms</p>
+                                <p class="text-[9px] text-slate-500 mt-1">Đồng bộ đám mây Realtime</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- SLIDE 6: GIẢI THÍCH CODE BẰNG HIGHLIGHT TỪNG DÒNG -->
-            <section>
-                <h2>Bảo Mật Phân Quyền (Middleware)</h2>
-                <p style="font-size: 0.8em;">Luồng xử lý <code style="color: var(--secondary);">onAuthStateChanged</code> chặn truy cập Admin trái phép.</p>
-                <div class="fragment" style="width: 100%; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                    <!-- Line numbers highlight -->
-                    <pre><code class="javascript" data-trim data-line-numbers="1,11|2-3|4-5|6-9">
-auth.onAuthStateChanged(user => {
-    if (!user) { 
-        window.location.href = "login.html"; return; 
-    }
-    db.collection("users").doc(user.uid).get().then(doc => {
-        if(!doc.exists || doc.data().role !== "admin") {
-            alert("Truy cập bị từ chối!");
-            window.location.href = "index.html";
-        } else {
-            initAdminDashboard();
-        }
-    });
-});
-                    </code></pre>
+            <!-- ================= SLIDE 4: SƠ ĐỒ KIẾN TRÚC SVB ================= -->
+            <div id="slide-4" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="text-center mb-6">
+                    <span class="text-xs font-bold text-primary tracking-widest uppercase">ARCHITECTURE MODEL</span>
+                    <h2 class="font-display font-extrabold text-3xl lg:text-4xl text-white mt-2">Kiến Trúc Đám Mây Serverless BaaS</h2>
                 </div>
-            </section>
+                <div class="glass p-6 rounded-[2rem] border border-white/10 max-w-4xl mx-auto w-full relative">
+                    <!-- SVG Sơ đồ tương tác thực sự -->
+                    <div class="w-full h-64 relative flex items-center justify-between px-10">
+                        <!-- Node Client -->
+                        <div class="flex flex-col items-center z-10 w-32">
+                            <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-primary text-primary flex items-center justify-center text-2xl shadow-lg shadow-indigo-500/20"><i class="fa-solid fa-laptop-code"></i></div>
+                            <span class="text-xs font-bold mt-2 text-white text-center">Giao Diện Client (Tailwind/JS)</span>
+                        </div>
+                        <!-- Đường truyền dữ liệu động -->
+                        <div class="flex-1 h-1 bg-slate-800 relative mx-4 rounded-full overflow-hidden">
+                            <div class="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-transparent via-primary to-transparent animate-[shimmer_2s_infinite]"></div>
+                        </div>
+                        <!-- Node Firebase Auth -->
+                        <div class="flex flex-col items-center z-10 w-32">
+                            <div class="w-16 h-16 rounded-2xl bg-orange-500/10 border border-secondary text-secondary flex items-center justify-center text-2xl shadow-lg shadow-orange-500/20"><i class="fa-solid fa-shield-halved"></i></div>
+                            <span class="text-xs font-bold mt-2 text-white text-center">Firebase Auth (Mã hóa UID)</span>
+                        </div>
+                        <!-- Đường truyền -->
+                        <div class="flex-1 h-1 bg-slate-800 relative mx-4 rounded-full overflow-hidden">
+                            <div class="absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-transparent via-secondary to-transparent animate-[shimmer_2s_infinite]"></div>
+                        </div>
+                        <!-- Node Firestore -->
+                        <div class="flex flex-col items-center z-10 w-32">
+                            <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-accent text-accent flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/20"><i class="fa-solid fa-cloud"></i></div>
+                            <span class="text-xs font-bold mt-2 text-white text-center">Cloud Firestore (Real-time NoSQL)</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-white/5 pt-6 mt-4 text-left">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                            <h5 class="text-xs font-bold text-primary mb-1">Loại bỏ VPS truyền thống</h5>
+                            <p class="text-[11px] text-slate-400">Không cần cấu hình, bảo trì hệ điều hành máy chủ vật lý, tối đa hóa bảo mật hạ tầng.</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                            <h5 class="text-xs font-bold text-secondary mb-1">Cơ chế Bảo Mật Hai Lớp</h5>
+                            <p class="text-[11px] text-slate-400">Client-Side Auth kết hợp tập luật bảo mật (Security Rules) thiết lập trực tiếp trên Firebase Console.</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                            <h5 class="text-xs font-bold text-accent mb-1">Auto-Scaling Tự Động</h5>
+                            <p class="text-[11px] text-slate-400">Google Cloud tự động co giãn lưu lượng tài nguyên băng thông khi lượng đặt Tour tăng vọt.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <!-- SLIDE 7: ADD-ONS UPSELL (CHUYỂN ĐỘNG AUTO-ANIMATE) -->
-            <section data-auto-animate>
-                <h2 data-id="addons-title">Kiến trúc Tùy chọn (Add-ons)</h2>
-                <p>Giải quyết bài toán phình to Database bằng cấu trúc <span class="highlight">Array of Maps</span></p>
-                <div style="display: flex; justify-content: space-around; margin-top: 40px;">
-                    <div class="glass-card" data-id="box1" style="width: 45%; padding: 20px;">
-                        <h4 style="color: #94a3b8;">Giao diện Đặt Tour</h4>
-                        <select style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px; background: #334155; color: white; border: none;">
-                            <option>Khách sạn 3 sao (+0đ)</option>
-                            <option>Khách sạn 4 sao (+500,000đ)</option>
-                        </select>
-                        <select style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px; background: #334155; color: white; border: none;">
-                            <option>Xe giường nằm (+0đ)</option>
-                            <option>Máy bay Vietnam Airline (+1,200,000đ)</option>
-                        </select>
+            <!-- ================= SLIDE 5: CHATBOT AI CHẠY THẬT ================= -->
+            <div id="slide-5" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto w-full">
+                    <div class="lg:col-span-5 text-left">
+                        <span class="text-xs font-bold text-accent tracking-widest uppercase">INTELLIGENCE AGENT</span>
+                        <h2 class="font-display font-extrabold text-3xl text-white mt-2 mb-4">Trợ Lý Ảo AI Tư Vấn Thông Minh</h2>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Sử dụng giải pháp liên kết **Contextual Prompting Engine**. Khi khách hỏi, hệ thống sẽ tự nạp dữ liệu tour hiện có từ Firestore dán vào ngữ cảnh để AI trả lời đúng chuẩn xác lữ hành thực tế.
+                        </p>
+                        <p class="text-xs text-slate-500 font-bold mb-2 uppercase">Bấm thử câu hỏi để demo trực tiếp:</p>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="demoChat('Tôi muốn đi biển 3 ngày, giá rẻ?')" class="text-left text-xs bg-white/5 hover:bg-white/10 text-white font-medium p-3 rounded-xl border border-white/5 transition-all flex items-center justify-between group active:scale-95">
+                                <span>"Gợi ý đi biển 3 ngày giá rẻ"</span>
+                                <i class="fa-solid fa-arrow-pointer text-accent opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            </button>
+                            <button onclick="demoChat('Công ty mình có tour Sapa không?')" class="text-left text-xs bg-white/5 hover:bg-white/10 text-white font-medium p-3 rounded-xl border border-white/5 transition-all flex items-center justify-between group active:scale-95">
+                                <span>"Công ty mình có tour Sapa không?"</span>
+                                <i class="fa-solid fa-arrow-pointer text-accent opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="glass-card fragment" data-id="box2" style="width: 45%; padding: 20px; border-color: var(--accent);">
-                        <h4 style="color: var(--accent);">Logic tính toán (DOM)</h4>
-                        <p style="font-size: 0.7em; font-family: monospace;">FinalPrice = BasePrice + HotelFee + FlightFee</p>
-                        <p style="font-size: 0.7em;">Tạo mã ID Giỏ hàng Độc bản (Variant ID) chống ghi đè dữ liệu.</p>
+                    <!-- Live Chat Module -->
+                    <div class="lg:col-span-7 w-full">
+                        <div class="bg-[#0f172a] rounded-2xl border border-white/10 shadow-2xl flex flex-col h-[380px] overflow-hidden text-left">
+                            <div class="bg-slate-900 p-4 border-b border-white/5 flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-full bg-accent/20 text-accent flex items-center justify-center"><i class="fa-solid fa-robot"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-xs text-white">50CNTT1 AI Travel Assistant</h4>
+                                    <span class="text-[9px] text-accent flex items-center gap-1 font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-accent animate-ping"></span> ĐANG TRỰC TUYẾN</span>
+                                </div>
+                            </div>
+                            <div id="demo-chat-box" class="flex-1 p-4 space-y-4 overflow-y-auto text-xs flex flex-col">
+                                <div class="p-3 bg-slate-800 text-slate-300 rounded-2xl max-w-[80%] self-start">Xin chào! Em có thể giúp gì cho anh chị về kế hoạch vi vu Việt Nam ạ?</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- SLIDE 8: TỔNG KẾT BẰNG ẢNH DASHBOARD MỜ -->
-            <section data-background-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1280" data-background-opacity="0.2">
-                <h2>Kết Quả Thực Hiện</h2>
-                <div class="feature-grid" style="margin-top: 40px;">
-                    <div class="feature-item">
-                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
-                        <h4>Hoàn thiện Nghiệp vụ</h4>
-                        <p style="font-size: 0.7em;">Quy trình khép kín từ Tìm kiếm -> Tham khảo -> Chọn dịch vụ nâng cấp -> Checkout.</p>
+            <!-- ================= SLIDE 6: BẢNG TÍNH ADD-ONS CHẠY THẬT ================= -->
+            <div id="slide-6" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto w-full">
+                    <div class="lg:col-span-5 text-left">
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase">UPSELLING STRATEGY</span>
+                        <h2 class="font-display font-extrabold text-3xl text-white mt-2 mb-4">Module Nâng Cấp Dịch Vụ (Add-ons)</h2>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Đột phá về tư duy thiết kế cơ sở dữ liệu. Nhóm sử dụng kiểu dữ liệu **Array of Maps** trong NoSQL để lồng thông tin phương tiện/khách sạn trực tiếp vào Document của Tour. 
+                        </p>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <p class="text-xs font-semibold text-slate-400 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-secondary"></i> Lợi ích kỹ thuật:</p>
+                            <p class="text-[11px] text-slate-400 mt-2">Chỉ cần truy xuất duy nhất 1 lần truy vấn (Single Query) để vẽ toàn bộ tuỳ chọn dịch vụ của Tour, triệt tiêu hoàn toàn gánh nặng nghẽn mạng.</p>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
-                        <h4>Ứng dụng AI mượt mà</h4>
-                        <p style="font-size: 0.7em;">Chatbot hoạt động như một tư vấn viên thực thụ, nắm rõ bảng giá hệ thống.</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
-                        <h4>Hiệu năng tuyệt đối</h4>
-                        <p style="font-size: 0.7em;">Kiến trúc NoSQL kết hợp Client-Side Rendering (CSR) không có độ trễ (Zero-latency).</p>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
-                        <h4>Dashboard Thời gian thực</h4>
-                        <p style="font-size: 0.7em;">Admin tự động đóng gói dữ liệu, Chart.js tự động cập nhật thống kê doanh thu.</p>
-                    </div>
-                </div>
-            </section>
+                    <!-- Live Add-ons Simulator -->
+                    <div class="lg:col-span-7 w-full">
+                        <div class="glass p-6 rounded-3xl border border-white/10 shadow-2xl text-left max-w-lg mx-auto">
+                            <h3 class="font-display font-bold text-white text-lg mb-1">Hành Trình Đà Nẵng - Hội An 3N2Đ</h3>
+                            <p class="text-[11px] text-slate-400 font-medium">Mã tour: DN-HA-03</p>
+                            
+                            <div class="my-5 space-y-4 border-t border-b border-white/5 py-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 mb-1.5 uppercase">Lưu trú tại khách sạn:</label>
+                                    <select id="slide-hotel" onchange="calcSlidePrice()" class="w-full bg-slate-900 border border-white/10 rounded-xl p-2.5 text-xs text-white outline-none focus:border-secondary transition-all">
+                                        <option value="0" data-name="Khách sạn 3 sao">Khách sạn 3 sao (Tiêu chuẩn - Bao gồm)</option>
+                                        <option value="500000" data-name="Khách sạn 4 sao">Khách sạn 4 sao (Gần biển) (+500,000đ/Khách)</option>
+                                        <option value="1500000" data-name="Resort 5 sao">Resort 5 sao (Đẳng cấp) (+1,500,000đ/Khách)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 mb-1.5 uppercase">Phương tiện di chuyển:</label>
+                                    <select id="slide-transport" onchange="calcSlidePrice()" class="w-full bg-slate-900 border border-white/10 rounded-xl p-2.5 text-xs text-white outline-none focus:border-secondary transition-all">
+                                        <option value="0" data-name="Xe giường nằm">Xe giường nằm limousine (Bao gồm)</option>
+                                        <option value="1200000" data-name="Vé máy bay">Vé máy bay khứ hồi VietJet (+1,200,000đ/Khách)</option>
+                                    </select>
+                                </div>
+                            </div>
 
-            <!-- SLIDE 9: THANK YOU (CHUYỂN CẢNH MỞ RỘNG) -->
-            <section data-transition="zoom">
-                <i class="fa-solid fa-code" style="font-size: 4em; color: var(--primary); margin-bottom: 20px;"></i>
-                <h1 style="font-size: 4em;">XIN CẢM ƠN!</h1>
-                <p class="accent-text">Mời Quý Hội Đồng trải nghiệm sản phẩm trực tiếp.</p>
-                
-                <div style="margin-top: 50px; opacity: 0.7; font-size: 0.8em; display: flex; justify-content: center; gap: 30px;">
-                    <p><i class="fa-brands fa-github"></i> github.com/50cntt1-travel</p>
-                    <p><i class="fa-solid fa-user-tie"></i> Vũ Tiến Đạt - Nguyễn Doãn Tùng</p>
-                    <p><i class="fa-solid fa-user-tie"></i> Đặng Thái Long - Nguyễn Như Đăng</p>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-[10px] uppercase font-bold text-slate-400">Tổng giá trị Tour</p>
+                                    <!-- Dynamic price counter -->
+                                    <p id="slide-total-price" class="text-3xl font-display font-black text-secondary tracking-tight">3.000.000 đ</p>
+                                </div>
+                                <button onclick="alert('Demo: Tour của bạn đã được thêm vào giỏ hàng cục bộ!')" class="bg-secondary hover:bg-orange-600 text-white font-bold text-xs px-6 py-3 rounded-xl transition-all shadow-lg active:scale-95">Đặt Tour Ngay</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
+
+            <!-- ================= SLIDE 7: REALTIME SYNC SIMULATOR ================= -->
+            <div id="slide-7" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="text-center mb-6">
+                    <span class="text-xs font-bold text-accent tracking-widest uppercase">REAL-TIME SYNCHRONIZATION</span>
+                    <h2 class="font-display font-extrabold text-3xl text-white mt-2">Mô Phỏng Trực Tiếp Đồng Bộ Dữ Liệu</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto w-full">
+                    <!-- Phân hệ Admin ảo -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-left">
+                        <div class="flex items-center gap-2 text-secondary font-bold text-xs uppercase mb-3"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span> Giao diện ADMIN</div>
+                        <h4 class="font-bold text-white text-sm mb-4">Mã Đơn hàng: #50CNTT-8899</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Cập nhật trạng thái đơn hàng:</label>
+                                <select id="admin-status-sim" class="w-full bg-slate-900 border border-white/10 rounded-xl p-2.5 text-xs text-white outline-none">
+                                    <option value="Chờ duyệt">Chờ duyệt đơn hàng</option>
+                                    <option value="Đã duyệt">Phê duyệt đơn - Đã thanh toán</option>
+                                    <option value="Hoàn thành">Đã hoàn thành chuyến đi</option>
+                                </select>
+                            </div>
+                            <button onclick="simSync()" class="w-full bg-secondary hover:bg-orange-600 text-white font-bold text-xs py-3 rounded-xl mt-2 transition-all active:scale-95">Đẩy Cập Nhật Lên Firebase</button>
+                        </div>
+                    </div>
+                    <!-- Phân hệ Client ảo -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-left relative overflow-hidden">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-accent/5 rounded-full blur-2xl"></div>
+                        <div class="flex items-center gap-2 text-accent font-bold text-xs uppercase mb-3"><span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span> Giao diện KHÁCH HÀNG</div>
+                        <p class="text-slate-400 text-[11px] mb-4">Trang cá nhân: Quản lý lịch sử giao dịch</p>
+                        
+                        <div class="p-4 bg-slate-900 rounded-xl border border-white/5 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-white">Tour Sapa 3N2Đ</span>
+                                <span id="client-status-badge" class="px-2 py-1 bg-orange-500/10 text-orange-400 text-[10px] font-bold rounded-full">Chờ duyệt</span>
+                            </div>
+                            <p class="text-[10px] text-slate-500">Khách hàng: Vũ Tiến Đạt</p>
+                        </div>
+                        <p class="text-[9px] text-slate-500 mt-4 leading-relaxed"><i class="fa-solid fa-info-circle text-accent"></i> Giải thích: Giao diện Client tự động chuyển trạng thái ngay khi có tín hiệu thay đổi dữ liệu từ Cloud Firestore nhờ luồng lắng nghe `onSnapshot()` mà khách không cần load lại trang.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SLIDE 8: DASHBOARD & BIỂU ĐỒ ================= -->
+            <div id="slide-8" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-5xl mx-auto w-full">
+                    <div class="lg:col-span-5 text-left">
+                        <span class="text-xs font-bold text-primary tracking-widest uppercase">DATA VISUALIZATION</span>
+                        <h2 class="font-display font-extrabold text-3xl text-white mt-2 mb-4">Dashboard & Trực Quan Hóa</h2>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Sử dụng thư viện **Chart.js** vẽ biểu đồ trên thẻ `<canvas>`. Giúp ban quản lý doanh nghiệp lữ hành có cái nhìn toàn cảnh về doanh số và trạng thái đơn hàng.
+                        </p>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2 text-xs">
+                            <p class="text-white font-medium flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Doanh thu tháng: 120.000.000 đ</p>
+                            <p class="text-white font-medium flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Đơn thành công: 85%</p>
+                        </div>
+                    </div>
+                    <!-- Live Chart -->
+                    <div class="lg:col-span-7 w-full">
+                        <div class="glass p-6 rounded-3xl border border-white/10 shadow-2xl h-80 flex items-center justify-center">
+                            <canvas id="slideChart" class="w-full h-full max-h-64"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SLIDE 9: TỔNG KẾT PERFORMANCE ================= -->
+            <div id="slide-9" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center">
+                <div class="text-center mb-6">
+                    <span class="text-xs font-bold text-accent tracking-widest uppercase">AUDIT PERFORMANCE</span>
+                    <h2 class="font-display font-extrabold text-3xl text-white mt-2">Chỉ Số Đánh Giá & Hiệu Năng Kỹ Thuật</h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto w-full">
+                    <!-- Performance -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center">
+                        <div class="relative w-24 h-24 mx-auto flex items-center justify-center border-4 border-accent rounded-full text-2xl font-black text-accent shadow-lg shadow-emerald-500/10">98</div>
+                        <h4 class="font-bold text-white text-sm mt-4">Hiệu năng tải trang</h4>
+                        <p class="text-[10px] text-slate-500 mt-1">Lighthouse Performance</p>
+                    </div>
+                    <!-- Accessibility -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center">
+                        <div class="relative w-24 h-24 mx-auto flex items-center justify-center border-4 border-accent rounded-full text-2xl font-black text-accent shadow-lg shadow-emerald-500/10">100</div>
+                        <h4 class="font-bold text-white text-sm mt-4">Khả năng tiếp cận</h4>
+                        <p class="text-[10px] text-slate-500 mt-1">Semantic HTML5</p>
+                    </div>
+                    <!-- Best Practices -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center">
+                        <div class="relative w-24 h-24 mx-auto flex items-center justify-center border-4 border-accent rounded-full text-2xl font-black text-accent shadow-lg shadow-emerald-500/10">100</div>
+                        <h4 class="font-bold text-white text-sm mt-4">Thực hành tốt nhất</h4>
+                        <p class="text-[10px] text-slate-500 mt-1">Clean Code Architecture</p>
+                    </div>
+                    <!-- SEO -->
+                    <div class="glass p-6 rounded-2xl border border-white/5 text-center">
+                        <div class="relative w-24 h-24 mx-auto flex items-center justify-center border-4 border-accent rounded-full text-2xl font-black text-accent shadow-lg shadow-emerald-500/10">96</div>
+                        <h4 class="font-bold text-white text-sm mt-4">Tối ưu SEO Google</h4>
+                        <p class="text-[10px] text-slate-500 mt-1">Structured Schema Metadata</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= SLIDE 10: KẾT THÚC Q&A ================= -->
+            <div id="slide-10" class="slide-card slide-inactive absolute w-full max-w-6xl h-full flex flex-col justify-center items-center text-center">
+                <div class="glass p-12 rounded-[2.5rem] border border-white/10 max-w-3xl w-full shadow-2xl relative overflow-hidden">
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl"></div>
+                    <i class="fa-solid fa-code text-5xl text-primary mb-6 animate-bounce"></i>
+                    <h1 class="font-display font-black text-4xl lg:text-5xl tracking-tight text-white mb-4">CẢM ƠN HỘI ĐỒNG LẮNG NGHE</h1>
+                    <p class="text-secondary font-bold text-sm lg:text-base mb-8 uppercase tracking-[0.2em]">Kính chúc quý Thầy/Cô dồi dào sức khỏe</p>
+                    <p class="text-slate-400 text-xs max-w-lg mx-auto mb-10 leading-relaxed">Mong nhận được các câu hỏi góp ý quý báu từ quý Thầy/Cô để dự án của chúng em được hoàn thiện xuất sắc hơn.</p>
+                    
+                    <div class="flex justify-center gap-6 text-slate-500 text-xs font-semibold border-t border-white/5 pt-8">
+                        <p><i class="fa-solid fa-globe text-primary mr-1"></i> doantn50cntt.github.io</p>
+                        <p><i class="fa-solid fa-envelope text-secondary mr-1"></i> admin@50cntt1.com</p>
+                    </div>
+                </div>
+            </div>
 
         </div>
+
+        <!-- Footer Bộ điều khiển chuyển slide -->
+        <footer class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-4 gap-4">
+            <div class="text-xs text-slate-500 font-semibold">Dùng phím <kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/10">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/10">→</kbd> hoặc nút bấm để chuyển Slide</div>
+            <div class="flex items-center gap-4">
+                <button onclick="prevSlide()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all active:scale-95"><i class="fa-solid fa-chevron-left"></i></button>
+                <button onclick="nextSlide()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all active:scale-95"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full md:w-64 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-500" style="width: 10%;"></div>
+            </div>
+        </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
-
+    <!-- Script điều khiển slide tương tác -->
     <script>
-        Reveal.initialize({
-            hash: true,
-            center: true,
-            autoAnimate: true,
-            autoAnimateDuration: 0.8,
-            transition: 'slide',
-            backgroundTransition: 'fade',
-            plugins: [ RevealHighlight ],
+        let currentSlide = 1;
+        const totalSlides = 10;
+        let slideChartInstance = null;
+
+        function updateSlide() {
+            // Thay đổi Class ẩn/hiện Slide với hiệu ứng 3D
+            for(let i = 1; i <= totalSlides; i++) {
+                const el = document.getElementById(`slide-${i}`);
+                if(i === currentSlide) {
+                    el.classList.remove('slide-inactive');
+                    el.classList.add('slide-active');
+                } else {
+                    el.classList.remove('slide-active');
+                    el.classList.add('slide-inactive');
+                }
+            }
+
+            // Cập nhật số slide và thanh tiến trình
+            document.getElementById('slide-index').innerText = `${currentSlide.toString().padStart(2, '0')} / ${totalSlides.toString().padStart(2, '0')}`;
+            document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+            // Di chuyển ambient blobs huyền ảo
+            const blobX = Math.random() * 80;
+            const blobY = Math.random() * 80;
+            document.getElementById('blob1').style.transform = `translate(${blobX}px, ${blobY}px)`;
+            document.getElementById('blob2').style.transform = `translate(${-blobX}px, ${-blobY}px)`;
+
+            // Nếu di chuyển đến Slide 8 (Biểu đồ) -> Vẽ biểu đồ
+            if(currentSlide === 8) {
+                setTimeout(initSlideChart, 300);
+            }
+        }
+
+        function nextSlide() {
+            if(currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if(currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Lắng nghe phím mũi tên bàn phím
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+            if(e.key === 'ArrowLeft') prevSlide();
         });
+
+        // ================= DEMO CHATBOT TỰ ĐỘNG =================
+        function demoChat(questionText) {
+            const chatBox = document.getElementById('demo-chat-box');
+            
+            // Xóa hết chat mẫu cũ
+            chatBox.innerHTML = `
+                <div class="p-3 bg-slate-800 text-slate-300 rounded-2xl max-w-[80%] self-start">Em có thể giúp gì cho anh chị về kế hoạch vi vu Việt Nam ạ?</div>
+                <div class="p-3 bg-indigo-600 text-white rounded-2xl max-w-[80%] self-end animate-[slideUp_0.3s_ease-out]">${questionText}</div>
+                <div id="bot-typing" class="p-3 bg-slate-800 text-slate-400 rounded-2xl max-w-[80%] self-start italic cursor-blink">Travel Bot đang gõ...</div>
+            `;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            let replyText = "";
+            if(questionText.includes('biển')) {
+                replyText = `Chào anh chị, dựa trên hệ thống cơ sở dữ liệu hiện tại, em gợi ý tour:<br><br>🌴 <strong>Đà Nẵng - Hội An (3N2Đ)</strong><br>💵 Giá: 3.500.000đ<br>✈️ Đã bao gồm vé bay & Khách sạn 3 sao sát biển Mỹ Khê!`;
+            } else {
+                replyText = `Dạ hiện tại trên hệ thống của công ty đang có tour:<br><br>⛰️ <strong>Khám phá Sapa kì vĩ (3N2Đ)</strong><br>💵 Giá: 2.800.000đ<br>🚍 Khởi hành bằng xe giường nằm hạng thương gia chất lượng cao ạ!`;
+            }
+
+            // Giả lập độ trễ AI suy nghĩ và gõ chữ
+            setTimeout(() => {
+                const typing = document.getElementById('bot-typing');
+                if(typing) typing.remove();
+                
+                chatBox.innerHTML += `
+                    <div class="p-3 bg-slate-800 text-slate-300 rounded-2xl max-w-[80%] self-start animate-[slideUp_0.3s_ease-out]">${replyText}</div>
+                `;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1800);
+        }
+
+        // ================= TÍNH TOÁN ADD-ONS REALTIME =================
+        function calcSlidePrice() {
+            const hotelFee = parseInt(document.getElementById('slide-hotel').value) || 0;
+            const transFee = parseInt(document.getElementById('slide-transport').value) || 0;
+            const basePrice = 3000000;
+            const finalPrice = basePrice + hotelFee + transFee;
+            
+            // Hiệu ứng tăng số nhảy mượt mà
+            let currentDisplay = basePrice;
+            const targetPrice = finalPrice;
+            const priceEl = document.getElementById('slide-total-price');
+
+            priceEl.innerText = finalPrice.toLocaleString('vi-VN') + " đ";
+        }
+
+        // ================= MÔ PHỎNG SYNC REALTIME =================
+        function simSync() {
+            const selectVal = document.getElementById('admin-status-sim').value;
+            const badge = document.getElementById('client-status-badge');
+            
+            badge.innerText = selectVal;
+            badge.className = "px-2 py-1 text-[10px] font-bold rounded-full transition-all duration-500 scale-125 " + 
+                (selectVal === 'Đã duyệt' ? 'bg-emerald-500/10 text-emerald-400' : 
+                 selectVal === 'Hoàn thành' ? 'bg-blue-500/10 text-blue-400' : 'bg-orange-500/10 text-orange-400');
+            
+            setTimeout(() => {
+                badge.classList.remove('scale-125');
+            }, 300);
+
+            alert(`Tín hiệu đã được cập nhật thành công lên Firestore. Trạng thái khách hàng đổi thành: "${selectVal}"!`);
+        }
+
+        // ================= VẼ BIỂU ĐỒ CHART.JS =================
+        function initSlideChart() {
+            const ctx = document.getElementById('slideChart').getContext('2d');
+            if(slideChartInstance) slideChartInstance.destroy();
+
+            Chart.defaults.color = '#94a3b8';
+            Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+
+            slideChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Đà Nẵng', 'Hạ Long', 'Sapa', 'Phú Quốc', 'Hà Giang'],
+                    datasets: [{
+                        label: 'Lượng đặt Tour (Tháng này)',
+                        data: [45, 30, 25, 20, 15],
+                        backgroundColor: ['#6366f1', '#fd6600', '#10b981', '#3b82f6', '#f43f5e'],
+                        borderWidth: 0,
+                        borderRadius: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // ================= CANVAS HẠT CHẠY THEO CHUỘT (PARTICLES) =================
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: (Math.random() - 0.5) * 0.8,
+                    size: Math.random() * 2 + 1
+                });
+            }
+        }
+
+        window.addEventListener('resize', initCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.fillStyle = 'rgba(99, 102, 241, 0.25)';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Vẽ các đường liên kết giữa các hạt và chuột
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 150) {
+                        ctx.strokeStyle = `rgba(255,255,255,${0.03 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initCanvas();
+        animateParticles();
     </script>
 </body>
 </html>
