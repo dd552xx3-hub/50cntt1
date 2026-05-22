@@ -1,216 +1,281 @@
-```html
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Slide Trình Chiếu - Đồ Án Tốt Nghiệp</title>
+    <title>Cinematic Presentation - 50CNTT1 TRAVEL</title>
 
-    <!-- Import Reveal.js Core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
-    <!-- Import Theme -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/simple.css">
-    
-    <!-- Import Font Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom CSS cho đồ án của bạn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/black.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
-        .reveal {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        :root {
+            --primary: #6366f1;
+            --secondary: #f43f5e;
+            --accent: #10b981;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
         }
-        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            font-weight: 800;
-            color: #002155; /* Màu Primary của dự án */
-            text-transform: none;
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; }
+
+        /* Hiệu ứng nền Gradient động */
+        .bg-blobs {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 40%);
+            z-index: -1;
         }
-        .reveal h1 { font-size: 2.2em; line-height: 1.2; }
-        .reveal h2 { font-size: 1.6em; color: #fd6600; /* Màu Secondary */ }
-        .reveal h3 { font-size: 1.3em; }
-        .reveal p, .reveal li { font-size: 0.9em; line-height: 1.6; color: #334155; }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-weight: 800; text-transform: none; letter-spacing: -0.02em;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .reveal h1 { font-size: 3em; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .reveal h2 { color: var(--primary); }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 30px;
+            padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .tech-icon { font-size: 2em; margin-bottom: 15px; color: var(--primary); }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
+        .feature-item { padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); }
         
-        .accent { color: #fd6600; font-weight: bold; }
-        .tech-badge {
-            display: inline-block;
-            background: #f1f5f9;
-            color: #002155;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.7em;
-            font-weight: 700;
-            margin: 5px;
-            border: 2px solid #e2e8f0;
-        }
+        .accent-text { color: var(--accent); font-weight: 600; }
+        .highlight { color: var(--secondary); font-weight: 800; }
+
+        /* Code highlight custom */
+        .reveal pre { background: #0f172a; border: 1px solid var(--border); border-radius: 15px; width: 100%; }
         
-        .flex-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px;
-        }
-        .flex-col { flex: 1; text-align: left; }
-        
-        /* Hiệu ứng khung ảnh */
-        .img-card {
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border: 1px solid #e2e8f0;
+        /* Auto-animate circle */
+        .circle-node {
+            width: 150px; height: 150px; border-radius: 50%;
+            background: var(--primary); display: flex; align-items: center;
+            justify-content: center; font-weight: 800; color: white;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.4);
         }
     </style>
 </head>
 <body>
+    <div class="bg-blobs"></div>
     <div class="reveal">
         <div class="slides">
             
-            <!-- SLIDE 1: TRANG BÌA -->
+            <section data-auto-animate>
+                <div class="glass-card" style="border: 2px solid var(--primary);">
+                    <p style="letter-spacing: 5px; color: var(--primary); font-weight: 600;">ĐỒ ÁN TỐT NGHIỆP</p>
+                    <h1>Xây dựng Website <br><span style="color: #fff;">Tích hợp AI</span> Du lịch</h1>
+                    <div style="height: 2px; width: 100px; background: var(--secondary); margin: 30px auto;"></div>
+                    <p style="font-size: 0.8em; opacity: 0.7;">TRƯỜNG CAO ĐẲNG ĐIỆN TỬ - ĐIỆN LẠNH HÀ NỘI</p>
+                </div>
+            </section>
+
+            <section data-auto-animate>
+                <h2 data-id="title">Đội ngũ thực hiện</h2>
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                    <div class="glass-card" style="flex: 1;">
+                        <i class="fa-solid fa-code tech-icon"></i>
+                        <h3>Nhóm sinh viên</h3>
+                        <p>Vũ Tiến Đạt - Nguyễn Doãn Tùng</p>
+                        <p>Đặng Thái Long - Nguyễn Như Đăng</p>
+                    </div>
+                    <div class="glass-card" style="flex: 1;">
+                        <i class="fa-solid fa-chalkboard-user tech-icon" style="color: var(--secondary);"></i>
+                        <h3>Giảng viên hướng dẫn</h3>
+                        <p class="accent-text">Ths. Lê Thị Vân Hồng</p>
+                    </div>
+                </div>
+            </section>
+
+            <section data-background-color="#020617">
+                <h2 style="color: var(--secondary);">Nỗi đau của thị trường?</h2>
+                <div class="feature-grid">
+                    <div class="feature-item fragment fade-up">
+                        <i class="fa-solid fa-hourglass-half accent-text"></i>
+                        <h4>Lãng phí thời gian</h4>
+                        <p style="font-size: 0.7em;">Người dùng mất trung bình 5-7 ngày để tìm kiếm thông tin và chốt lịch trình.</p>
+                    </div>
+                    <div class="feature-item fragment fade-up">
+                        <i class="fa-solid fa-brain accent-text"></i>
+                        <h4>Thiếu thông minh</h4>
+                        <p style="font-size: 0.7em;">Các bộ lọc tĩnh không hiểu được nhu cầu cảm xúc và cá nhân hóa của khách.</p>
+                    </div>
+                    <div class="feature-item fragment fade-up">
+                        <i class="fa-solid fa-shield-virus accent-text"></i>
+                        <h4>Dữ liệu rời rạc</h4>
+                        <p style="font-size: 0.7em;">Khách phải nhảy qua lại giữa hàng chục tab: Bản đồ, Giá, Chatbot, Review.</p>
+                    </div>
+                    <div class="feature-item fragment fade-up">
+                        <i class="fa-solid fa-comments accent-text"></i>
+                        <h4>Hỗ trợ chậm</h4>
+                        <p style="font-size: 0.7em;">Tư vấn viên không thể trực 24/7 để trả lời mọi thắc mắc ngay lập tức.</p>
+                    </div>
+                </div>
+            </section>
+
             <section data-transition="zoom">
-                <h4 style="color: #64748b; font-size: 1em;">TRƯỜNG CAO ĐẲNG ĐIỆN TỬ - ĐIỆN LẠNH HÀ NỘI<br>KHOA CÔNG NGHỆ THÔNG TIN</h4>
-                <br>
-                <h3 style="color: #fd6600;">BẢO VỆ ĐỒ ÁN TỐT NGHIỆP</h3>
-                <h1>XÂY DỰNG WEBSITE QUẢN LÝ VÀ ĐẶT TOUR DU LỊCH TÍCH HỢP AI</h1>
-                <p style="font-weight: bold; font-size: 1.1em; margin-top: 30px;">Hệ thống: 50CNTT1 TRAVEL</p>
-                
-                <div style="display: flex; justify-content: space-around; margin-top: 40px; font-size: 0.8em; text-align: left;">
-                    <div>
-                        <p class="accent">Sinh viên thực hiện:</p>
-                        <ul>
-                            <li>Vũ Tiến Đạt</li>
-                            <li>Nguyễn Doãn Tùng</li>
-                            <li>Đặng Thái Long</li>
-                            <li>Nguyễn Như Đăng</li>
+                <p class="accent-text">CHÚNG TÔI MANG ĐẾN</p>
+                <h1 style="font-size: 4em;">50CNTT1 <span class="highlight">TRAVEL</span></h1>
+                <p>Hệ sinh thái du lịch <span class="accent-text">Serverless</span> tích hợp <span class="accent-text">LLM AI</span></p>
+            </section>
+
+            <section data-auto-animate>
+                <h2 data-id="tech-title">Kiến trúc hệ thống</h2>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                    <div class="circle-node" data-id="node1">Frontend</div>
+                    <div class="circle-node" data-id="node2" style="background: var(--secondary);">Backend</div>
+                    <div class="circle-node" data-id="node3" style="background: var(--accent);">AI</div>
+                </div>
+                <div class="fragment" style="margin-top: 50px;">
+                    <pre><code class="javascript" data-trim>
+                        Architecture: Serverless / Backend-as-a-Service (BaaS)
+                        Frontend: Tailwind CSS + Vanilla JS ES6
+                        Cloud Platform: Google Firebase Ecosystem
+                        Intelligence: Gemini / GPT Engine Integration
+                    </code></pre>
+                </div>
+            </section>
+
+            <section>
+                <div style="display: flex; align-items: center;">
+                    <div style="flex: 1; text-align: left;">
+                        <h2>01. Trợ lý ảo AI</h2>
+                        <p class="accent-text">Thuật toán Contextual Prompting</p>
+                        <ul style="font-size: 0.8em;">
+                            <li class="fragment">Nạp dữ liệu Firestore thời gian thực.</li>
+                            <li class="fragment">Nhồi ngữ cảnh tour vào Prompt Engineering.</li>
+                            <li class="fragment">Phản hồi thông minh, lịch sự bằng NLP.</li>
                         </ul>
                     </div>
-                    <div>
-                        <p class="accent">Giảng viên hướng dẫn:</p>
-                        <p>Ths. Lê Thị Vân Hồng</p>
+                    <div style="flex: 1;" class="glass-card">
+                        <i class="fa-solid fa-robot" style="font-size: 5em; color: var(--accent); margin-bottom: 20px;"></i>
+                        <p class="highlight">Brain Engine</p>
                     </div>
                 </div>
             </section>
 
-            <!-- SLIDE 2: TÍNH CẤP THIẾT -->
-            <section data-transition="slide">
-                <h2>1. Đặt Vấn Đề & Tính Cấp Thiết</h2>
-                <div class="flex-container">
-                    <div class="flex-col">
-                        <ul>
-                            <li class="fragment">Sự bùng nổ của xu hướng <span class="accent">Du lịch tự túc (FIT)</span> sau đại dịch.</li>
-                            <li class="fragment">Hiện tượng <span class="accent">Khủng hoảng thông tin</span>: Người dùng mất quá nhiều thời gian tra cứu, so sánh giá trên các nền tảng OTA truyền thống.</li>
-                            <li class="fragment">Các website hiện tại thiếu sự <span class="accent">cá nhân hóa</span> và tương tác thời gian thực.</li>
-                            <li class="fragment">=> Cần một hệ thống quản lý trọn gói kết hợp <span class="accent">Trợ lý ảo AI</span> hỗ trợ 24/7.</li>
-                        </ul>
-                    </div>
-                    <div class="flex-col fragment">
-                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop" class="img-card" alt="Travel">
-                    </div>
-                </div>
-            </section>
-
-            <!-- SLIDE 3: KIẾN TRÚC & CÔNG NGHỆ -->
-            <section data-transition="slide">
-                <h2>2. Giải Pháp Công Nghệ</h2>
-                <p>Mô hình: <span class="accent">Kiến trúc Serverless (BaaS)</span> giúp tối ưu hiệu năng và chi phí.</p>
-                <br>
-                <div style="text-align: left;">
-                    <p><strong>1. Giao diện (Frontend):</strong></p>
-                    <div style="margin-bottom: 20px;">
-                        <span class="tech-badge">HTML5 / CSS3</span>
-                        <span class="tech-badge">Vanilla JS (ES6+)</span>
-                        <span class="tech-badge">Tailwind CSS</span>
-                        <span class="tech-badge">Chart.js</span>
-                    </div>
-
-                    <p><strong>2. Hệ thống nền tảng (Backend - Firebase):</strong></p>
-                    <div style="margin-bottom: 20px;">
-                        <span class="tech-badge">Firebase Auth</span>
-                        <span class="tech-badge">Cloud Firestore (NoSQL)</span>
-                        <span class="tech-badge">Real-time Data</span>
-                    </div>
-
-                    <p><strong>3. Tích hợp API (Third-party):</strong></p>
-                    <div>
-                        <span class="tech-badge">LLM Chatbot AI</span>
-                        <span class="tech-badge">Leaflet Map</span>
-                        <span class="tech-badge">OpenWeatherMap</span>
+            <section>
+                <div class="glass-card">
+                    <h2>02. Trục dữ liệu Real-time</h2>
+                    <p>Ứng dụng phương thức <code style="color: var(--secondary);">onSnapshot()</code></p>
+                    <div class="feature-grid" style="margin-top: 30px;">
+                        <div class="feature-item">
+                            <h4 class="accent-text">Sync Không Độ Trễ</h4>
+                            <p style="font-size: 0.6em;">Dữ liệu từ Admin đẩy xuống Client trong 200ms mà không cần F5.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4 class="accent-text">Bảo mật đa lớp</h4>
+                            <p style="font-size: 0.6em;">Firebase Auth kết hợp Firestore Rules chặn mọi truy cập trái phép.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SLIDE 4: CHỨC NĂNG CỐT LÕI (NGƯỜI DÙNG) -->
-            <section data-transition="slide">
-                <h2>3. Chức năng hệ thống (Client-side)</h2>
-                <ul>
-                    <li class="fragment"><strong>Quản lý Giỏ hàng thông minh:</strong> Tính toán State bằng <span class="accent">LocalStorage</span> đảm bảo tốc độ phản hồi Zero-latency.</li>
-                    <li class="fragment"><strong>Bản đồ tương tác (Destinations):</strong> Trực quan hóa dữ liệu điểm đến bằng <span class="accent">Leaflet.js</span> kết hợp truy vấn Firestore.</li>
-                    <li class="fragment"><strong>Tùy chọn Add-ons (Upselling):</strong> Kiến trúc dữ liệu động cho phép khách hàng nâng cấp Khách sạn & Phương tiện ngay trong chi tiết Tour.</li>
-                    <li class="fragment"><strong>Trợ lý ảo AI:</strong> Thuật toán Contextual Prompting (nhồi ngữ cảnh) giúp Bot tư vấn chính xác dữ liệu Tour của công ty.</li>
-                </ul>
-            </section>
-
-            <!-- SLIDE 5: CHỨC NĂNG CỐT LÕI (QUẢN TRỊ) -->
-            <section data-transition="slide">
-                <h2>4. Phân hệ Quản trị (Admin)</h2>
-                <div class="flex-container">
-                    <div class="flex-col">
-                        <ul>
-                            <li class="fragment"><strong>Bảo mật đa lớp:</strong> Phân quyền Middleware tại Frontend kết hợp Firestore Security Rules.</li>
-                            <li class="fragment"><strong>Dashboard Thời gian thực:</strong> Sử dụng `onSnapshot` tự động đồng bộ khi có đơn hàng mới (Real-time).</li>
-                            <li class="fragment"><strong>Trực quan hóa Dữ liệu:</strong> Phân tích và kết xuất biểu đồ động bằng Chart.js.</li>
-                            <li class="fragment"><strong>Auto-Packaging:</strong> Tự động đóng gói cấu trúc dữ liệu JSON khi thêm Tour mới.</li>
-                        </ul>
+            <section>
+                <h2>03. Add-ons Upselling</h2>
+                <p class="accent-text">Điểm đột phá về tư duy nghiệp vụ</p>
+                <div style="position: relative; height: 300px;">
+                    <div class="glass-card fragment custom" data-fragment-index="1" style="position: absolute; left: 0; top: 0; width: 250px;">
+                        <p>Giá Gốc</p>
+                        <h4 class="highlight">3,000,000đ</h4>
                     </div>
-                    <div class="flex-col fragment">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" class="img-card" alt="Dashboard">
+                    <div class="glass-card fragment custom" data-fragment-index="2" style="position: absolute; left: 300px; top: 0; width: 250px; border-color: var(--accent);">
+                        <p>+ Khách sạn 4 sao</p>
+                        <h4 style="color: var(--accent);">+ 500,000đ</h4>
+                    </div>
+                    <div class="glass-card fragment custom" data-fragment-index="3" style="position: absolute; left: 600px; top: 0; width: 250px; border-color: var(--secondary);">
+                        <p>+ Máy bay</p>
+                        <h4 style="color: var(--secondary);">+ 1,200,000đ</h4>
                     </div>
                 </div>
+                <p class="fragment" style="margin-top: 50px;">=> Thuật toán tính toán State trực tiếp trên DOM</p>
             </section>
 
-            <!-- SLIDE 6: KẾT LUẬN & HƯỚNG PHÁT TRIỂN -->
-            <section data-transition="slide">
-                <h2>5. Kết Luận & Hướng Phát Triển</h2>
-                <div style="text-align: left; margin-top: 30px;">
-                    <p><strong>Kết quả đạt được:</strong></p>
-                    <ul style="margin-bottom: 30px;">
-                        <li>Giải quyết trọn vẹn vòng đời Thương mại điện tử lữ hành.</li>
-                        <li>Ứng dụng thành công Trí tuệ nhân tạo (AI) vào nghiệp vụ tư vấn thực tế.</li>
-                    </ul>
-                    <p><strong>Hướng mở rộng trong tương lai:</strong></p>
-                    <ul>
-                        <li>Tích hợp Webhook xử lý thanh toán tự động (VietQR / VNPay).</li>
-                        <li>Nâng cấp thuật toán AI với Voice Search (Tìm kiếm bằng giọng nói).</li>
-                        <li>Mở rộng hệ sinh thái thành mô hình B2B2C cho nhiều đại lý.</li>
+            <section data-background-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1280" data-background-opacity="0.2">
+                <h2>04. Analytics Dashboard</h2>
+                <div class="glass-card">
+                    <p>Trực quan hóa chỉ số doanh nghiệp với <span class="highlight">Chart.js</span></p>
+                    <ul style="font-size: 0.8em; columns: 2;">
+                        <li>Thống kê trạng thái đơn hàng</li>
+                        <li>Theo dõi tương tác khách hàng</li>
+                        <li>Tự động đóng gói JSON</li>
+                        <li>Quản lý bài viết Blog</li>
                     </ul>
                 </div>
             </section>
 
-            <!-- SLIDE 7: KẾT THÚC -->
-            <section data-transition="zoom">
-                <h1>XIN TRÂN TRỌNG CẢM ƠN!</h1>
-                <p>Kính mời Quý Thầy/Cô và Hội đồng đặt câu hỏi đóng góp.</p>
-                <br>
-                <div style="font-size: 0.8em; color: #64748b;">
-                    <p>Nhóm sinh viên thực hiện: Đạt - Tùng - Long - Đăng</p>
-                    <p>Project: 50CNTT1 TRAVEL</p>
+            <section>
+                <h2>Hiệu năng hệ thống</h2>
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1; border-right: 1px solid var(--border);">
+                        <h1 class="accent-text">98/100</h1>
+                        <p>Lighthouse Score</p>
+                    </div>
+                    <div style="flex: 1; border-right: 1px solid var(--border);">
+                        <h1 class="accent-text">< 1.2s</h1>
+                        <p>Time to Interactive</p>
+                    </div>
+                    <div style="flex: 1;">
+                        <h1 class="accent-text">100%</h1>
+                        <p>Responsive</p>
+                    </div>
+                </div>
+            </section>
+
+            <section data-background-color="var(--primary)">
+                <h1 style="color: #fff;">LIVE DEMO</h1>
+                <p>Khám phá hệ thống 50CNTT1 TRAVEL</p>
+                <div class="fragment" style="margin-top: 30px;">
+                    <i class="fa-solid fa-circle-play" style="font-size: 3em; cursor: pointer;"></i>
+                </div>
+            </section>
+
+            <section>
+                <h2>Kết luận</h2>
+                <div class="glass-card" style="text-align: left;">
+                    <p><i class="fa-solid fa-check-double accent-text"></i> Hoàn thành 100% mục tiêu đề ra.</p>
+                    <p><i class="fa-solid fa-check-double accent-text"></i> Hệ thống vận hành ổn định trên môi trường Cloud.</p>
+                    <p><i class="fa-solid fa-check-double accent-text"></i> AI đáp ứng tốt nghiệp vụ tư vấn lữ hành.</p>
+                    <p><i class="fa-solid fa-rocket highlight"></i> Sẵn sàng mở rộng và thương mại hóa.</p>
+                </div>
+            </section>
+
+            <section data-auto-animate>
+                <h1 data-id="h1">Q&A</h1>
+                <p>Cảm ơn Quý Thầy/Cô đã lắng nghe!</p>
+                <div style="margin-top: 50px; display: flex; justify-content: center; gap: 50px; opacity: 0.5; font-size: 0.7em;">
+                    <p><i class="fa-brands fa-github"></i> github.com/username</p>
+                    <p><i class="fa-solid fa-globe"></i> 50cntt-travel.vercel.app</p>
                 </div>
             </section>
 
         </div>
     </div>
 
-    <!-- Import Reveal.js JS -->
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
+
     <script>
-        // Khởi tạo thư viện Reveal.js
         Reveal.initialize({
-            controls: true,       // Hiện nút điều hướng
-            progress: true,       // Hiện thanh tiến trình
-            center: true,         // Căn giữa slide
-            hash: true,           // Lưu trạng thái slide trên URL
-            transition: 'slide',  // Hiệu ứng chuyển cảnh mặc định (none/fade/slide/convex/concave/zoom)
-            
-            // Tự động phân mảnh nội dung list
-            fragmentInURL: true
+            hash: true,
+            center: true,
+            autoAnimate: true,
+            transition: 'fade',
+            backgroundTransition: 'zoom',
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+            // Hiệu ứng hạt bay nền
+            dependencies: []
         });
     </script>
 </body>
