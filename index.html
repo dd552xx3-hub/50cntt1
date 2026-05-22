@@ -1,260 +1,267 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cinematic Presentation - 50CNTT1 TRAVEL</title>
+    <title>Premium Presentation - 50CNTT1 TRAVEL</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/black.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/monokai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            --primary: #6366f1;
-            --secondary: #f43f5e;
-            --accent: #10b981;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6; /* Blue */
+            --secondary: #fd6600; /* Orange */
+            --accent: #10b981; /* Green */
+            --glass: rgba(15, 23, 42, 0.7);
+            --border: rgba(255, 255, 255, 0.15);
         }
 
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; }
 
-        /* Hiệu ứng nền Gradient động */
-        .bg-blobs {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 40%);
-            z-index: -1;
-        }
-
-        .reveal h1, .reveal h2, .reveal h3 {
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 800; text-transform: none; letter-spacing: -0.02em;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .reveal h1 { font-size: 3em; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .reveal h1 { font-size: 3.5em; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .reveal h2 { color: var(--primary); }
+        .reveal p, .reveal li { font-size: 0.9em; color: #cbd5e1; }
 
         /* Glassmorphism Card */
         .glass-card {
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 30px;
+            background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border); border-radius: 24px;
             padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .tech-icon { font-size: 2em; margin-bottom: 15px; color: var(--primary); }
         .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
-        .feature-item { padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); }
+        .feature-item { padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); transition: all 0.3s; }
+        .feature-item:hover { transform: translateY(-5px); border-color: var(--secondary); background: rgba(253, 102, 0, 0.1); }
         
         .accent-text { color: var(--accent); font-weight: 600; }
         .highlight { color: var(--secondary); font-weight: 800; }
 
-        /* Code highlight custom */
-        .reveal pre { background: #0f172a; border: 1px solid var(--border); border-radius: 15px; width: 100%; }
+        /* Chat UI Mockup */
+        .chat-container { border-radius: 20px; background: #1e293b; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.4); text-align: left;}
+        .chat-header { background: #0f172a; padding: 15px 20px; border-b: 1px solid var(--border); display: flex; align-items: center; gap: 10px;}
+        .chat-body { padding: 20px; display: flex; flex-direction: column; gap: 15px; height: 300px; overflow-y: auto;}
+        .msg { padding: 12px 18px; border-radius: 18px; max-width: 80%; font-size: 0.8em; line-height: 1.4;}
+        .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .msg-bot { background: #334155; color: white; align-self: flex-start; border-bottom-left-radius: 4px; }
         
-        /* Auto-animate circle */
-        .circle-node {
-            width: 150px; height: 150px; border-radius: 50%;
-            background: var(--primary); display: flex; align-items: center;
-            justify-content: center; font-weight: 800; color: white;
-            box-shadow: 0 0 50px rgba(99, 102, 241, 0.4);
-        }
+        /* Auto-animate Custom */
+        .badge { display: inline-block; padding: 8px 16px; border-radius: 30px; background: rgba(59, 130, 246, 0.2); border: 1px solid var(--primary); color: #60a5fa; font-size: 0.6em; font-weight: bold; margin: 5px; }
     </style>
 </head>
 <body>
-    <div class="bg-blobs"></div>
     <div class="reveal">
         <div class="slides">
             
+            <!-- SLIDE 1: INTRO (CÓ BACKGROUND ẢNH MỜ DẦN) -->
+            <section data-background-image="https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=1920" data-background-opacity="0.3" data-transition="zoom">
+                <div class="glass-card fragment fade-up">
+                    <p style="letter-spacing: 4px; color: #94a3b8; font-weight: 600; font-size: 0.7em;">ĐỒ ÁN TỐT NGHIỆP 2026</p>
+                    <h1>50CNTT1 <span class="highlight">TRAVEL</span></h1>
+                    <h3 style="color: white; font-weight: 400;">Hệ sinh thái Quản lý & Đặt Tour Du Lịch</h3>
+                    <div class="badge">Serverless Architecture</div>
+                    <div class="badge" style="border-color: var(--secondary); color: var(--secondary); background: rgba(253,102,0,0.1);">AI Integrated</div>
+                    <p style="font-size: 0.6em; opacity: 0.7; margin-top: 40px;">GVHD: Ths. Lê Thị Vân Hồng</p>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: NỖI ĐAU THỊ TRƯỜNG (FRAGMENT STAGGER) -->
+            <section data-background-color="#020617" data-transition="slide">
+                <h2 style="color: white;">Nỗi đau của thị trường OTA</h2>
+                <div class="feature-grid" style="margin-top: 40px;">
+                    <div class="feature-item fragment fade-right">
+                        <i class="fa-solid fa-hourglass-half accent-text" style="font-size: 1.5em; margin-bottom: 10px;"></i>
+                        <h4>Khủng hoảng thông tin</h4>
+                        <p style="font-size: 0.7em;">Mất trung bình 5-7 ngày để tra cứu, đối chiếu giá cả trên hàng chục website khác nhau.</p>
+                    </div>
+                    <div class="feature-item fragment fade-left">
+                        <i class="fa-solid fa-robot" style="color: var(--secondary); font-size: 1.5em; margin-bottom: 10px;"></i>
+                        <h4>Thiếu tính Cá nhân hóa</h4>
+                        <p style="font-size: 0.7em;">Bộ lọc tĩnh (chọn nơi đi, nơi đến) không hiểu được "cảm xúc" và nhu cầu phức tạp của khách.</p>
+                    </div>
+                    <div class="feature-item fragment fade-right">
+                        <i class="fa-solid fa-layer-group text-blue-400" style="color: #60a5fa; font-size: 1.5em; margin-bottom: 10px;"></i>
+                        <h4>Quy trình rời rạc</h4>
+                        <p style="font-size: 0.7em;">Tách biệt giữa Đặt Tour, Đặt Phòng, Đặt Xe khiến quản lý hành trình trở nên mệt mỏi.</p>
+                    </div>
+                    <div class="feature-item fragment fade-left">
+                        <i class="fa-solid fa-server text-red-400" style="color: #f87171; font-size: 1.5em; margin-bottom: 10px;"></i>
+                        <h4>Hiệu năng Server cũ</h4>
+                        <p style="font-size: 0.7em;">Mô hình Client-Server truyền thống thường xuyên giật lag, sập web vào mùa du lịch cao điểm.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: KIẾN TRÚC HỆ THỐNG (AUTO-ANIMATE) -->
             <section data-auto-animate>
-                <div class="glass-card" style="border: 2px solid var(--primary);">
-                    <p style="letter-spacing: 5px; color: var(--primary); font-weight: 600;">ĐỒ ÁN TỐT NGHIỆP</p>
-                    <h1>Xây dựng Website <br><span style="color: #fff;">Tích hợp AI</span> Du lịch</h1>
-                    <div style="height: 2px; width: 100px; background: var(--secondary); margin: 30px auto;"></div>
-                    <p style="font-size: 0.8em; opacity: 0.7;">TRƯỜNG CAO ĐẲNG ĐIỆN TỬ - ĐIỆN LẠNH HÀ NỘI</p>
-                </div>
-            </section>
-
-            <section data-auto-animate>
-                <h2 data-id="title">Đội ngũ thực hiện</h2>
-                <div style="display: flex; justify-content: center; gap: 20px;">
-                    <div class="glass-card" style="flex: 1;">
-                        <i class="fa-solid fa-code tech-icon"></i>
-                        <h3>Nhóm sinh viên</h3>
-                        <p>Vũ Tiến Đạt - Nguyễn Doãn Tùng</p>
-                        <p>Đặng Thái Long - Nguyễn Như Đăng</p>
+                <h2 data-id="tech-title">Giải pháp: Kiến trúc Serverless</h2>
+                <p>Loại bỏ hoàn toàn máy chủ vật lý, tăng tốc độ phản hồi lên <span class="accent-text">Real-time</span></p>
+                
+                <div style="display: flex; justify-content: space-around; margin-top: 50px;">
+                    <div class="glass-card" style="width: 30%;">
+                        <i class="fa-brands fa-html5 tech-icon"></i>
+                        <h4>Frontend</h4>
+                        <p style="font-size: 0.7em;">HTML5, Vanilla JS, Tailwind CSS, Chart.js</p>
                     </div>
-                    <div class="glass-card" style="flex: 1;">
-                        <i class="fa-solid fa-chalkboard-user tech-icon" style="color: var(--secondary);"></i>
-                        <h3>Giảng viên hướng dẫn</h3>
-                        <p class="accent-text">Ths. Lê Thị Vân Hồng</p>
+                    <div class="glass-card" style="width: 30%; border-color: var(--secondary);">
+                        <i class="fa-solid fa-database tech-icon" style="color: var(--secondary);"></i>
+                        <h4>BaaS (Firebase)</h4>
+                        <p style="font-size: 0.7em;">Firestore (NoSQL), Firebase Auth, Hosting</p>
+                    </div>
+                    <div class="glass-card" style="width: 30%; border-color: var(--accent);">
+                        <i class="fa-solid fa-microchip tech-icon" style="color: var(--accent);"></i>
+                        <h4>Third-party APIs</h4>
+                        <p style="font-size: 0.7em;">LLM AI, Leaflet Map, OpenWeatherMap</p>
                     </div>
                 </div>
             </section>
 
-            <section data-background-color="#020617">
-                <h2 style="color: var(--secondary);">Nỗi đau của thị trường?</h2>
-                <div class="feature-grid">
-                    <div class="feature-item fragment fade-up">
-                        <i class="fa-solid fa-hourglass-half accent-text"></i>
-                        <h4>Lãng phí thời gian</h4>
-                        <p style="font-size: 0.7em;">Người dùng mất trung bình 5-7 ngày để tìm kiếm thông tin và chốt lịch trình.</p>
-                    </div>
-                    <div class="feature-item fragment fade-up">
-                        <i class="fa-solid fa-brain accent-text"></i>
-                        <h4>Thiếu thông minh</h4>
-                        <p style="font-size: 0.7em;">Các bộ lọc tĩnh không hiểu được nhu cầu cảm xúc và cá nhân hóa của khách.</p>
-                    </div>
-                    <div class="feature-item fragment fade-up">
-                        <i class="fa-solid fa-shield-virus accent-text"></i>
-                        <h4>Dữ liệu rời rạc</h4>
-                        <p style="font-size: 0.7em;">Khách phải nhảy qua lại giữa hàng chục tab: Bản đồ, Giá, Chatbot, Review.</p>
-                    </div>
-                    <div class="feature-item fragment fade-up">
-                        <i class="fa-solid fa-comments accent-text"></i>
-                        <h4>Hỗ trợ chậm</h4>
-                        <p style="font-size: 0.7em;">Tư vấn viên không thể trực 24/7 để trả lời mọi thắc mắc ngay lập tức.</p>
+            <!-- SLIDE 4: UI SHOWCASE BẰNG R-STACK (CHỒNG ẢNH LÊN NHAU) -->
+            <section data-transition="convex">
+                <h2>Giao diện Tối ưu hóa UI/UX</h2>
+                <div class="r-stack" style="margin-top: 30px;">
+                    <!-- Ảnh 1: Hiện đầu tiên -->
+                    <img class="fragment fade-in-then-out" src="https://images.unsplash.com/photo-1559592442-7e182c9405db?w=800&q=80" style="border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 2px solid #334155; width: 800px; height: 450px; object-fit: cover;">
+                    <!-- Ảnh 2: Đè lên ảnh 1 -->
+                    <img class="fragment fade-in-then-out" src="https://images.unsplash.com/photo-1504457047772-27faf1c00561?w=800&q=80" style="border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 2px solid var(--primary); width: 800px; height: 450px; object-fit: cover;">
+                    <!-- Ảnh 3: Đè lên ảnh 2 -->
+                    <div class="fragment fade-in glass-card" style="width: 700px;">
+                        <h3 class="highlight">Trải nghiệm Seamless</h3>
+                        <p><i class="fa-solid fa-check text-green-400"></i> Thiết kế Responsive đa nền tảng (Mobile-First).</p>
+                        <p><i class="fa-solid fa-check text-green-400"></i> LocalStorage: Giỏ hàng không độ trễ.</p>
+                        <p><i class="fa-solid fa-check text-green-400"></i> Skeleton Loading & Lazy Load hình ảnh.</p>
                     </div>
                 </div>
             </section>
 
-            <section data-transition="zoom">
-                <p class="accent-text">CHÚNG TÔI MANG ĐẾN</p>
-                <h1 style="font-size: 4em;">50CNTT1 <span class="highlight">TRAVEL</span></h1>
-                <p>Hệ sinh thái du lịch <span class="accent-text">Serverless</span> tích hợp <span class="accent-text">LLM AI</span></p>
+            <!-- SLIDE 5: DEMO CHAT AI ĐỘNG (RẤT ẤN TƯỢNG) -->
+            <section data-background-color="#0f172a">
+                <div style="display: flex; gap: 40px; align-items: center;">
+                    <div style="flex: 1; text-align: left;">
+                        <h2 style="color: white;">Trợ lý AI <span class="highlight">Thông Minh</span></h2>
+                        <p class="accent-text" style="font-size: 1.2em;">Contextual Prompting Algorithm</p>
+                        <p style="font-size: 0.8em; margin-bottom: 20px;">AI không chỉ chat phiếm, mà được "nhồi" trực tiếp dữ liệu (Giá, Lịch trình) từ Database vào não bộ (Prompt) trước khi trả lời khách.</p>
+                        <div class="badge">Natural Language Processing (NLP)</div>
+                        <div class="badge">Real-time Fetching</div>
+                    </div>
+                    
+                    <!-- Khung Chat Mô phỏng -->
+                    <div style="flex: 1;" class="fragment fade-left">
+                        <div class="chat-container">
+                            <div class="chat-header">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--secondary); display: flex; justify-content: center; align-items: center;"><i class="fa-solid fa-robot text-white"></i></div>
+                                <div><p style="margin: 0; font-weight: bold; font-size: 0.9em; color: white;">Travel Bot</p><p style="margin: 0; font-size: 0.6em; color: #10b981;">Đang hoạt động</p></div>
+                            </div>
+                            <div class="chat-body">
+                                <div class="msg msg-user fragment fade-up">Tôi muốn đi du lịch biển 3 ngày, ngân sách khoảng 4 triệu có tour nào không?</div>
+                                <div class="msg msg-bot fragment fade-up" style="transition-delay: 0.5s;">
+                                    Chào bạn, dựa trên dữ liệu công ty hiện tại, mình gợi ý cho bạn:<br><br>
+                                    <strong style="color: #60a5fa;">Đà Nẵng - Hội An (3N2Đ)</strong><br>
+                                    - Giá: 3.500.000đ<br>
+                                    - Lịch trình: Tắm biển Mỹ Khê, Phố cổ Hội An.<br>
+                                    Bạn có muốn đặt ngay không?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <section data-auto-animate>
-                <h2 data-id="tech-title">Kiến trúc hệ thống</h2>
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-                    <div class="circle-node" data-id="node1">Frontend</div>
-                    <div class="circle-node" data-id="node2" style="background: var(--secondary);">Backend</div>
-                    <div class="circle-node" data-id="node3" style="background: var(--accent);">AI</div>
-                </div>
-                <div class="fragment" style="margin-top: 50px;">
-                    <pre><code class="javascript" data-trim>
-                        Architecture: Serverless / Backend-as-a-Service (BaaS)
-                        Frontend: Tailwind CSS + Vanilla JS ES6
-                        Cloud Platform: Google Firebase Ecosystem
-                        Intelligence: Gemini / GPT Engine Integration
+            <!-- SLIDE 6: GIẢI THÍCH CODE BẰNG HIGHLIGHT TỪNG DÒNG -->
+            <section>
+                <h2>Bảo Mật Phân Quyền (Middleware)</h2>
+                <p style="font-size: 0.8em;">Luồng xử lý <code style="color: var(--secondary);">onAuthStateChanged</code> chặn truy cập Admin trái phép.</p>
+                <div class="fragment" style="width: 100%; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                    <!-- Line numbers highlight -->
+                    <pre><code class="javascript" data-trim data-line-numbers="1,11|2-3|4-5|6-9">
+auth.onAuthStateChanged(user => {
+    if (!user) { 
+        window.location.href = "login.html"; return; 
+    }
+    db.collection("users").doc(user.uid).get().then(doc => {
+        if(!doc.exists || doc.data().role !== "admin") {
+            alert("Truy cập bị từ chối!");
+            window.location.href = "index.html";
+        } else {
+            initAdminDashboard();
+        }
+    });
+});
                     </code></pre>
                 </div>
             </section>
 
-            <section>
-                <div style="display: flex; align-items: center;">
-                    <div style="flex: 1; text-align: left;">
-                        <h2>01. Trợ lý ảo AI</h2>
-                        <p class="accent-text">Thuật toán Contextual Prompting</p>
-                        <ul style="font-size: 0.8em;">
-                            <li class="fragment">Nạp dữ liệu Firestore thời gian thực.</li>
-                            <li class="fragment">Nhồi ngữ cảnh tour vào Prompt Engineering.</li>
-                            <li class="fragment">Phản hồi thông minh, lịch sự bằng NLP.</li>
-                        </ul>
-                    </div>
-                    <div style="flex: 1;" class="glass-card">
-                        <i class="fa-solid fa-robot" style="font-size: 5em; color: var(--accent); margin-bottom: 20px;"></i>
-                        <p class="highlight">Brain Engine</p>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <div class="glass-card">
-                    <h2>02. Trục dữ liệu Real-time</h2>
-                    <p>Ứng dụng phương thức <code style="color: var(--secondary);">onSnapshot()</code></p>
-                    <div class="feature-grid" style="margin-top: 30px;">
-                        <div class="feature-item">
-                            <h4 class="accent-text">Sync Không Độ Trễ</h4>
-                            <p style="font-size: 0.6em;">Dữ liệu từ Admin đẩy xuống Client trong 200ms mà không cần F5.</p>
-                        </div>
-                        <div class="feature-item">
-                            <h4 class="accent-text">Bảo mật đa lớp</h4>
-                            <p style="font-size: 0.6em;">Firebase Auth kết hợp Firestore Rules chặn mọi truy cập trái phép.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h2>03. Add-ons Upselling</h2>
-                <p class="accent-text">Điểm đột phá về tư duy nghiệp vụ</p>
-                <div style="position: relative; height: 300px;">
-                    <div class="glass-card fragment custom" data-fragment-index="1" style="position: absolute; left: 0; top: 0; width: 250px;">
-                        <p>Giá Gốc</p>
-                        <h4 class="highlight">3,000,000đ</h4>
-                    </div>
-                    <div class="glass-card fragment custom" data-fragment-index="2" style="position: absolute; left: 300px; top: 0; width: 250px; border-color: var(--accent);">
-                        <p>+ Khách sạn 4 sao</p>
-                        <h4 style="color: var(--accent);">+ 500,000đ</h4>
-                    </div>
-                    <div class="glass-card fragment custom" data-fragment-index="3" style="position: absolute; left: 600px; top: 0; width: 250px; border-color: var(--secondary);">
-                        <p>+ Máy bay</p>
-                        <h4 style="color: var(--secondary);">+ 1,200,000đ</h4>
-                    </div>
-                </div>
-                <p class="fragment" style="margin-top: 50px;">=> Thuật toán tính toán State trực tiếp trên DOM</p>
-            </section>
-
-            <section data-background-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1280" data-background-opacity="0.2">
-                <h2>04. Analytics Dashboard</h2>
-                <div class="glass-card">
-                    <p>Trực quan hóa chỉ số doanh nghiệp với <span class="highlight">Chart.js</span></p>
-                    <ul style="font-size: 0.8em; columns: 2;">
-                        <li>Thống kê trạng thái đơn hàng</li>
-                        <li>Theo dõi tương tác khách hàng</li>
-                        <li>Tự động đóng gói JSON</li>
-                        <li>Quản lý bài viết Blog</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section>
-                <h2>Hiệu năng hệ thống</h2>
-                <div style="display: flex; gap: 20px;">
-                    <div style="flex: 1; border-right: 1px solid var(--border);">
-                        <h1 class="accent-text">98/100</h1>
-                        <p>Lighthouse Score</p>
-                    </div>
-                    <div style="flex: 1; border-right: 1px solid var(--border);">
-                        <h1 class="accent-text">< 1.2s</h1>
-                        <p>Time to Interactive</p>
-                    </div>
-                    <div style="flex: 1;">
-                        <h1 class="accent-text">100%</h1>
-                        <p>Responsive</p>
-                    </div>
-                </div>
-            </section>
-
-            <section data-background-color="var(--primary)">
-                <h1 style="color: #fff;">LIVE DEMO</h1>
-                <p>Khám phá hệ thống 50CNTT1 TRAVEL</p>
-                <div class="fragment" style="margin-top: 30px;">
-                    <i class="fa-solid fa-circle-play" style="font-size: 3em; cursor: pointer;"></i>
-                </div>
-            </section>
-
-            <section>
-                <h2>Kết luận</h2>
-                <div class="glass-card" style="text-align: left;">
-                    <p><i class="fa-solid fa-check-double accent-text"></i> Hoàn thành 100% mục tiêu đề ra.</p>
-                    <p><i class="fa-solid fa-check-double accent-text"></i> Hệ thống vận hành ổn định trên môi trường Cloud.</p>
-                    <p><i class="fa-solid fa-check-double accent-text"></i> AI đáp ứng tốt nghiệp vụ tư vấn lữ hành.</p>
-                    <p><i class="fa-solid fa-rocket highlight"></i> Sẵn sàng mở rộng và thương mại hóa.</p>
-                </div>
-            </section>
-
+            <!-- SLIDE 7: ADD-ONS UPSELL (CHUYỂN ĐỘNG AUTO-ANIMATE) -->
             <section data-auto-animate>
-                <h1 data-id="h1">Q&A</h1>
-                <p>Cảm ơn Quý Thầy/Cô đã lắng nghe!</p>
-                <div style="margin-top: 50px; display: flex; justify-content: center; gap: 50px; opacity: 0.5; font-size: 0.7em;">
-                    <p><i class="fa-brands fa-github"></i> github.com/username</p>
-                    <p><i class="fa-solid fa-globe"></i> 50cntt-travel.vercel.app</p>
+                <h2 data-id="addons-title">Kiến trúc Tùy chọn (Add-ons)</h2>
+                <p>Giải quyết bài toán phình to Database bằng cấu trúc <span class="highlight">Array of Maps</span></p>
+                <div style="display: flex; justify-content: space-around; margin-top: 40px;">
+                    <div class="glass-card" data-id="box1" style="width: 45%; padding: 20px;">
+                        <h4 style="color: #94a3b8;">Giao diện Đặt Tour</h4>
+                        <select style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px; background: #334155; color: white; border: none;">
+                            <option>Khách sạn 3 sao (+0đ)</option>
+                            <option>Khách sạn 4 sao (+500,000đ)</option>
+                        </select>
+                        <select style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 8px; background: #334155; color: white; border: none;">
+                            <option>Xe giường nằm (+0đ)</option>
+                            <option>Máy bay Vietnam Airline (+1,200,000đ)</option>
+                        </select>
+                    </div>
+                    <div class="glass-card fragment" data-id="box2" style="width: 45%; padding: 20px; border-color: var(--accent);">
+                        <h4 style="color: var(--accent);">Logic tính toán (DOM)</h4>
+                        <p style="font-size: 0.7em; font-family: monospace;">FinalPrice = BasePrice + HotelFee + FlightFee</p>
+                        <p style="font-size: 0.7em;">Tạo mã ID Giỏ hàng Độc bản (Variant ID) chống ghi đè dữ liệu.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8: TỔNG KẾT BẰNG ẢNH DASHBOARD MỜ -->
+            <section data-background-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1280" data-background-opacity="0.2">
+                <h2>Kết Quả Thực Hiện</h2>
+                <div class="feature-grid" style="margin-top: 40px;">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
+                        <h4>Hoàn thiện Nghiệp vụ</h4>
+                        <p style="font-size: 0.7em;">Quy trình khép kín từ Tìm kiếm -> Tham khảo -> Chọn dịch vụ nâng cấp -> Checkout.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
+                        <h4>Ứng dụng AI mượt mà</h4>
+                        <p style="font-size: 0.7em;">Chatbot hoạt động như một tư vấn viên thực thụ, nắm rõ bảng giá hệ thống.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
+                        <h4>Hiệu năng tuyệt đối</h4>
+                        <p style="font-size: 0.7em;">Kiến trúc NoSQL kết hợp Client-Side Rendering (CSR) không có độ trễ (Zero-latency).</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-check text-green-400" style="font-size: 1.5em;"></i>
+                        <h4>Dashboard Thời gian thực</h4>
+                        <p style="font-size: 0.7em;">Admin tự động đóng gói dữ liệu, Chart.js tự động cập nhật thống kê doanh thu.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 9: THANK YOU (CHUYỂN CẢNH MỞ RỘNG) -->
+            <section data-transition="zoom">
+                <i class="fa-solid fa-code" style="font-size: 4em; color: var(--primary); margin-bottom: 20px;"></i>
+                <h1 style="font-size: 4em;">XIN CẢM ƠN!</h1>
+                <p class="accent-text">Mời Quý Hội Đồng trải nghiệm sản phẩm trực tiếp.</p>
+                
+                <div style="margin-top: 50px; opacity: 0.7; font-size: 0.8em; display: flex; justify-content: center; gap: 30px;">
+                    <p><i class="fa-brands fa-github"></i> github.com/50cntt1-travel</p>
+                    <p><i class="fa-solid fa-user-tie"></i> Vũ Tiến Đạt - Nguyễn Doãn Tùng</p>
+                    <p><i class="fa-solid fa-user-tie"></i> Đặng Thái Long - Nguyễn Như Đăng</p>
                 </div>
             </section>
 
@@ -262,8 +269,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/markdown/markdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/highlight/highlight.js"></script>
 
     <script>
@@ -271,11 +276,10 @@
             hash: true,
             center: true,
             autoAnimate: true,
-            transition: 'fade',
-            backgroundTransition: 'zoom',
-            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
-            // Hiệu ứng hạt bay nền
-            dependencies: []
+            autoAnimateDuration: 0.8,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            plugins: [ RevealHighlight ],
         });
     </script>
 </body>
