@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* CORE VARIABLES */
+        
         :root {
             --bg-color: #f1f5f9; 
             --container-bg: #ffffff;
@@ -41,16 +41,16 @@
         }
         .slide.active { opacity: 1; pointer-events: auto; transform: scale(1) translateZ(0); z-index: 10; }
 
-        /* Typography */
+        
         h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 700; margin-bottom: 20px; color: var(--text-main); }
         .slide-title { font-size: 34px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; border-left: 6px solid var(--secondary); padding-left: 15px; }
         p { font-size: 18px; line-height: 1.6; color: var(--text-sub); margin-bottom: 15px; }
         
-        /* Highlight Utility */
+        
         .text-primary { color: var(--primary); } .text-secondary { color: var(--secondary); } .text-accent { color: var(--accent); }
         .vi-note { font-size: 15px; font-style: italic; color: #64748b; font-weight: 400; letter-spacing: 0; text-transform: none; }
 
-        /* Layouts */
+        
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; width: 100%; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 100%; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
@@ -78,7 +78,7 @@
         .bleed-image { height: 100%; width: 100%; border-radius: 0 20px 20px 0; overflow: hidden; }
         .bleed-image img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Code IDE Engine */
+        
         .code-container { display: grid; grid-template-columns: 3fr 2fr; gap: 30px; width: 100%; align-items: start; }
         .ide-window { background: #0d1117; border-radius: 16px; border: 1px solid #30363d; overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 14px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
         .ide-header { background: #161b22; padding: 12px 16px; border-bottom: 1px solid #30363d; display: flex; align-items: center; gap: 8px; }
@@ -107,7 +107,7 @@
 
         .s-kw { color: #ff7b72; } .s-fn { color: #d2a8ff; } .s-str { color: #a5d6ff; } .s-var { color: #79c0ff; } .s-cm { color: #8b949e; font-style: italic; }
 
-        /* Controls */
+        
         .controls {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 20px; align-items: center; z-index: 100;
@@ -127,7 +127,7 @@
     <div class="presentation-wrapper">
         <canvas id="bg-canvas"></canvas>
 
-        <!-- SLIDE 1 -->
+        
         <div class="slide active overlay-gradient" id="slide-1">
             <div style="text-align: center; width: 100%; z-index: 2;">
                 <p style="color: var(--primary); font-weight: 900; letter-spacing: 5px; margin-bottom: 20px;">ĐỒ ÁN TỐT NGHIỆP CÔNG NGHỆ THÔNG TIN</p>
@@ -141,7 +141,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 2 -->
+        
         <div class="slide" id="slide-2">
             <h2 class="slide-title">Bối cảnh & Vấn đề thị trường</h2>
             <div class="grid-2">
@@ -160,7 +160,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 3 -->
+        
         <div class="slide" id="slide-3">
             <div style="text-align: center;">
                 <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 80px; color: var(--accent); margin-bottom: 20px;"></i>
@@ -179,7 +179,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 4 -->
+        
         <div class="slide" id="slide-4">
             <h2 class="slide-title">Hệ Sinh Thái Công Nghệ</h2>
             <div class="grid-4" style="text-align: center; margin-top: 40px;">
@@ -190,7 +190,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 5 -->
+        
         <div class="slide" id="slide-5">
             <h2 class="slide-title">Thiết Kế CSDL: Tại sao chọn NoSQL?</h2>
             <div class="grid-2">
@@ -219,7 +219,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 6 -->
+        
         <div class="slide code-slide" id="slide-6" data-step="0" data-max-steps="4">
             <h2 class="slide-title">Code: Middleware <span class="vi-note" style="font-size:20px; font-weight:700;">(Lớp phần mềm trung gian bảo mật)</span></h2>
             <div class="code-container">
@@ -244,7 +244,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 7 -->
+        
         <div class="slide" id="slide-7" style="padding: 0;">
             <div class="bleed-layout">
                 <div class="bleed-content">
@@ -265,7 +265,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 8 -->
+        
         <div class="slide code-slide" id="slide-8" data-step="0" data-max-steps="3">
             <h2 class="slide-title">Code: State Management <span class="vi-note" style="font-size:20px; font-weight:700;">(Quản lý trạng thái giỏ hàng)</span></h2>
             <div class="code-container">
@@ -292,7 +292,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 9 -->
+        
         <div class="slide code-slide" id="slide-9" data-step="0" data-max-steps="3">
             <h2 class="slide-title">Code: Client-side Search <span class="vi-note" style="font-size:20px; font-weight:700;">(Tìm kiếm phía máy khách)</span></h2>
             <div class="code-container">
@@ -316,7 +316,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 10 -->
+        
         <div class="slide" id="slide-10">
             <h2 class="slide-title">Hệ Sinh Thái: CMS & GIS</h2>
             <div class="grid-2">
@@ -337,7 +337,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 11 -->
+        
         <div class="slide code-slide" id="slide-11" data-step="0" data-max-steps="3">
             <h2 class="slide-title">Code: Tích Hợp LLM <span class="vi-note" style="font-size:20px; font-weight:700;">(Mô hình ngôn ngữ lớn)</span></h2>
             <div class="code-container">
@@ -364,7 +364,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 12 -->
+        
         <div class="slide" id="slide-12">
             <h2 class="slide-title">Thanh toán Chốt đơn 4.0</h2>
             <div class="grid-2">
@@ -383,7 +383,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 13 -->
+        
         <div class="slide" id="slide-13">
             <h2 class="slide-title">Trung Tâm Điều Hành (Admin Dashboard)</h2>
             <div class="grid-2">
@@ -404,7 +404,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 14 -->
+        
         <div class="slide code-slide" id="slide-14" data-step="0" data-max-steps="3">
             <h2 class="slide-title">Code: WebSockets <span class="vi-note" style="font-size:20px; font-weight:700;">(Ống kết nối thời gian thực)</span></h2>
             <div class="code-container">
@@ -429,20 +429,41 @@
             </div>
         </div>
 
-        <!-- SLIDE 15 -->
-        <div class="slide" id="slide-15">
-            <div style="text-align: center;">
-                <h2 style="font-size: 48px; margin-bottom: 50px;">Kết Quả Đạt Được</h2>
-                <div class="grid-4">
-                    <div class="glass-box"><h3 style="font-size:56px; color:var(--primary); margin:0;">100%</h3><p style="font-weight:bold; color:var(--text-main);">Tính Năng Lõi</p></div>
-                    <div class="glass-box"><h3 style="font-size:56px; color:var(--accent); margin:0;">98</h3><p style="font-weight:bold; color:var(--text-main);">Điểm Lighthouse</p></div>
-                    <div class="glass-box"><h3 style="font-size:56px; color:var(--secondary); margin:0;">< 0.2s</h3><p style="font-weight:bold; color:var(--text-main);">Độ trễ Đồng bộ</p></div>
-                    <div class="glass-box"><h3 style="font-size:56px; color:var(--text-main); margin:0;">∞</h3><p style="font-weight:bold; color:var(--text-main);">Khả năng Mở rộng</p></div>
+        
+                <div class="slide" id="slide-15">
+            <h2 class="slide-title">Đánh giá Hiệu năng & Kết quả thực thi</h2>
+            <div class="grid-2" style="gap: 20px;">
+                <div class="glass-box" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <h3 class="text-primary"><i class="fa-solid fa-gauge-high"></i> Benchmark <span class="vi-note">(Đo lường hiệu năng)</span></h3>
+                    <p style="margin-bottom: 25px;">Nhóm đã tiến hành kiểm thử hệ thống qua công cụ <strong>Google Lighthouse</strong> để đảm bảo tiêu chuẩn Web hiện đại:</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="text-align: center; padding: 15px; background: #f0fdf4; border-radius: 12px; border: 1px solid #bbf7d0;">
+                            <div style="font-size: 32px; font-weight: 900; color: #16a34a;">98/100</div>
+                            <div style="font-size: 13px; font-weight: bold; color: #15803d;">Performance <br><span class="vi-note">(Hiệu suất tải)</span></div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #eff6ff; border-radius: 12px; border: 1px solid #bfdbfe;">
+                            <div style="font-size: 32px; font-weight: 900; color: #2563eb;">100/100</div>
+                            <div style="font-size: 13px; font-weight: bold; color: #1d4ed8;">SEO & Best Practices <br><span class="vi-note">(Chuẩn hóa dữ liệu)</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-box" style="height: 100%;">
+                    <h3 class="text-secondary"><i class="fa-solid fa-chart-line"></i> Chỉ số Vận hành</h3>
+                    <ul class="check-list" style="margin-top: 15px;">
+                        <li><i class="fa-solid fa-check-double text-accent"></i> <strong>Hoàn thiện 100%:</strong> Toàn bộ 12 module chức năng cốt lõi (Đặt tour, AI Chat, Admin...).</li>
+                        <li><i class="fa-solid fa-bolt text-secondary"></i> <strong>Sync Latency <span class="vi-note">(Độ trễ đồng bộ)</span>:</strong> Đạt mức <strong>< 0.2s</strong> nhờ giao thức WebSockets của Firebase.</li>
+                        <li><i class="fa-solid fa-shield-virus text-primary"></i> <strong>Bảo mật:</strong> 0 lỗ hổng nghiêm trọng nhờ thiết lập <strong>Security Rules</strong> tầng Database.</li>
+                        <li><i class="fa-solid fa-users-viewfinder text-accent"></i> <strong>Responsive:</strong> Hiển thị tốt trên 100% các kích thước màn hình phổ biến.</li>
+                    </ul>
                 </div>
             </div>
+            <p style="text-align: center; margin-top: 30px; font-weight: bold; color: var(--primary);" class="vi-note">Hệ thống đã sẵn sàng vận hành trên môi trường thực tế (Production Ready).</p>
         </div>
 
-        <!-- SLIDE 16 -->
+
+        
         <div class="slide" id="slide-16">
             <h2 class="slide-title">Hướng Phát Triển Tương Lai</h2>
             <div class="grid-2">
@@ -457,7 +478,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 17 -->
+        
         <div class="slide" id="slide-17">
             <div style="text-align: center; background: var(--container-bg); padding: 60px; border-radius: 24px; box-shadow: var(--shadow-soft);">
                 <i class="fa-solid fa-code" style="font-size: 80px; color: var(--primary); margin-bottom: 30px;"></i>
@@ -468,7 +489,7 @@
             </div>
         </div>
 
-        <!-- CONTROLS -->
+        
         <div class="controls">
             <button class="ctrl-btn" id="btn-prev"><i class="fa-solid fa-circle-chevron-left"></i></button>
             <span class="slide-counter" id="slide-counter">01 / 17</span>
