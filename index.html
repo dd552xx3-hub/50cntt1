@@ -1,454 +1,365 @@
-```html
+CĐ ĐTĐLHN
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Code Highlight Showcase - 50CNTT1 TRAVEL</title>
-    <!-- Tailwind CSS -->
+    <title>Defensive Showcase - 50CNTT1 TRAVEL</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts & FontAwesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        primary: '#6366f1',    /* Indigo */
-                        secondary: '#fd6600',  /* Orange */
-                        accent: '#10b981',     /* Emerald */
-                        darkbg: '#020617',     /* Navy slate */
-                        cardbg: 'rgba(15, 23, 42, 0.85)',
-                    }
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { primary: '#6366f1', secondary: '#fd6600', accent: '#10b981', darkbg: '#020617' }
                 }
             }
         }
     </script>
 
     <style>
-        /* Ambient Aurora Background */
-        .aurora {
-            position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.12; z-index: 0; pointer-events: none; transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* 3D Slide Engine Custom CSS */
-        .slide-deck { perspective: 2000px; overflow: hidden; }
-        .slide-frame { transition: all 0.8s cubic-bezier(0.2, 1, 0.2, 1); transform-style: preserve-3d; }
-        .slide-hide-next { opacity: 0; pointer-events: none; transform: translate3d(150px, 0, -200px) rotateY(-15deg) scale(0.9); }
-        .slide-hide-prev { opacity: 0; pointer-events: none; transform: translate3d(-150px, 0, -200px) rotateY(15deg) scale(0.9); }
-        .slide-show { opacity: 1; pointer-events: auto; transform: translate3d(0, 0, 0) rotateY(0deg) scale(1); }
+        body { background: #020617; color: #e2e8f0; overflow: hidden; }
+        .aurora { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.1; z-index: 0; pointer-events: none; transition: all 2s ease; }
+        .slide-frame { transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; opacity: 0; pointer-events: none; transform: translate3d(100px, 0, -200px) rotateY(-10deg); }
+        .slide-active { opacity: 1; pointer-events: auto; transform: translate3d(0, 0, 0) rotateY(0deg); }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
         
-        .glass { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        
-        @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        .anim-wave { animation: wave 5s ease-in-out infinite; }
-
-        /* Typing cursor animation */
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .cursor-blink::after { content: '|'; animation: blink 0.8s infinite; color: #fd6600; }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
-
-        /* ======== BỘ STYLES CHO HIỆU ỨNG CODE HIGHLIGHT ======== */
-        .code-window {
-            background: #0d1117;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            line-height: 1.7;
-            text-align: left;
-        }
-        .code-header {
-            background: #1e293b;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-b: 1px solid rgba(255,255,255,0.05);
-        }
-        .code-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .code-dot.red { background: #ef4444; }
-        .code-dot.yellow { background: #eab308; }
-        .code-dot.green { background: #22c55e; }
-        
-        .code-line {
-            display: flex;
-            padding: 2px 16px;
-            transition: all 0.4s ease;
-        }
-        .code-num {
-            width: 30px;
-            color: #475569;
-            user-select: none;
-            text-align: right;
-            margin-right: 16px;
-        }
-        /* Hiệu ứng làm mờ đoạn code không được focus */
-        .code-content.has-focus .code-line:not(.focused) {
-            opacity: 0.2;
-            filter: blur(1px);
-        }
-        /* Hiệu ứng làm nổi bật đoạn code đang focus */
-        .code-line.focused {
-            background: rgba(99, 102, 241, 0.15);
-            border-left: 2px solid #6366f1;
-            padding-left: 14px; /* Trừ đi 2px border */
-            opacity: 1;
-        }
-        
-        /* Tooltip giải thích code bay ra */
-        .code-explanation {
-            position: absolute;
-            right: -20px;
-            top: 50%;
-            transform: translate(100%, -50%);
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(99, 102, 241, 0.4);
-            padding: 16px;
-            border-radius: 12px;
-            width: 280px;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 50;
-        }
-        /* Mũi tên chỉ vào code của Tooltip */
-        .code-explanation::before {
-            content: '';
-            position: absolute;
-            left: -6px;
-            top: 50%;
-            transform: translateY(-50%) rotate(45deg);
-            width: 12px;
-            height: 12px;
-            background: rgba(15, 23, 42, 0.95);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.4);
-            border-left: 1px solid rgba(99, 102, 241, 0.4);
-        }
-        .code-explanation.active {
-            opacity: 1;
-            transform: translate(100%, -50%) translateX(20px); /* Bay ra 20px */
-        }
-        
-        /* Syntax Colors */
-        .syn-keyword { color: #c678dd; } /* const, let, async, await, function */
-        .syn-function { color: #61afef; } /* addDoc, document.getElementById, console.log */
-        .syn-string { color: #98c379; } /* "string" */
-        .syn-number { color: #d19a66; } /* 123 */
-        .syn-comment { color: #5c6370; font-style: italic; } /* // comment */
-        .syn-property { color: #e06c75; } /* value, innerText, uid */
-        .syn-variable { color: #e5c07b; } /* e, doc, user */
+        /* Code Highlight CSS */
+        .code-line { transition: all 0.3s; opacity: 0.2; filter: blur(0.5px); }
+        .code-line.focused { opacity: 1; filter: blur(0); background: rgba(99, 102, 241, 0.15); border-left: 3px solid #6366f1; padding-left: 10px; }
+        .code-tip { position: absolute; right: -320px; top: 20%; width: 280px; background: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #6366f1; opacity: 0; transition: all 0.4s; z-index: 100; }
+        .code-tip.active { opacity: 1; right: -300px; }
     </style>
 </head>
-<body class="bg-darkbg text-slate-100 overflow-hidden min-h-screen relative font-sans antialiased select-none flex flex-col">
+<body class="h-screen w-full flex flex-col p-6 lg:p-10">
 
-    <!-- Canvas Hiệu Ứng Ma Trận Mạng Lưới Hạt -->
     <canvas id="meshCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+    <div id="aurora-1" class="aurora w-96 h-96 bg-primary top-0 left-0"></div>
+    <div id="aurora-2" class="aurora w-96 h-96 bg-secondary bottom-0 right-0"></div>
 
-    <!-- Các Khối Sáng Ambient Chuyển Động -->
-    <div id="aurora-1" class="aurora w-[600px] h-[600px] bg-primary top-[-10%] left-[-10%]"></div>
-    <div id="aurora-2" class="aurora w-[600px] h-[600px] bg-secondary bottom-[-10%] right-[-10%]"></div>
-    <div id="aurora-3" class="aurora w-[500px] h-[500px] bg-accent top-[30%] left-[35%]"></div>
+    <header class="flex justify-between items-center border-b border-white/5 pb-4 z-20 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg"><i class="fa-solid fa-code text-white"></i></div>
+            <div><h2 class="font-bold text-lg text-white">50CNTT1 TRAVEL</h2><p class="text-[10px] text-slate-400 uppercase tracking-widest">Báo Cáo Đồ Án Tốt Nghiệp</p></div>
+        </div>
+        <div id="slide-num" class="text-secondary font-bold bg-secondary/10 px-4 py-1 rounded-full border border-secondary/20">01 / 17</div>
+    </header>
 
-    <!-- Khung Ứng Dụng Slide Chính -->
-    <div class="relative z-20 flex flex-col h-screen w-full p-4 lg:p-8">
-        
-        <!-- TOP NAVIGATION BAR -->
-        <header class="flex justify-between items-center border-b border-white/5 pb-3 shrink-0">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg shadow-blue-500/10">
-                    <i class="fa-solid fa-code text-white text-base"></i>
-                </div>
-                <div>
-                    <h2 class="font-display font-bold tracking-tight text-sm lg:text-base text-white">CODE HIGHLIGHT SHOWCASE</h2>
-                    <p class="text-[9px] text-slate-400 font-bold tracking-widest uppercase">Phân Tích Giải Thuật Lập Trình</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3 text-xs">
-                <span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-slate-400 font-semibold text-[10px] uppercase hidden sm:inline-block tracking-wider">Source Code Architecture</span>
-                <span id="indicator" class="text-secondary font-display font-bold bg-secondary/10 px-3 py-1 rounded-full border border-secondary/20">01 / 02</span>
-            </div>
-        </header>
+    <div class="flex-1 relative flex items-center justify-center z-20 overflow-hidden my-6">
 
-        <!-- MAIN SLIDE CONTAINER -->
-        <div class="slide-deck flex-1 relative flex items-center justify-center w-full h-full">
-
-            <!-- SLIDE 1: GIẢI THÍCH CODE AUTH MIDDLEWARE -->
-            <div id="slide-1" class="slide-frame slide-show absolute w-full max-w-5xl h-full flex flex-col justify-center items-center">
-                <div class="text-center w-full max-w-4xl mb-6">
-                    <span class="text-xs font-bold text-primary tracking-widest uppercase block mb-1">SECURITY LOGIC</span>
-                    <h2 class="font-display font-black text-3xl text-white">Middleware Bảo Mật Trong `admin.html`</h2>
-                    <p class="text-xs text-slate-400 mt-2">Nhấn Mũi Tên Phải (hoặc Nút Next) để xem giải thích từng khối lệnh</p>
-                </div>
-
-                <!-- Khung IDE giả lập -->
-                <div class="w-full max-w-3xl relative">
-                    <div class="code-window">
-                        <div class="code-header">
-                            <div class="flex gap-1.5 mr-4">
-                                <div class="code-dot red"></div><div class="code-dot yellow"></div><div class="code-dot green"></div>
-                            </div>
-                            <span class="text-[10px] text-slate-400 font-mono tracking-widest"><i class="fa-brands fa-js text-yellow-400 mr-1"></i> admin.html (Script block)</span>
-                        </div>
-                        
-                        <div id="code-content-1" class="code-content py-4 pb-6 relative">
-                            <!-- Các Tooltip giải thích cho từng Step -->
-                            <div id="exp-1-1" class="code-explanation top-[15%]">
-                                <h4 class="font-bold text-primary mb-1 text-sm"><i class="fa-solid fa-ear-listen"></i> Trình lắng nghe ngầm</h4>
-                                <p class="text-[10px] text-slate-300">Sử dụng phương thức <code class="bg-primary/20 px-1 rounded text-primary">onAuthStateChanged</code> của Firebase. Trình này chạy ngầm và tự động kích hoạt (trigger) khi trạng thái người dùng thay đổi (VD: Hết hạn token).</p>
-                            </div>
-                            <div id="exp-1-2" class="code-explanation top-[35%]">
-                                <h4 class="font-bold text-secondary mb-1 text-sm"><i class="fa-solid fa-shield-halved"></i> Chốt chặn vòng ngoài</h4>
-                                <p class="text-[10px] text-slate-300">Nếu biến <code class="bg-secondary/20 px-1 rounded text-secondary">user</code> rỗng (chưa đăng nhập), lập tức dừng hàm (return) và ép điều hướng văng về trang <code class="text-slate-400">login.html</code> trước khi DOM Admin kịp render.</p>
-                            </div>
-                            <div id="exp-1-3" class="code-explanation top-[60%]">
-                                <h4 class="font-bold text-accent mb-1 text-sm"><i class="fa-solid fa-user-lock"></i> Đối chiếu Role Mapping</h4>
-                                <p class="text-[10px] text-slate-300">Dùng UID của user chọc thẳng vào Collection <code class="text-accent">users</code> để truy vấn thuộc tính <code class="text-white">role</code>. Nếu không phải là <code class="text-red-400">admin</code>, lập tức hiển thị cảnh báo và đá văng về trang chủ.</p>
-                            </div>
-
-                            <!-- Source Code Lines -->
-                            <div class="code-line" data-step="1"><div class="code-num">01</div><div class="text-slate-300"><span class="syn-comment">// Check Auth Middleware</span></div></div>
-                            <div class="code-line" data-step="1"><div class="code-num">02</div><div class="text-slate-300"><span class="syn-variable">auth</span>.<span class="syn-function">onAuthStateChanged</span>(<span class="syn-variable">user</span> => {</div></div>
-                            <div class="code-line" data-step="2"><div class="code-num">03</div><div class="text-slate-300 ml-4"><span class="syn-keyword">if</span> (!<span class="syn-variable">user</span>) {</div></div>
-                            <div class="code-line" data-step="2"><div class="code-num">04</div><div class="text-slate-300 ml-8"><span class="syn-variable">window</span>.location.<span class="syn-property">href</span> = <span class="syn-string">"login.html"</span>;</div></div>
-                            <div class="code-line" data-step="2"><div class="code-num">05</div><div class="text-slate-300 ml-8"><span class="syn-keyword">return</span>;</div></div>
-                            <div class="code-line" data-step="2"><div class="code-num">06</div><div class="text-slate-300 ml-4">}</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">07</div><div class="text-slate-300 ml-4"><span class="syn-variable">db</span>.<span class="syn-function">collection</span>(<span class="syn-string">"users"</span>).<span class="syn-function">doc</span>(<span class="syn-variable">user</span>.<span class="syn-property">uid</span>).<span class="syn-function">get</span>().<span class="syn-function">then</span>(<span class="syn-variable">doc</span> => {</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">08</div><div class="text-slate-300 ml-8"><span class="syn-keyword">if</span>(!<span class="syn-variable">doc</span>.<span class="syn-function">exists</span> || <span class="syn-variable">doc</span>.<span class="syn-function">data</span>().<span class="syn-property">role</span> !== <span class="syn-string">"admin"</span>) {</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">09</div><div class="text-slate-300 ml-12"><span class="syn-function">alert</span>(<span class="syn-string">"Truy cập bị từ chối! Bạn không phải Quản trị viên."</span>);</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">10</div><div class="text-slate-300 ml-12"><span class="syn-variable">window</span>.location.<span class="syn-property">href</span> = <span class="syn-string">"index.html"</span>;</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">11</div><div class="text-slate-300 ml-8">} <span class="syn-keyword">else</span> {</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">12</div><div class="text-slate-300 ml-12"><span class="syn-function">initAdmin</span>(); <span class="syn-comment">// Xác thực thành công, cho phép khởi tạo UI</span></div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">13</div><div class="text-slate-300 ml-8">}</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">14</div><div class="text-slate-300 ml-4">});</div></div>
-                            <div class="code-line" data-step="1"><div class="code-num">15</div><div class="text-slate-300">});</div></div>
-                        </div>
-                    </div>
+        <div id="slide-1" class="slide-frame slide-active absolute w-full max-w-5xl h-full flex flex-col justify-center items-center text-center">
+            <div class="glass p-12 rounded-[3rem] border border-white/10 w-full max-w-4xl shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-20 -right-20 w-48 h-48 bg-primary/20 rounded-full blur-3xl"></div>
+                <span class="text-xs font-bold text-primary tracking-[0.4em] uppercase mb-6 block">KHOA CÔNG NGHỆ THÔNG TIN</span>
+                <h1 class="font-extrabold text-4xl lg:text-6xl text-white mb-8 leading-tight">XÂY DỰNG WEBSITE ĐẶT TOUR <br><span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TÍCH HỢP AI TRỢ LÝ</span></h1>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left border-t border-white/5 pt-8 text-[11px]">
+                    <div><p class="text-slate-500 font-bold uppercase">Sinh viên</p><p class="text-white font-bold mt-1">Vũ Tiến Đạt</p><p class="text-white font-bold">Nguyễn Doãn Tùng</p></div>
+                    <div><p class="text-slate-500 font-bold uppercase">Thành viên</p><p class="text-white mt-1">Đặng Thái Long</p><p class="text-white">Nguyễn Như Đăng</p></div>
+                    <div><p class="text-slate-500 font-bold uppercase">GV Hướng dẫn</p><p class="text-secondary font-black mt-1">Ths. Lê Thị Vân Hồng</p></div>
+                    <div><p class="text-slate-500 font-bold uppercase">Dự án</p><p class="text-white font-medium mt-1">50CNTT1 TRAVEL</p></div>
                 </div>
             </div>
-
-            <!-- SLIDE 2: GIẢI THÍCH CODE GIỎ HÀNG VÀ VARIANT ID -->
-            <div id="slide-2" class="slide-frame slide-hide-next absolute w-full max-w-5xl h-full flex flex-col justify-center items-center">
-                <div class="text-center w-full max-w-4xl mb-6">
-                    <span class="text-xs font-bold text-secondary tracking-widest uppercase block mb-1">DATA ALGORITHM</span>
-                    <h2 class="font-display font-black text-3xl text-white">Thuật Toán Chống Trùng Lặp Giỏ Hàng `tour-detail.html`</h2>
-                    <p class="text-xs text-slate-400 mt-2">Kỹ thuật tạo ID Biến thể (Variant ID) độc bản</p>
-                </div>
-
-                <div class="w-full max-w-4xl relative">
-                    <div class="code-window">
-                        <div class="code-header">
-                            <div class="flex gap-1.5 mr-4"><div class="code-dot red"></div><div class="code-dot yellow"></div><div class="code-dot green"></div></div>
-                            <span class="text-[10px] text-slate-400 font-mono tracking-widest"><i class="fa-brands fa-js text-yellow-400 mr-1"></i> function addToCart()</span>
-                        </div>
-                        
-                        <div id="code-content-2" class="code-content py-4 pb-6 relative">
-                            <!-- Tooltips -->
-                            <div id="exp-2-1" class="code-explanation top-[15%]">
-                                <h4 class="font-bold text-primary mb-1 text-sm"><i class="fa-solid fa-code-merge"></i> Thuật toán định danh Variant</h4>
-                                <p class="text-[10px] text-slate-300">Bóc tách Tên khách sạn và Phương tiện người dùng vừa chọn ở thẻ Select. Sau đó, nối chuỗi (String Concatenation) với mã TourID gốc để tạo ra một chuỗi ID <code class="text-white bg-slate-800 px-1 rounded">variantId</code> duy nhất hoàn toàn mới.</p>
-                            </div>
-                            <div id="exp-2-2" class="code-explanation top-[45%]">
-                                <h4 class="font-bold text-secondary mb-1 text-sm"><i class="fa-solid fa-search"></i> Kiểm tra trùng lặp (findIndex)</h4>
-                                <p class="text-[10px] text-slate-300">Sử dụng hàm Array <code class="text-secondary bg-secondary/10 px-1 rounded">findIndex</code> duyệt qua mảng giỏ hàng LocalStorage hiện tại. Nếu trả về <code class="font-bold text-red-400">-1</code> nghĩa là khách chưa từng đặt gói Tùy chọn y hệt như thế này.</p>
-                            </div>
-                            <div id="exp-2-3" class="code-explanation top-[75%]">
-                                <h4 class="font-bold text-accent mb-1 text-sm"><i class="fa-solid fa-database"></i> Đóng gói State Client-side</h4>
-                                <p class="text-[10px] text-slate-300">Nếu an toàn, tiến hành <code class="text-accent bg-accent/10 px-1 rounded">push()</code> cấu trúc Object JSON mới chứa đầy đủ thông tin vào mảng, sau đó lưu đè lại vào bộ nhớ trình duyệt qua <code class="text-white">localStorage.setItem()</code>.</p>
-                            </div>
-
-                            <!-- Lines -->
-                            <div class="code-line" data-step="1"><div class="code-num">01</div><div class="text-slate-300"><span class="syn-comment">// Lấy thông tin Tùy chọn dịch vụ nâng cấp (Add-ons) từ giao diện</span></div></div>
-                            <div class="code-line" data-step="1"><div class="code-num">02</div><div class="text-slate-300"><span class="syn-keyword">let</span> <span class="syn-variable">selectedHotel</span> = <span class="syn-variable">hotelSelect</span>.options[...].<span class="syn-function">getAttribute</span>(<span class="syn-string">'data-name'</span>);</div></div>
-                            <div class="code-line" data-step="1"><div class="code-num">03</div><div class="text-slate-300"><span class="syn-keyword">let</span> <span class="syn-variable">selectedTransport</span> = <span class="syn-variable">transportSelect</span>.options[...].<span class="syn-function">getAttribute</span>(<span class="syn-string">'data-name'</span>);</div></div>
-                            <div class="code-line" data-step="1"><div class="code-num">04</div><div class="text-slate-300"><span class="syn-comment">// Tạo ID biến thể tránh trùng lặp giỏ hàng khi đặt cùng 1 tour nhưng khác khách sạn</span></div></div>
-                            <div class="code-line" data-step="1"><div class="code-num">05</div><div class="text-slate-300"><span class="syn-keyword">const</span> <span class="syn-variable">variantId</span> = <span class="syn-variable">baseId</span> + <span class="syn-string">"_"</span> + <span class="syn-variable">selectedHotel</span> + <span class="syn-string">"_"</span> + <span class="syn-variable">selectedTransport</span>;</div></div>
-                            <div class="code-line" data-step="0"><div class="code-num">06</div><div class="text-slate-300"></div></div>
-                            <div class="code-line" data-step="2"><div class="code-num">07</div><div class="text-slate-300"><span class="syn-keyword">let</span> <span class="syn-variable">cart</span> = <span class="syn-variable">JSON</span>.<span class="syn-function">parse</span>(<span class="syn-variable">localStorage</span>.<span class="syn-function">getItem</span>(<span class="syn-string">'cart50cntt1'</span>)) || [];</div></div>
-                            <div class="code-line" data-step="2"><div class="code-num">08</div><div class="text-slate-300"><span class="syn-keyword">let</span> <span class="syn-variable">existingItemIndex</span> = <span class="syn-variable">cart</span>.<span class="syn-function">findIndex</span>(<span class="syn-variable">item</span> => <span class="syn-variable">item</span>.<span class="syn-property">id</span> === <span class="syn-variable">variantId</span>);</div></div>
-                            <div class="code-line" data-step="0"><div class="code-num">09</div><div class="text-slate-300"></div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">10</div><div class="text-slate-300"><span class="syn-keyword">if</span> (<span class="syn-variable">existingItemIndex</span> === -1) { <span class="syn-comment">// Chưa có biến thể này trong giỏ</span></div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">11</div><div class="text-slate-300 ml-4"><span class="syn-variable">cart</span>.<span class="syn-function">push</span>({</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">12</div><div class="text-slate-300 ml-8"><span class="syn-property">id</span>: <span class="syn-variable">variantId</span>, <span class="syn-comment">// Dùng ID độc bản làm khóa chính của đơn</span></div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">13</div><div class="text-slate-300 ml-8"><span class="syn-property">tourId</span>: <span class="syn-variable">baseId</span>,  <span class="syn-comment">// Giữ lại ID gốc để móc nối DB nếu cần</span></div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">14</div><div class="text-slate-300 ml-8"><span class="syn-property">khachSan</span>: <span class="syn-variable">selectedHotel</span>,</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">15</div><div class="text-slate-300 ml-8"><span class="syn-property">phuongTien</span>: <span class="syn-variable">selectedTransport</span>,</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">16</div><div class="text-slate-300 ml-8"><span class="syn-property">giaTour</span>: <span class="syn-variable">finalPrice</span></div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">17</div><div class="text-slate-300 ml-4">});</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">18</div><div class="text-slate-300 ml-4"><span class="syn-variable">localStorage</span>.<span class="syn-function">setItem</span>(<span class="syn-string">'cart50cntt1'</span>, <span class="syn-variable">JSON</span>.<span class="syn-function">stringify</span>(<span class="syn-variable">cart</span>));</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">19</div><div class="text-slate-300 ml-4"><span class="syn-function">alert</span>(<span class="syn-string">'Đã thêm gói tour vào giỏ hàng cục bộ thành công!'</span>);</div></div>
-                            <div class="code-line" data-step="3"><div class="code-num">20</div><div class="text-slate-300">}</div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <!-- FOOTER & BỘ ĐIỀU KHIỂN (CẬP NHẬT CHO CODE HIGHLIGHT) -->
-        <footer class="flex flex-col sm:flex-row justify-between items-center border-t border-white/5 pt-3 gap-3 shrink-0 mt-4">
-            <div class="text-[10px] text-slate-500 font-semibold tracking-wide">
-                Mũi tên <kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/10 mx-0.5 text-white">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/10 mx-0.5 text-white">→</kbd> để chạy hiệu ứng Focus Code
+        <div id="slide-2" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-3xl font-bold text-center mb-10 text-white">Đội Ngũ Thực Hiện</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="glass p-6 rounded-2xl text-center"><div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4 text-primary text-xl"><i class="fa-solid fa-code"></i></div><h4 class="font-bold text-white">Vũ Tiến Đạt</h4><p class="text-[10px] text-slate-400">Leader / Fullstack</p></div>
+                <div class="glass p-6 rounded-2xl text-center"><div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4 text-primary text-xl"><i class="fa-solid fa-database"></i></div><h4 class="font-bold text-white">N. Doãn Tùng</h4><p class="text-[10px] text-slate-400">Backend / NoSQL</p></div>
+                <div class="glass p-6 rounded-2xl text-center"><div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4 text-secondary text-xl"><i class="fa-solid fa-brain"></i></div><h4 class="font-bold text-white">Đặng Thái Long</h4><p class="text-[10px] text-slate-400">AI Specialist</p></div>
+                <div class="glass p-6 rounded-2xl text-center"><div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4 text-secondary text-xl"><i class="fa-solid fa-window-restore"></i></div><h4 class="font-bold text-white">N. Như Đăng</h4><p class="text-[10px] text-slate-400">UI/UX / Tester</p></div>
             </div>
-            <div class="flex items-center gap-3">
-                <button onclick="movePrev()" class="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-700 border border-white/10 flex items-center justify-center text-white text-sm transition-all shadow-lg active:scale-90"><i class="fa-solid fa-chevron-left"></i></button>
-                <button onclick="moveNext()" class="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-700 border border-white/10 flex items-center justify-center text-white text-sm transition-all shadow-lg active:scale-90"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div id="slide-3" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="text-left">
+                    <h2 class="text-4xl font-bold text-white mb-6">Nỗi đau của thị trường du lịch</h2>
+                    <p class="text-slate-400 mb-6">Người dùng mất quá nhiều thời gian để tra cứu thông tin rời rạc và các bộ lọc tìm kiếm hiện nay quá nghèo nàn, không hiểu được nhu cầu thực tế.</p>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 items-center text-red-400"><i class="fa-solid fa-clock-rotate-left"></i> 48 Giờ tra cứu lịch trình trung bình</li>
+                        <li class="flex gap-3 items-center text-orange-400"><i class="fa-solid fa-triangle-exclamation"></i> Dữ liệu không đồng bộ Real-time</li>
+                    </ul>
+                </div>
+                <div class="glass p-4 rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800" class="rounded-2xl w-full">
+                </div>
             </div>
-        </footer>
+        </div>
+
+        <div id="slide-4" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-3xl font-bold text-center mb-10 text-white">Kiến Trúc Serverless Đám Mây</h2>
+            <div class="glass p-10 rounded-[2rem] border border-white/5 relative flex justify-between items-center text-center">
+                <div class="z-10"><div class="w-16 h-16 bg-primary/20 border border-primary text-primary rounded-2xl flex items-center justify-center mx-auto text-3xl mb-2"><i class="fa-solid fa-laptop"></i></div><p class="text-xs font-bold">Frontend UI</p></div>
+                <div class="flex-1 h-0.5 bg-slate-800 mx-4 relative"><div class="absolute inset-0 bg-primary animate-[shimmer_2s_infinite]"></div></div>
+                <div class="z-10"><div class="w-16 h-16 bg-secondary/20 border border-secondary text-secondary rounded-2xl flex items-center justify-center mx-auto text-3xl mb-2"><i class="fa-solid fa-cloud"></i></div><p class="text-xs font-bold">Firebase SDK</p></div>
+                <div class="flex-1 h-0.5 bg-slate-800 mx-4 relative"><div class="absolute inset-0 bg-accent animate-[shimmer_2s_infinite]"></div></div>
+                <div class="z-10"><div class="w-16 h-16 bg-accent/20 border border-accent text-accent rounded-2xl flex items-center justify-center mx-auto text-3xl mb-2"><i class="fa-solid fa-server"></i></div><p class="text-xs font-bold">Cloud Firestore</p></div>
+            </div>
+            <p class="text-center text-slate-400 mt-8 text-sm">Giao tiếp trực tiếp phi máy chủ (Client-to-DB) giúp tối ưu hiệu năng tuyệt đối.</p>
+        </div>
+
+        <div id="slide-5" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-3xl font-bold text-center mb-12 text-white">Hệ Sinh Thái Công Nghệ</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                <div class="glass p-6 rounded-2xl"><i class="fa-brands fa-html5 text-4xl text-orange-500 mb-3"></i><p class="text-xs">HTML5 / CSS3</p></div>
+                <div class="glass p-6 rounded-2xl"><i class="fa-brands fa-js text-4xl text-yellow-400 mb-3"></i><p class="text-xs">ES6+ Vanilla</p></div>
+                <div class="glass p-6 rounded-2xl"><i class="fa-solid fa-wind text-4xl text-sky-400 mb-3"></i><p class="text-xs">Tailwind CSS</p></div>
+                <div class="glass p-6 rounded-2xl"><i class="fa-solid fa-fire text-4xl text-orange-400 mb-3"></i><p class="text-xs">Firebase BaaS</p></div>
+                <div class="glass p-6 rounded-2xl"><i class="fa-solid fa-chart-line text-4xl text-accent mb-3"></i><p class="text-xs">Chart.js / GIS</p></div>
+            </div>
+        </div>
+
+        <div id="slide-6" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-3xl font-bold mb-10 text-white">Thiết kế Cơ sở dữ liệu NoSQL</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass p-6 rounded-2xl border-t-4 border-primary"><h4 class="font-bold mb-4 text-primary underline">Collection: users</h4><ul class="text-[10px] space-y-2 text-slate-400"><li>- uid (Primary Key)</li><li>- email, hoTen</li><li>- role: "admin" | "user"</li></ul></div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-secondary"><h4 class="font-bold mb-4 text-secondary underline">Collection: tours</h4><ul class="text-[10px] space-y-2 text-slate-400"><li>- tenTour, giaTour</li><li>- galleryImages: Array</li><li>- tuyChonHotel: Array&lt;Map&gt;</li></ul></div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-accent"><h4 class="font-bold mb-4 text-accent underline">Collection: bookings</h4><ul class="text-[10px] space-y-2 text-slate-400"><li>- email_khach</li><li>- chiTietDon: JSON</li><li>- trangThai: string</li></ul></div>
+            </div>
+        </div>
+
+        <div id="slide-7" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-2xl font-bold mb-6 text-primary">Giải thuật Bảo Mật Phân Quyền</h2>
+            <div class="relative">
+                <div class="code-window">
+                    <div id="line-7-1" class="code-line" data-tip="Lắng nghe trạng thái đăng nhập ngầm">auth.onAuthStateChanged(async (user) => {</div>
+                    <div id="line-7-2" class="code-line ml-4" data-tip="Chọc vào DB để kiểm tra bảng phân quyền">const userDoc = await db.collection("users").doc(user.uid).get();</div>
+                    <div id="line-7-3" class="code-line ml-4" data-tip="Nếu không phải Admin, ép về trang chủ">if (userDoc.data().role !== "admin") window.location.href = "index.html";</div>
+                    <div id="line-7-4" class="code-line">});</div>
+                </div>
+                <div id="tip-7" class="code-tip"></div>
+            </div>
+        </div>
+
+        <div id="slide-8" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-3xl font-bold text-center mb-10 text-white">Luồng Trải Nghiệm Người Dùng (UX)</h2>
+            <div class="flex justify-between items-center gap-4 text-center">
+                <div class="glass p-4 rounded-xl flex-1 border border-white/5"><div class="font-black text-primary mb-2">01</div><p class="text-[10px]">Splash & Home</p></div>
+                <div class="text-slate-700"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="glass p-4 rounded-xl flex-1 border border-white/5"><div class="font-black text-secondary mb-2">02</div><p class="text-[10px]">Filter Tours</p></div>
+                <div class="text-slate-700"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="glass p-4 rounded-xl flex-1 border border-white/5 bg-secondary/10 border-secondary/20"><div class="font-black text-white mb-2">03</div><p class="text-[10px]">Custom Add-ons</p></div>
+                <div class="text-slate-700"><i class="fa-solid fa-chevron-right"></i></div>
+                <div class="glass p-4 rounded-xl flex-1 border border-white/5"><div class="font-black text-accent mb-2">04</div><p class="text-[10px]">Checkout</p></div>
+            </div>
+            <div class="mt-12 glass p-4 rounded-3xl shadow-inner"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000" class="rounded-2xl h-48 w-full object-cover"></div>
+        </div>
+
+        <div id="slide-9" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-2xl font-bold mb-6 text-secondary">Thuật Toán Variant ID Độc Bản</h2>
+            <div class="relative">
+                <div class="code-window">
+                    <div id="line-9-1" class="code-line" data-tip="Bóc tách tùy chọn Hotel/Transport">const selectedH = hotelSelect.options[...].getAttribute('data-name');</div>
+                    <div id="line-9-2" class="code-line" data-tip="Nối chuỗi tạo ID biến thể duy nhất">const variantId = baseId + "_" + selectedH + "_" + selectedT;</div>
+                    <div id="line-9-3" class="code-line" data-tip="Kiểm tra xem khách đã đặt gói này chưa">let existing = cart.findIndex(item => item.id === variantId);</div>
+                </div>
+                <div id="tip-9" class="code-tip"></div>
+            </div>
+        </div>
+
+        <div id="slide-10" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-2xl font-bold mb-6 text-accent">Logic Tìm Kiếm & Lọc Toàn Diện</h2>
+            <div class="relative">
+                <div class="code-window">
+                    <div id="line-10-1" class="code-line" data-tip="Lấy từ khóa người dùng nhập">const keyword = e.target.value.toLowerCase();</div>
+                    <div id="line-10-2" class="code-line" data-tip="Lọc mảng tour bằng hàm filter JS">const filtered = allTours.filter(t => t.tenTour.includes(keyword));</div>
+                    <div id="line-10-3" class="code-line" data-tip="Render lại giao diện (Dynamic UI)">renderTours(filtered);</div>
+                </div>
+                <div id="tip-10" class="code-tip"></div>
+            </div>
+        </div>
+
+        <div id="slide-11" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="glass p-6 rounded-3xl">
+                    <img src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=800" class="rounded-2xl">
+                </div>
+                <div class="text-right">
+                    <h2 class="text-4xl font-bold text-white mb-6">Hệ thống Cẩm Nang Lữ Hành</h2>
+                    <p class="text-slate-400 mb-6 italic">"Không chỉ bán tour, chúng tôi cung cấp kiến thức."</p>
+                    <p class="text-xs text-slate-500 leading-loose">Quản lý bài viết động từ Firestore, hỗ trợ định dạng thẻ HTML và tối ưu hóa SEO bằng thẻ tiêu đề động.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide-12" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-3xl font-bold text-center mb-8 text-white">Định Vị Điểm Đến Số (GIS)</h2>
+            <div class="w-full h-64 bg-slate-900 rounded-[2.5rem] relative overflow-hidden flex items-center justify-center border border-white/10 shadow-2xl">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+                <div class="relative z-10 flex flex-col items-center animate-bounce text-secondary">
+                    <div class="bg-secondary text-white font-bold text-[8px] px-2 py-0.5 rounded shadow-lg mb-1">Hạ Long từ 3.2tr</div>
+                    <i class="fa-solid fa-location-dot text-2xl"></i>
+                </div>
+            </div>
+            <p class="text-center text-slate-400 mt-6 text-xs leading-relaxed">Tích hợp thư viện Leaflet.js vẽ Marker động theo tọa độ kinh/vĩ độ được cấu hình trong CSDL.</p>
+        </div>
+
+        <div id="slide-13" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center items-center">
+            <div class="glass p-8 rounded-3xl border border-accent/30 text-center max-w-lg">
+                <i class="fa-solid fa-qrcode text-5xl text-accent mb-6 animate-pulse"></i>
+                <h2 class="text-2xl font-bold text-white mb-4">Quy trình Thanh toán 4.0</h2>
+                <p class="text-sm text-slate-400 mb-6 leading-relaxed">Tích hợp API VietQR tự động nội suy số tiền và nội dung chuyển khoản theo SĐT khách hàng, tối ưu tỷ lệ chốt đơn.</p>
+                <div class="w-32 h-32 bg-white p-2 mx-auto rounded-xl shadow-lg"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=50cntt1" class="w-full"></div>
+            </div>
+        </div>
+
+        <div id="slide-14" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="text-left">
+                    <h2 class="text-4xl font-bold text-white mb-6">Trang Quản Trị Tối Cao</h2>
+                    <p class="text-slate-400 mb-8 leading-relaxed">Thống kê chỉ số doanh nghiệp bằng Chart.js, quản lý duyệt tour Real-time giúp ban quản trị nắm bắt dữ liệu mọi lúc mọi nơi.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5"><p class="text-[9px] text-slate-500 uppercase font-bold">Duyệt đơn</p><p class="text-xl font-bold text-primary">Real-time</p></div>
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5"><p class="text-[9px] text-slate-500 uppercase font-bold">Biểu đồ</p><p class="text-xl font-bold text-secondary">Chart.js</p></div>
+                    </div>
+                </div>
+                <div class="glass p-4 rounded-2xl shadow-2xl relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" class="rounded-xl opacity-60">
+                    <div class="absolute inset-0 flex items-center justify-center"><p class="bg-black/60 px-4 py-2 rounded-full text-xs font-bold border border-white/20">Dán Screenshot Admin tại đây</p></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide-15" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center items-center">
+            <h2 class="text-3xl font-bold text-white mb-12">Kết Quả Đạt Được</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
+                <div class="text-center group"><div class="text-5xl font-black text-primary mb-2 group-hover:scale-110 transition-transform">100%</div><p class="text-[10px] text-slate-500 uppercase">Hoàn thiện tính năng</p></div>
+                <div class="text-center group"><div class="text-5xl font-black text-secondary mb-2 group-hover:scale-110 transition-transform">98</div><p class="text-[10px] text-slate-500 uppercase">Điểm Lighthouse</p></div>
+                <div class="text-center group"><div class="text-5xl font-black text-accent mb-2 group-hover:scale-110 transition-transform">0ms</div><p class="text-[10px] text-slate-500 uppercase">Độ trễ đồng bộ UI</p></div>
+                <div class="text-center group"><div class="text-5xl font-black text-white mb-2 group-hover:scale-110 transition-transform">∞</div><p class="text-[10px] text-slate-500 uppercase">Khả năng mở rộng</p></div>
+            </div>
+        </div>
+
+        <div id="slide-16" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center">
+            <h2 class="text-3xl font-bold mb-10 text-white text-center">Hướng Phát Triển Tương Lai</h2>
+            <div class="space-y-4 max-w-3xl mx-auto w-full">
+                <div class="glass p-5 rounded-xl border border-white/5 flex gap-6 items-center"><div class="w-12 h-12 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0 text-xl"><i class="fa-solid fa-mobile-screen"></i></div><div><h4 class="font-bold text-white">Ứng dụng di động (Hybrid App)</h4><p class="text-xs text-slate-500">Phát triển bản Android/iOS trên nền tảng React Native / Flutter.</p></div></div>
+                <div class="glass p-5 rounded-xl border border-white/5 flex gap-6 items-center"><div class="w-12 h-12 rounded-full bg-secondary/20 text-secondary flex items-center justify-center shrink-0 text-xl"><i class="fa-solid fa-credit-card"></i></div><div><h4 class="font-bold text-white">Thanh toán trực tiếp VNPay / MoMo</h4><p class="text-xs text-slate-500">Tích hợp cổng Webhook để gạch nợ đơn hàng tự động 100%.</p></div></div>
+            </div>
+        </div>
+
+        <div id="slide-17" class="slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center items-center text-center">
+            <div class="glass p-16 rounded-[3rem] border border-white/10 max-w-3xl w-full relative overflow-hidden shadow-2xl">
+                <div class="absolute -bottom-20 -left-20 w-56 h-56 bg-primary/20 rounded-full blur-[80px]"></div>
+                <i class="fa-solid fa-code text-5xl text-primary mb-6 animate-bounce"></i>
+                <h1 class="text-5xl font-black text-white mb-4 tracking-tighter">XIN CẢM ƠN!</h1>
+                <p class="text-secondary font-bold text-lg mb-8 uppercase tracking-[0.2em]">Hội đồng bảo vệ Đồ án tốt nghiệp</p>
+                <p class="text-slate-400 text-sm max-w-lg mx-auto mb-10 leading-relaxed">Mong nhận được những ý kiến đóng góp quý báu từ quý Thầy/Cô để dự án của chúng em được hoàn thiện xuất sắc hơn.</p>
+                <div class="flex justify-center gap-6 text-slate-500 text-[11px] border-t border-white/10 pt-8 font-semibold">
+                    <p><i class="fa-brands fa-github text-primary mr-1"></i> dd552xx3-hub/doantn50cntt</p>
+                    <p><i class="fa-solid fa-users text-secondary mr-1"></i> Nhóm: Đạt - Tùng - Long - Đăng</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <footer class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-4 gap-4 z-20 shrink-0">
+        <div class="text-[10px] text-slate-500 font-medium">Sử dụng phím mũi tên <kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/10 text-white">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-white/10 border border-white/10 text-white">→</kbd> để điều khiển</div>
+        <div class="flex items-center gap-3">
+            <button onclick="prev()" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90 shadow-lg"><i class="fa-solid fa-chevron-left text-white"></i></button>
+            <button onclick="next()" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-all active:scale-90 shadow-lg"><i class="fa-solid fa-chevron-right text-white"></i></button>
+        </div>
+        <div class="w-full sm:w-64 h-1 bg-slate-900 rounded-full overflow-hidden border border-white/5"><div id="progress" class="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500" style="width: 5.88%;"></div></div>
+    </footer>
+
     <script>
-        // CORE SLIDE LOGIC FOR CODE HIGHLIGHTING
-        let currentSlide = 1;
-        const totalSlides = 2;
-        
-        // Cấu trúc State Machine cho hiệu ứng Code Focus
-        // Cấu trúc: slideIndex -> mảng các Step. Ví dụ: Slide 1 có step 0 (show all), step 1, step 2, step 3.
-        const codeSteps = {
-            1: { currentStep: 0, maxStep: 3 },
-            2: { currentStep: 0, maxStep: 3 }
+        let current = 1;
+        let walkStep = 0;
+        const total = 17;
+
+        // Cấu hình các slide có chế độ Walkthrough
+        const walkthroughSlides = {
+            7: { max: 3 }, // Slide Auth
+            9: { max: 3 }, // Slide Cart
+            10: { max: 3 } // Slide Search
         };
 
-        function renderSlidePosition() {
-            for(let i = 1; i <= totalSlides; i++) {
-                const targetFrame = document.getElementById(`slide-${i}`);
-                if(i === currentSlide) {
-                    targetFrame.className = "slide-frame slide-show absolute w-full max-w-5xl h-full flex flex-col justify-center items-center";
-                } else if(i < currentSlide) {
-                    targetFrame.className = "slide-frame slide-hide-prev absolute w-full max-w-5xl h-full flex flex-col justify-center items-center";
+        function updateSlide() {
+            for(let i=1; i<=total; i++) {
+                const el = document.getElementById(`slide-${i}`);
+                el.className = (i === current) ? "slide-frame slide-active absolute w-full max-w-5xl h-full flex flex-col justify-center items-center" : "slide-frame absolute w-full max-w-5xl h-full flex flex-col justify-center items-center";
+                if(i < current) el.classList.add('slide-hide-prev');
+                if(i > current) el.classList.add('slide-hide-next');
+            }
+            document.getElementById('slide-num').innerText = `${current.toString().padStart(2, '0')} / ${total.toString().padStart(2, '0')}`;
+            document.getElementById('progress').style.width = `${(current / total) * 100}%`;
+            walkStep = 0; // Reset step
+            resetWalkthrough();
+        }
+
+        function resetWalkthrough() {
+            document.querySelectorAll('.code-line').forEach(l => l.classList.remove('focused'));
+            document.querySelectorAll('.code-tip').forEach(t => t.classList.remove('active'));
+        }
+
+        function handleWalkthrough(slideIdx) {
+            const lines = document.querySelectorAll(`#slide-${slideIdx} .code-line`);
+            const tip = document.getElementById(`tip-${slideIdx}`);
+            walkStep++;
+            lines.forEach((l, i) => {
+                if(i + 1 === walkStep) {
+                    l.classList.add('focused');
+                    tip.innerText = l.getAttribute('data-tip');
+                    tip.classList.add('active');
                 } else {
-                    targetFrame.className = "slide-frame slide-hide-next absolute w-full max-w-5xl h-full flex flex-col justify-center items-center";
+                    l.classList.remove('focused');
                 }
-            }
-            document.getElementById('indicator').innerText = `${currentSlide.toString().padStart(2, '0')} / ${totalSlides.toString().padStart(2, '0')}`;
-            
-            // Xóa focus khi chuyển sang slide mới (về Step 0)
-            resetCodeFocus(currentSlide);
+            });
         }
 
-        // Logic xử lý Highlight Code từng dòng
-        function updateCodeFocus(slideIdx, stepIdx) {
-            const container = document.getElementById(`code-content-${slideIdx}`);
-            const lines = container.querySelectorAll('.code-line');
-            const tooltips = container.querySelectorAll('.code-explanation');
-            
-            if (stepIdx === 0) {
-                // Step 0: Hiện toàn bộ code, không làm mờ, không hiện tooltip
-                container.classList.remove('has-focus');
-                lines.forEach(l => l.classList.remove('focused'));
-                tooltips.forEach(t => t.classList.remove('active'));
-            } else {
-                // Bật chế độ làm mờ
-                container.classList.add('has-focus');
-                
-                // Quét từng dòng code, nếu khớp step thì sáng, ko thì mờ
-                lines.forEach(l => {
-                    if (parseInt(l.getAttribute('data-step')) === stepIdx) {
-                        l.classList.add('focused');
-                    } else {
-                        l.classList.remove('focused');
-                    }
-                });
-
-                // Xử lý Tooltip
-                tooltips.forEach(t => t.classList.remove('active'));
-                const targetTooltip = document.getElementById(`exp-${slideIdx}-${stepIdx}`);
-                if (targetTooltip) targetTooltip.classList.add('active');
+        function next() {
+            if (walkthroughSlides[current] && walkStep < walkthroughSlides[current].max) {
+                handleWalkthrough(current);
+            } else if (current < total) {
+                current++;
+                updateSlide();
             }
         }
 
-        function resetCodeFocus(slideIdx) {
-            codeSteps[slideIdx].currentStep = 0;
-            updateCodeFocus(slideIdx, 0);
-        }
-
-        // Logic chuyển tiếp kết hợp (Nếu trong slide có Step code thì chạy Step trước, hết Step mới chuyển Slide)
-        function moveNext() { 
-            const state = codeSteps[currentSlide];
-            if (state.currentStep < state.maxStep) {
-                // Đang trong slide có code, chạy hiệu ứng focus tiếp theo
-                state.currentStep++;
-                updateCodeFocus(currentSlide, state.currentStep);
-            } else {
-                // Đã chạy hết các step của code, chuyển sang slide tiếp theo
-                if(currentSlide < totalSlides) { 
-                    currentSlide++; 
-                    renderSlidePosition(); 
-                } 
-            }
-        }
-        function movePrev() { 
-            const state = codeSteps[currentSlide];
-            if (state.currentStep > 0) {
-                // Đang trong slide có code, lùi hiệu ứng focus
-                state.currentStep--;
-                updateCodeFocus(currentSlide, state.currentStep);
-            } else {
-                // Lùi slide
-                if(currentSlide > 1) { 
-                    currentSlide--; 
-                    renderSlidePosition(); 
-                    // Tự động nhảy đến step cuối của slide trước đó để mạch chảy mượt mà
-                    codeSteps[currentSlide].currentStep = codeSteps[currentSlide].maxStep;
-                    updateCodeFocus(currentSlide, codeSteps[currentSlide].maxStep);
-                } 
+        function prev() {
+            if (current > 1) {
+                current--;
+                updateSlide();
             }
         }
 
-        document.addEventListener('keydown', (event) => {
-            if(event.key === 'ArrowRight' || event.key === 'Space') moveNext();
-            if(event.key === 'ArrowLeft') movePrev();
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight' || e.key === 'Space') next();
+            if(e.key === 'ArrowLeft') prev();
         });
 
-        // ================= CANVAS MẠNG LƯỚI HẠT NHỎ =================
-        const meshCanvas = document.getElementById('meshCanvas');
-        const meshCtx = meshCanvas.getContext('2d');
-        let meshParticles = [];
+        // CANVAS MESH LOGIC
+        const canvas = document.getElementById('meshCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
         function initMesh() {
-            meshCanvas.width = window.innerWidth;
-            meshCanvas.height = window.innerHeight;
-            meshParticles = [];
-            for (let i = 0; i < 25; i++) {
-                meshParticles.push({
-                    x: Math.random() * meshCanvas.width,
-                    y: Math.random() * meshCanvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    r: Math.random() * 1.5 + 1
-                });
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 40; i++) {
+                particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5 });
             }
         }
         window.addEventListener('resize', initMesh);
-        function loopMesh() {
-            meshCtx.clearRect(0, 0, meshCanvas.width, meshCanvas.height);
-            meshParticles.forEach((p, idx) => {
+        function loop() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particles.forEach((p, i) => {
                 p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > meshCanvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > meshCanvas.height) p.vy *= -1;
-                
-                meshCtx.fillStyle = 'rgba(59, 130, 246, 0.2)';
-                meshCtx.beginPath(); meshCtx.arc(p.x, p.y, p.r, 0, Math.PI*2); meshCtx.fill();
+                if(p.x<0 || p.x>canvas.width) p.vx*=-1; if(p.y<0 || p.y>canvas.height) p.vy*=-1;
+                ctx.fillStyle = 'rgba(99, 102, 241, 0.2)'; ctx.beginPath(); ctx.arc(p.x,p.y,1.5,0,Math.PI*2); ctx.fill();
+                for(let j=i+1; j<particles.length; j++) {
+                    const d = Math.hypot(p.x-particles[j].x, p.y-particles[j].y);
+                    if(d<150) { ctx.strokeStyle=`rgba(255,255,255,${0.05*(1-d/150)})`; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); }
+                }
             });
-            requestAnimationFrame(loopMesh);
+            requestAnimationFrame(loop);
         }
-        initMesh();
-        loopMesh();
+        initMesh(); loop();
     </script>
 </body>
 </html>
