@@ -238,29 +238,50 @@
         <!-- ========================================== -->
         <!-- SLIDE 5: DATABASE SCHEMA -->
         <!-- ========================================== -->
+                <!-- ========================================== -->
+        <!-- SLIDE 5: DATABASE SCHEMA (ĐÃ NÂNG CẤP) -->
+        <!-- ========================================== -->
         <div class="slide" id="slide-5">
-            <h2 class="slide-title">Thiết Kế CSDL NoSQL (Firestore)</h2>
-            <div class="grid-3">
-                <div class="glass-box" style="border-top: 5px solid var(--primary);">
-                    <h3 class="text-primary">users</h3>
-                    <p style="font-family: 'JetBrains Mono'; font-size: 16px; margin:0; color: var(--text-main);">
-                        <span class="s-kw" style="color:var(--secondary)">uid</span> (PK)<br>hoTen: string<br>email: string<br>role: "admin"
-                    </p>
+            <h2 class="slide-title">Thiết Kế CSDL NoSQL (Tối Ưu Read-Heavy)</h2>
+            <div class="grid-2" style="align-items: start; gap: 40px;">
+                <div>
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">Kỹ thuật Lồng Dữ Liệu (Data Embedding)</h3>
+                    <p style="font-size: 18px; margin-bottom: 20px;">Thay vì phải dùng lệnh <code style="background:#e2e8f0; padding:3px 8px; border-radius:6px; font-size:15px; color:#ef4444; font-weight:bold; font-family:'JetBrains Mono'">JOIN</code> qua nhiều bảng phụ phức tạp như SQL truyền thống, hệ thống áp dụng kỹ thuật <strong>Array of Maps</strong> để nhúng trực tiếp các tùy chọn Add-ons vào ngay trong Document của Tour.</p>
+                    
+                    <ul class="check-list">
+                        <li><i class="fa-solid fa-bolt text-secondary"></i> <strong>Single Query:</strong> Chỉ cần đúng 1 lệnh truy vấn duy nhất để kéo toàn bộ dữ liệu (Thông tin Tour + Bảng giá Khách sạn + Xe).</li>
+                        <li><i class="fa-solid fa-gauge-high text-accent"></i> <strong>Zero-latency:</strong> Khách hàng bấm chọn thay đổi dịch vụ trên giao diện, giá tiền nhảy lập tức không có độ trễ tải trang.</li>
+                        <li><i class="fa-solid fa-database text-primary"></i> <strong>Mở rộng vô hạn:</strong> Lược đồ Schema linh hoạt, dễ dàng thêm mới các trường dữ liệu (vd: Giờ bay, Bữa ăn) mà không làm vỡ cấu trúc cũ.</li>
+                    </ul>
                 </div>
-                <div class="glass-box" style="border-top: 5px solid var(--accent);">
-                    <h3 class="text-accent">tours</h3>
-                    <p style="font-family: 'JetBrains Mono'; font-size: 16px; margin:0; color: var(--text-main);">
-                        <span class="s-kw" style="color:var(--secondary)">id</span> (PK)<br>tenTour, giaTour<br>tuyChonHotel: []<br>tuyChonXe: []
-                    </p>
-                </div>
-                <div class="glass-box" style="border-top: 5px solid var(--secondary);">
-                    <h3 class="text-secondary">bookings</h3>
-                    <p style="font-family: 'JetBrains Mono'; font-size: 16px; margin:0; color: var(--text-main);">
-                        <span class="s-kw" style="color:var(--secondary)">id</span> (PK)<br>email_khach (FK)<br>chiTiet: JSON<br>trangThai
-                    </p>
+                
+                <div class="glass-box" style="padding: 0; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
+                    <div style="background: #f8fafc; padding: 12px 20px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 8px;">
+                        <div style="width:12px; height:12px; border-radius:50%; background:#ff5f56;"></div>
+                        <div style="width:12px; height:12px; border-radius:50%; background:#ffbd2e;"></div>
+                        <div style="width:12px; height:12px; border-radius:50%; background:#27c93f;"></div>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-sub); margin-left: 10px; font-weight: bold;">tours / document_id (JSON Tree)</span>
+                    </div>
+                    <div style="padding: 20px; background: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 15px; line-height: 1.6; overflow-x: auto;">
+<pre style="margin:0;"><span style="color:#0369a1; font-weight:bold;">"DN-HA-03"</span>: {
+  <span style="color:#0369a1; font-weight:bold;">"tenTour"</span>: <span style="color:#b91c1c;">"Đà Nẵng - Hội An 3N2Đ"</span>,
+  <span style="color:#0369a1; font-weight:bold;">"giaBase"</span>: <span style="color:#0ea5e9; font-weight:bold;">3500000</span>,
+  <span style="color:#0369a1; font-weight:bold;">"toaDo"</span>: [<span style="color:#0ea5e9; font-weight:bold;">16.0544</span>, <span style="color:#0ea5e9; font-weight:bold;">108.2021</span>],
+  <span style="color:#94a3b8; font-style:italic;">// Data Embedding: Mảng tùy chọn Khách sạn</span>
+  <span style="color:#0369a1; font-weight:bold;">"tuyChonHotel"</span>: [
+    { <span style="color:#0369a1;">"ten"</span>: <span style="color:#b91c1c;">"Mường Thanh 5*"</span>, <span style="color:#0369a1;">"phuThu"</span>: <span style="color:#0ea5e9; font-weight:bold;">1200000</span> },
+    { <span style="color:#0369a1;">"ten"</span>: <span style="color:#b91c1c;">"A La Carte 4*"</span>, <span style="color:#0369a1;">"phuThu"</span>: <span style="color:#0ea5e9; font-weight:bold;">800000</span> }
+  ],
+  <span style="color:#94a3b8; font-style:italic;">// Data Embedding: Mảng tùy chọn Xe</span>
+  <span style="color:#0369a1; font-weight:bold;">"tuyChonXe"</span>: [
+    { <span style="color:#0369a1;">"ten"</span>: <span style="color:#b91c1c;">"Limousine VIP"</span>, <span style="color:#0369a1;">"phuThu"</span>: <span style="color:#0ea5e9; font-weight:bold;">300000</span> }
+  ]
+}</pre>
+                    </div>
                 </div>
             </div>
         </div>
+
 
         <!-- ========================================== -->
         <!-- SLIDE 6: CODE 1 - AUTH (CÓ HIỆU ỨNG) -->
