@@ -71,7 +71,6 @@
             background-color: #f8fafc; display: flex; align-items: center; justify-content: center; position: relative;
         }
         .screenshot-frame img { width: 100%; height: 100%; object-fit: cover; }
-        .placeholder-text { position: absolute; text-align: center; color: #94a3b8; font-weight: bold; font-family: monospace; font-size: 16px;}
 
         .bleed-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; padding: 0; gap: 40px; height: 100%; }
         .bleed-content { padding: 60px; display: flex; flex-direction: column; justify-content: center; z-index: 2; }
@@ -107,19 +106,6 @@
 
         .s-kw { color: #ff7b72; } .s-fn { color: #d2a8ff; } .s-str { color: #a5d6ff; } .s-var { color: #79c0ff; } .s-cm { color: #8b949e; font-style: italic; }
 
-        /* Hộp thoại gợi ý thuyết trình */
-        .speaker-cue {
-            position: absolute; bottom: 30px; right: 30px;
-            background: var(--card-bg);
-            border-left: 4px solid var(--primary);
-            padding: 12px 20px; border-radius: 8px;
-            max-width: 450px; z-index: 50;
-            box-shadow: var(--shadow-soft);
-            backdrop-filter: blur(10px);
-        }
-        .speaker-cue strong { color: var(--primary); display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 12px; font-family: 'Poppins', sans-serif;}
-        .speaker-cue p { font-size: 14px; color: var(--text-sub); margin: 0; line-height: 1.4; }
-
         .controls {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 20px; align-items: center; z-index: 100;
@@ -151,7 +137,6 @@
                     <div><p style="font-size:13px; font-weight:bold; text-transform:uppercase; color: var(--text-sub);">Cơ sở đào tạo</p><h3 style="font-size:18px; margin-top:5px; color:var(--text-main);">Khoa Công Nghệ Thông Tin</h3></div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Giới thiệu tên đề tài và thành viên. Nhấn mạnh cụm "Hệ sinh thái" và "AI".</p></div>
         </div>
 
         
@@ -160,9 +145,9 @@
             <div class="grid-2">
                 <div>
                     <ul class="check-list">
-                        <li><i class="fa-solid fa-triangle-exclamation text-secondary"></i> <strong>Khủng hoảng thông tin:</strong> Khách mất quá nhiều thời gian nhảy tab giữa các trang tìm tour, khách sạn rời rạc.</li>
-                        <li><i class="fa-solid fa-server text-primary"></i> <strong>Bottleneck <span class="vi-note">(Nghẽn cổ chai máy chủ)</span>:</strong> Kiến trúc Web cũ (Client-Server) dễ sập nguồn lúc cao điểm mùa du lịch.</li>
-                        <li><i class="fa-solid fa-robot text-accent"></i> <strong>Thiếu cá nhân hóa:</strong> Các form tìm kiếm hiện nay cứng nhắc, không thể tư vấn theo ngữ cảnh (Context) của từng khách hàng.</li>
+                        <li><i class="fa-solid fa-triangle-exclamation text-secondary"></i> <strong>Khủng hoảng thông tin:</strong> Khách mất quá nhiều thời gian "nhảy tab" giữa các trang tìm tour, khách sạn rời rạc.</li>
+                        <li><i class="fa-solid fa-server text-primary"></i> <strong>Bottleneck <span class="vi-note">(Nghẽn cổ chai)</span>:</strong> Kiến trúc Web cũ (Client-Server) dễ sập nguồn do quá tải server lúc cao điểm mùa du lịch.</li>
+                        <li><i class="fa-solid fa-robot text-accent"></i> <strong>Thiếu cá nhân hóa:</strong> Các form tìm kiếm hiện nay cứng nhắc, chưa thể tư vấn linh hoạt theo ngữ cảnh của từng khách hàng.</li>
                     </ul>
                 </div>
                 <div>
@@ -171,7 +156,6 @@
                     </div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Giải thích Bottleneck là nghẽn cổ chai khiến web hay sập dịp lễ. Khách nhảy tab quá nhiều.</p></div>
         </div>
 
         
@@ -183,15 +167,14 @@
                 <div class="grid-2 text-left" style="gap: 30px;">
                     <div class="glass-box">
                         <h3 class="text-primary"><i class="fa-solid fa-cloud"></i> Serverless BaaS <br><span class="vi-note">(Kiến trúc phi máy chủ)</span></h3>
-                        <p style="font-size: 16px;">Loại bỏ máy chủ backend vật lý. Client giao tiếp trực tiếp với Database qua Google Cloud, tính năng <strong>Auto-scaling</strong> <span class="vi-note">(Tự động co giãn băng thông)</span> triệt tiêu tình trạng tắc nghẽn mạng.</p>
+                        <p style="font-size: 16px;">Loại bỏ máy chủ backend vật lý. Ứng dụng tính năng <strong>Auto-scaling</strong> <span class="vi-note">(Tự động co giãn băng thông)</span> của Google Cloud để giải quyết triệt để lỗi sập web.</p>
                     </div>
                     <div class="glass-box">
-                        <h3 class="text-accent"><i class="fa-solid fa-brain"></i> Data Embedding <br><span class="vi-note">(Kỹ thuật lồng dữ liệu)</span></h3>
-                        <p style="font-size: 16px;">Nhúng các dịch vụ Add-ons vào Tour để tải dữ liệu chỉ trong 1 lần truy xuất. Tích hợp AI <strong>NLP</strong> <span class="vi-note">(Xử lý ngôn ngữ tự nhiên)</span> để chốt Sales.</p>
+                        <h3 class="text-accent"><i class="fa-solid fa-brain"></i> Data Embedding & NLP <br><span class="vi-note">(Xử lý dữ liệu tối ưu)</span></h3>
+                        <p style="font-size: 16px;">Nhúng trực tiếp các dịch vụ (KS, Xe) vào Tour để tăng tốc truy xuất. Đồng thời tích hợp <strong>AI NLP</strong> <span class="vi-note">(Xử lý ngôn ngữ tự nhiên)</span> để tăng tỷ lệ chốt Sales.</p>
                     </div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Serverless = Không quản server, Google lo hạ tầng. Auto-scaling = Tự mở rộng theo lượng khách.</p></div>
         </div>
 
         
@@ -203,7 +186,6 @@
                 <div class="glass-box"><i class="fa-solid fa-chart-line" style="font-size:50px; color:var(--primary); margin-bottom:15px;"></i><br><h3>Data Viz <span class="vi-note">(Trực quan hóa)</span></h3><p style="font-size:14px;">Chart.js Canvas</p></div>
                 <div class="glass-box"><i class="fa-solid fa-map-location-dot" style="font-size:50px; color:var(--accent); margin-bottom:15px;"></i><br><h3>GIS <span class="vi-note">(Bản đồ số)</span></h3><p style="font-size:14px;">Leaflet.js Mapping</p></div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Liệt kê Tech Stack: Tailwind (Giao diện), Firestore (Cơ sở dữ liệu), GIS (Bản đồ số).</p></div>
         </div>
 
         
@@ -213,8 +195,8 @@
                 <div>
                     <h3 class="text-primary">SQL Truyền Thống vs NoSQL</h3>
                     <ul class="check-list">
-                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> <strong>CSDL Quan hệ (SQL):</strong> Phải tách rời Bảng. Khi cần lấy dữ liệu Tour, hệ thống phải chạy lệnh <code>JOIN</code> liên tục gây chậm trễ.</li>
-                        <li><i class="fa-solid fa-check text-accent"></i> <strong>Mô hình NoSQL:</strong> Dùng <strong>Data Embedding</strong> <span class="vi-note">(Kỹ thuật lồng dữ liệu)</span>. Mảng Khách sạn & Xe được nhúng thẳng vào file JSON của Tour.</li>
+                        <li><i class="fa-solid fa-xmark" style="color: #ef4444;"></i> <strong>CSDL Quan hệ (SQL):</strong> Phải tách rời Bảng. Khi cần lấy dữ liệu tổng hợp, hệ thống phải chạy lệnh <code>JOIN</code> liên tục gây chậm trễ.</li>
+                        <li><i class="fa-solid fa-check text-accent"></i> <strong>Mô hình NoSQL:</strong> Dùng <strong>Data Embedding</strong> <span class="vi-note">(Kỹ thuật lồng dữ liệu)</span>. Mảng Khách sạn & Xe được nhúng thẳng vào file JSON gốc.</li>
                         <li><i class="fa-solid fa-bolt text-secondary"></i> <strong>Single Query <span class="vi-note">(Truy vấn duy nhất)</span>:</strong> Gọi DB 1 lần là có đủ dữ liệu. Giúp hệ thống đạt mức <strong>Low-latency</strong> <span class="vi-note">(Độ trễ cực thấp)</span>.</li>
                     </ul>
                 </div>
@@ -224,7 +206,7 @@
 <pre style="margin:0;"><span style="color:#2563eb;">"Tour_DaNang"</span>: {
   <span style="color:#2563eb;">"tenTour"</span>: <span style="color:#b91c1c;">"Đà Nẵng - Hội An 3N2Đ"</span>,
   <span style="color:#2563eb;">"giaGoc"</span>: <span style="color:#059669;">3500000</span>,
-  <span style="color:#64748b; font-style:italic;">// Mảng tùy chọn được lồng trực tiếp</span>
+  <span style="color:#64748b; font-style:italic;">// Mảng tùy chọn được lồng trực tiếp (Embedding)</span>
   <span style="color:#ea580c; font-weight:bold;">"tuyChonHotel"</span>: [
     { <span style="color:#2563eb;">"ten"</span>: <span style="color:#b91c1c;">"Mường Thanh 5*"</span>, <span style="color:#2563eb;">"gia"</span>: <span style="color:#059669;">1200000</span> },
     { <span style="color:#2563eb;">"ten"</span>: <span style="color:#b91c1c;">"A La Carte 4*"</span>, <span style="color:#2563eb;">"gia"</span>: <span style="color:#059669;">800000</span> }
@@ -233,7 +215,6 @@
                     </div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Điểm sáng: Nhấn mạnh "Low-latency". Kỹ thuật nhúng dữ liệu giúp gọi 1 lệnh là lấy được tất cả.</p></div>
         </div>
 
         
@@ -253,13 +234,12 @@
                     </div>
                 </div>
                 <div class="code-notes-area">
-                    <div class="code-note" id="note-6-1"><h4>1. Lắng nghe ngầm Real-time</h4><p>Ủy quyền cho Firebase tự mã hóa Token. Hàm bắt tín hiệu ngay khi phiên đăng nhập hết hạn hoặc thay đổi.</p></div>
-                    <div class="code-note" id="note-6-2"><h4>2. Chốt chặn vòng ngoài</h4><p>Ngay tại trình duyệt, nếu phát hiện Token rỗng, lập tức điều hướng về trang đăng nhập.</p></div>
-                    <div class="code-note" id="note-6-3"><h4>3. Đối chiếu Role (Vai trò)</h4><p>Dùng UID an toàn chọc vào Collection `users` để kiểm tra phân quyền (Authorization).</p></div>
-                    <div class="code-note" id="note-6-4"><h4>4. Khóa quyền Admin</h4><p>Chỉ khi biến `role` khớp với chuỗi "admin" thì giao diện quản trị mới được phép Render (Hiển thị).</p></div>
+                    <div class="code-note" id="note-6-1"><h4>1. Auth Observer <span class="vi-note">(Lắng nghe Real-time)</span></h4><p>Ủy quyền cho Firebase mã hóa Token. Hàm liên tục bắt tín hiệu ngay khi phiên đăng nhập hết hạn hoặc thay đổi.</p></div>
+                    <div class="code-note" id="note-6-2"><h4>2. Chốt chặn vòng ngoài</h4><p>Ngay tại trình duyệt, nếu phát hiện Token rỗng, lập tức điều hướng khách về trang đăng nhập.</p></div>
+                    <div class="code-note" id="note-6-3"><h4>3. Đối chiếu Vai trò <span class="vi-note">(Authorization)</span></h4><p>Dùng UID an toàn chọc vào Collection `users` để kiểm tra quyền hạn thực sự của tài khoản.</p></div>
+                    <div class="code-note" id="note-6-4"><h4>4. Khóa quyền Admin</h4><p>Chỉ khi biến `role` khớp với chuỗi "admin" thì giao diện quản trị (Dashboard) mới được phép Render.</p></div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Giải thích Route Guard là "Người gác cổng" trình duyệt. Observer theo dõi ngầm phiên đăng nhập.</p></div>
         </div>
 
         
@@ -267,12 +247,12 @@
             <div class="bleed-layout">
                 <div class="bleed-content">
                     <h2 class="slide-title" style="font-size:30px;">Luồng SPA <span class="vi-note" style="font-weight:700;">(Single Page Application)</span></h2>
-                    <p>Ứng dụng web hoạt động trên một trang duy nhất, chuyển đổi mượt mà không cần tải lại toàn bộ trang.</p>
+                    <p>Ứng dụng web hoạt động trên một trang duy nhất, dữ liệu chuyển đổi mượt mà không cần chớp đen tải lại trang.</p>
                     <ul class="check-list" style="margin-top: 20px;">
-                        <li><i class="fa-solid fa-arrow-right"></i> Xem và Chọn Tour.</li>
-                        <li><i class="fa-solid fa-arrow-right"></i> Cá nhân hóa Add-ons (Chọn KS, Xe).</li>
-                        <li><i class="fa-solid fa-arrow-right"></i> Tính tiền Giỏ hàng <strong>Real-time</strong> <span class="vi-note">(Tức thời)</span>.</li>
-                        <li><i class="fa-solid fa-arrow-right"></i> Đóng gói Checkout & QRCode.</li>
+                        <li><i class="fa-solid fa-arrow-right"></i> Xem và Lựa chọn Tour.</li>
+                        <li><i class="fa-solid fa-arrow-right"></i> Cá nhân hóa các Add-ons (Chọn KS, Xe).</li>
+                        <li><i class="fa-solid fa-arrow-right"></i> Cập nhật tổng tiền Giỏ hàng <strong>Real-time</strong>.</li>
+                        <li><i class="fa-solid fa-arrow-right"></i> Đóng gói Checkout & Hiện QRCode.</li>
                     </ul>
                 </div>
                 <div class="bleed-image">
@@ -281,7 +261,6 @@
                     </div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Giải thích SPA: Web 1 trang, đổi giá tiền tức thời mà không bị chớp đen màn hình.</p></div>
         </div>
 
         
@@ -304,12 +283,11 @@
                     </div>
                 </div>
                 <div class="code-notes-area">
-                    <div class="code-note" id="note-8-1"><h4>1. Khóa Variant Độc Bản</h4><p>Bảo vệ giỏ hàng. Chuỗi ID nối 3 yếu tố đảm bảo một gói Option (Khách sạn A, Xe B) là duy nhất, không bị ghi đè nhầm.</p></div>
-                    <div class="code-note" id="note-8-2"><h4>2. Client-side Storage <span class="vi-note">(Lưu trữ cục bộ)</span></h4><p>Thao tác hoàn toàn trên bộ nhớ đệm (LocalStorage) thay vì Database, giúp thay đổi giỏ hàng tức thời không tốn băng thông.</p></div>
-                    <div class="code-note" id="note-8-3"><h4>3. Đóng gói JSON</h4><p>Kiểm tra tồn tại. Nếu chưa có thì đẩy Object vào mảng và lưu ngược lại bộ nhớ trình duyệt.</p></div>
+                    <div class="code-note" id="note-8-1"><h4>1. Thuật toán Variant ID <span class="vi-note">(Mã biến thể độc bản)</span></h4><p>Nối 3 ID (Tour, Hotel, Car) để đảm bảo một gói Option là duy nhất, ngăn chặn lỗi ghi đè sản phẩm trong giỏ hàng.</p></div>
+                    <div class="code-note" id="note-8-2"><h4>2. Client-side Storage <span class="vi-note">(Bộ nhớ trình duyệt)</span></h4><p>Thao tác thêm/bớt giỏ hàng được xử lý bằng LocalStorage thay vì đẩy lên Database, giúp tránh làm quá tải máy chủ.</p></div>
+                    <div class="code-note" id="note-8-3"><h4>3. Đóng gói JSON</h4><p>Chỉ đồng bộ trạng thái (Sync State) đẩy toàn bộ mảng dữ liệu này lên Cloud ở bước thanh toán cuối cùng.</p></div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Dùng bộ nhớ trình duyệt để giỏ hàng cực mượt. Variant ID phân biệt các gói tour.</p></div>
         </div>
 
         
@@ -330,11 +308,10 @@
                 </div>
                 <div class="code-notes-area">
                     <div class="code-note" id="note-9-1"><h4>1. Bắt sự kiện Gõ phím</h4><p>Sự kiện kích hoạt ngay khi gõ từng chữ. Chuẩn hóa về chữ thường để so sánh không phân biệt hoa/thường.</p></div>
-                    <div class="code-note" id="note-9-2"><h4>2. Duyệt mảng nội bộ</h4><p>Dùng thuật toán mảng JS lọc dữ liệu đã được tải sẵn ở bộ nhớ đệm thay vì gửi yêu cầu (Request) lên Server liên tục.</p></div>
-                    <div class="code-note" id="note-9-3"><h4>3. Dynamic UI Render <span class="vi-note">(Cập nhật giao diện động)</span></h4><p>Trình duyệt tự động xóa các Tour không khớp và giữ lại Tour đúng từ khóa ngay lập tức.</p></div>
+                    <div class="code-note" id="note-9-2"><h4>2. Duyệt mảng nội bộ (No API Request)</h4><p>Lọc dữ liệu đã được tải sẵn ở bộ nhớ đệm thay vì gửi yêu cầu (Request) lên Server liên tục mỗi khi người dùng gõ phím.</p></div>
+                    <div class="code-note" id="note-9-3"><h4>3. Dynamic UI Render <span class="vi-note">(Cập nhật giao diện động)</span></h4><p>Trình duyệt tự động xóa các Tour không khớp và cập nhật Tour đúng từ khóa ngay lập tức trên màn hình.</p></div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Dynamic Render: Trình duyệt lọc ngay khi gõ phím mà không cần gửi lệnh lên máy chủ.</p></div>
         </div>
 
         
@@ -345,18 +322,17 @@
                     <div class="screenshot-frame" style="aspect-ratio: 4/3;">
                         <img src="https://placehold.co/800x600/e2e8f0/475569?text=CHÈN+ẢNH+TRANG+CẨM+NANG+VÀO+ĐÂY" alt="Trang Blog">
                     </div>
-                    <h3 style="margin-top: 15px; color: var(--secondary);">CMS <span class="vi-note">(Hệ thống quản trị nội dung)</span></h3>
-                    <p style="font-size: 16px;">Tính năng viết Blog cho phép Admin đăng bài chia sẻ, giúp tăng cường <strong>SEO</strong> <span class="vi-note">(Tối ưu công cụ tìm kiếm)</span>.</p>
+                    <h3 style="margin-top: 15px; color: var(--secondary);">CMS <span class="vi-note">(Quản trị nội dung)</span></h3>
+                    <p style="font-size: 16px;">Xây dựng chuyên trang Blog để chia sẻ kinh nghiệm du lịch, gia tăng đáng kể điểm <strong>SEO Tracking</strong> trên Google.</p>
                 </div>
                 <div>
                     <div class="screenshot-frame" style="aspect-ratio: 4/3;">
                         <img src="https://placehold.co/800x600/e2e8f0/475569?text=CHÈN+ẢNH+TRANG+BẢN+ĐỒ+VÀO+ĐÂY" alt="Bản đồ">
                     </div>
-                    <h3 style="margin-top: 15px; color: var(--accent);">GIS <span class="vi-note">(Hệ thống thông tin địa lý)</span></h3>
-                    <p style="font-size: 16px;">Tích hợp thư viện Leaflet.js tự động <strong>Plotting</strong> <span class="vi-note">(Ghim đánh dấu)</span> Marker theo tọa độ từ Firestore.</p>
+                    <h3 style="margin-top: 15px; color: var(--accent);">GIS <span class="vi-note">(Bản đồ địa lý)</span></h3>
+                    <p style="font-size: 16px;">Sử dụng Leaflet.js để thực hiện <strong>Plotting</strong> <span class="vi-note">(Ghim tọa độ vĩ độ/kinh độ)</span> tự động lấy từ Database lên màn hình thực.</p>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>CMS dùng viết bài tăng SEO Google. GIS dùng để ghim tọa độ thực tế lên bản đồ.</p></div>
         </div>
 
         
@@ -379,12 +355,11 @@
                     </div>
                 </div>
                 <div class="code-notes-area">
-                    <div class="code-note" id="note-11-1"><h4>1. Context Injection <span class="vi-note">(Bơm ngữ cảnh thực tế)</span></h4><p>Khắc phục nhược điểm AI "bịa chuyện" bằng cách tự động tải bảng giá tour mới nhất nạp vào bộ nhớ Chatbot.</p></div>
-                    <div class="code-note" id="note-11-2"><h4>2. Prompt Engineering <span class="vi-note">(Kỹ thuật tinh chỉnh câu lệnh)</span></h4><p>Ghép nối Vai trò, Dữ liệu và Câu hỏi của khách thành một cấu trúc chuẩn trước khi gửi đi.</p></div>
-                    <div class="code-note" id="note-11-3"><h4>3. Cập nhật DOM</h4><p>Chuyển đổi kết quả JSON thành văn bản và in ra bong bóng chat trên giao diện.</p></div>
+                    <div class="code-note" id="note-11-1"><h4>1. Context Injection <span class="vi-note">(Bơm ngữ cảnh thực tế)</span></h4><p>Khắc phục hiện tượng <strong>Hallucination</strong> (AI bịa chuyện) bằng cách tự động nạp bảng giá tour từ Database vào bộ nhớ AI.</p></div>
+                    <div class="code-note" id="note-11-2"><h4>2. Prompt Engineering <span class="vi-note">(Kỹ thuật tinh chỉnh câu lệnh)</span></h4><p>Ép AI đóng vai trò CSKH, từ chối trả lời các câu hỏi ngoài lề và chỉ tư vấn dựa trên cấu trúc câu lệnh được nhúng sẵn.</p></div>
+                    <div class="code-note" id="note-11-3"><h4>3. Cập nhật DOM</h4><p>Chuyển đổi kết quả JSON thành định dạng văn bản và in ra bong bóng chat trên giao diện người dùng.</p></div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Context Injection (Bơm ngữ cảnh) giúp AI chỉ tư vấn dựa trên bảng giá thực tế, không bị ảo giác.</p></div>
         </div>
 
         
@@ -392,11 +367,11 @@
             <h2 class="slide-title">Thanh toán Chốt đơn 4.0</h2>
             <div class="grid-2">
                 <div>
-                    <h3 class="text-primary">Đóng gói Firestore</h3>
-                    <p>Khách bấm Đặt Tour -> Hệ thống gộp thông tin người dùng + Mảng Giỏ hàng + Cờ trạng thái "Chờ xử lý" thành 1 JSON đẩy lên CSDL.</p>
+                    <h3 class="text-primary">Đóng gói Database Document</h3>
+                    <p>Khách bấm Đặt Tour -> Hệ thống gộp thông tin người dùng, LocalStorage Giỏ hàng và Trạng thái vé thành 1 khối JSON duy nhất đẩy lên Cloud.</p>
                     <br>
-                    <h3 class="text-accent">Mã VietQR Tự Động</h3>
-                    <p>Kết nối API Ngân hàng. Tự sinh hình ảnh mã QRCode chuẩn xác 100% về số tiền và cú pháp chuyển khoản giúp chống thất thoát doanh thu.</p>
+                    <h3 class="text-accent">Mã VietQR Tự Động Động</h3>
+                    <p>Kết nối API Ngân hàng tự động sinh hình ảnh mã QRCode chuẩn xác 100% về <strong>số tiền</strong> và <strong>cú pháp chuyển khoản</strong> giúp chống thất thoát.</p>
                 </div>
                 <div>
                     <div class="screenshot-frame">
@@ -404,7 +379,6 @@
                     </div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Nêu rõ việc đóng gói JSON đẩy lên Cloud. Hệ thống tự động sinh mã VietQR chuẩn xác từng đồng.</p></div>
         </div>
 
         
@@ -417,16 +391,15 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-secondary">BI <span class="vi-note">(Khai thác trí tuệ doanh nghiệp)</span></h3>
-                    <p>Sử dụng thư viện <strong>Chart.js</strong> vẽ biểu đồ động trực tiếp trên trình duyệt để đánh giá hiệu quả kinh doanh.</p>
+                    <h3 class="text-secondary">Hệ thống BI <span class="vi-note">(Khai thác trí tuệ doanh nghiệp)</span></h3>
+                    <p>Tích hợp thư viện <strong>Chart.js</strong> vẽ biểu đồ trực quan, giúp ban quản trị đánh giá ngay hiệu quả kinh doanh.</p>
                     <ul class="check-list" style="margin-top: 20px;">
-                        <li><i class="fa-solid fa-chart-pie"></i> Biểu đồ tỷ lệ trạng thái Đơn hàng.</li>
-                        <li><i class="fa-solid fa-chart-column"></i> Biểu đồ doanh thu lũy kế.</li>
-                        <li><i class="fa-solid fa-clipboard-check"></i> Cập nhật trạng thái duyệt đơn nhanh gọn.</li>
+                        <li><i class="fa-solid fa-chart-pie"></i> Biểu đồ tỷ lệ trạng thái Đơn hàng (Thành công/Hủy).</li>
+                        <li><i class="fa-solid fa-chart-column"></i> Biểu đồ cột tổng hợp doanh thu lũy kế.</li>
+                        <li><i class="fa-solid fa-clipboard-check"></i> Cập nhật trạng thái duyệt đơn nhanh gọn 1 click.</li>
                     </ul>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>BI: Dùng Chart.js vẽ biểu đồ báo cáo doanh thu động ngay trên màn hình.</p></div>
         </div>
 
         
@@ -447,12 +420,11 @@
                     </div>
                 </div>
                 <div class="code-notes-area">
-                    <div class="code-note" id="note-14-1"><h4>1. Truy vấn an toàn</h4><p>Dùng `where` filter chặn tải thừa dữ liệu. Máy khách chỉ được phép nghe đơn hàng thuộc Email của mình.</p></div>
-                    <div class="code-note" id="note-14-2"><h4>2. Từ bỏ Client-Pull <span class="vi-note">(Tự tải lại)</span></h4><p>Thay vì bắt Khách bấm F5 tải lại trang. Hàm `onSnapshot` tạo ống kết nối qua giao thức gRPC.</p></div>
-                    <div class="code-note" id="note-14-3"><h4>3. Server-Push <span class="vi-note">(Máy chủ chủ động đẩy dữ liệu)</span></h4><p>Ngay khi Admin duyệt vé, Server chủ động đẩy tín hiệu. Code tự động chạy lại đổi màu thẻ vé thành Xanh.</p></div>
+                    <div class="code-note" id="note-14-1"><h4>1. Truy vấn an toàn</h4><p>Dùng `where` filter chặn tải thừa dữ liệu. Máy khách chỉ được phép nghe các đơn hàng thuộc Email của chính mình.</p></div>
+                    <div class="code-note" id="note-14-2"><h4>2. Từ bỏ Client-Pull <span class="vi-note">(Tự tải lại)</span></h4><p>Thay vì bắt Khách bấm F5, hàm `onSnapshot` mở một luồng kết nối liên tục thông qua giao thức truyền tải <strong>gRPC</strong>.</p></div>
+                    <div class="code-note" id="note-14-3"><h4>3. Server-Push <span class="vi-note">(Máy chủ chủ động đẩy dữ liệu)</span></h4><p>Ngay khi Admin duyệt vé, Server chủ động đẩy tín hiệu. Code tự động chạy lại để đổi màu vé thành "Thành công" trên màn hình khách.</p></div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Hệ thống dùng giao thức gRPC hiện đại. Server-Push: Máy chủ tự đẩy báo cáo, khách không cần F5.</p></div>
         </div>
 
         
@@ -461,12 +433,12 @@
             <div class="grid-2" style="gap: 20px;">
                 <div class="glass-box" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
                     <h3 class="text-primary"><i class="fa-solid fa-gauge-high"></i> Benchmark <span class="vi-note">(Đo lường hiệu năng)</span></h3>
-                    <p style="margin-bottom: 25px;">Nhóm đã tiến hành kiểm thử hệ thống qua công cụ <strong>Google Lighthouse</strong> để đảm bảo tiêu chuẩn Web hiện đại:</p>
+                    <p style="margin-bottom: 25px;">Kiểm thử hệ thống qua công cụ <strong>Google Lighthouse</strong> để đảm bảo tiêu chuẩn Web hiện đại:</p>
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div style="text-align: center; padding: 15px; background: #f0fdf4; border-radius: 12px; border: 1px solid #bbf7d0;">
                             <div style="font-size: 32px; font-weight: 900; color: #16a34a;">98/100</div>
-                            <div style="font-size: 13px; font-weight: bold; color: #15803d;">Performance <br><span class="vi-note">(Hiệu suất tải)</span></div>
+                            <div style="font-size: 13px; font-weight: bold; color: #15803d;">Performance <br><span class="vi-note">(Hiệu suất tải trang)</span></div>
                         </div>
                         <div style="text-align: center; padding: 15px; background: #eff6ff; border-radius: 12px; border: 1px solid #bfdbfe;">
                             <div style="font-size: 32px; font-weight: 900; color: #2563eb;">100/100</div>
@@ -478,15 +450,14 @@
                 <div class="glass-box" style="height: 100%;">
                     <h3 class="text-secondary"><i class="fa-solid fa-chart-line"></i> Chỉ số Vận hành</h3>
                     <ul class="check-list" style="margin-top: 15px;">
-                        <li><i class="fa-solid fa-check-double text-accent"></i> <strong>Hoàn thiện 100%:</strong> Toàn bộ 12 module chức năng cốt lõi (Đặt tour, AI Chat, Admin...).</li>
-                        <li><i class="fa-solid fa-bolt text-secondary"></i> <strong>Sync Latency <span class="vi-note">(Độ trễ đồng bộ)</span>:</strong> Đạt mức <strong>< 0.2s</strong> nhờ giao thức gRPC của Firebase.</li>
-                        <li><i class="fa-solid fa-shield-virus text-primary"></i> <strong>Bảo mật:</strong> 0 lỗ hổng nghiêm trọng nhờ thiết lập <strong>Security Rules</strong> tầng Database.</li>
-                        <li><i class="fa-solid fa-users-viewfinder text-accent"></i> <strong>Responsive:</strong> Hiển thị tốt trên 100% các kích thước màn hình phổ biến.</li>
+                        <li><i class="fa-solid fa-check-double text-accent"></i> <strong>Hoàn thiện 100%:</strong> Đủ 12 module chức năng cốt lõi.</li>
+                        <li><i class="fa-solid fa-bolt text-secondary"></i> <strong>Sync Latency <span class="vi-note">(Độ trễ đồng bộ)</span>:</strong> Đạt mức <strong>< 0.2s</strong>.</li>
+                        <li><i class="fa-solid fa-shield-virus text-primary"></i> <strong>Bảo mật:</strong> 0 lỗ hổng nhờ <strong>Security Rules</strong>.</li>
+                        <li><i class="fa-solid fa-users-viewfinder text-accent"></i> <strong>Responsive:</strong> Hiển thị đa thiết bị.</li>
                     </ul>
                 </div>
             </div>
-            <p style="text-align: center; margin-top: 30px; font-weight: bold; color: var(--primary);" class="vi-note">Hệ thống đã sẵn sàng vận hành trên môi trường thực tế (Production Ready).</p>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>SEO điểm tuyệt đối 100. Độ trễ đồng bộ dưới 0.2 giây. Hệ thống đã đạt chuẩn Production Ready.</p></div>
+            <p style="text-align: center; margin-top: 30px; font-weight: bold; color: var(--primary);" class="vi-note">Hệ thống đã đạt trạng thái Production Ready (Sẵn sàng vận hành thực tế).</p>
         </div>
 
 
@@ -496,14 +467,13 @@
             <div class="grid-2">
                 <div class="glass-box" style="display:flex; align-items:center; gap:25px;">
                     <i class="fa-solid fa-mobile-screen" style="font-size:50px; color:var(--primary);"></i>
-                    <div><h3 style="margin-bottom:5px; color:var(--text-main);">Mobile Hybrid App</h3><p style="font-size:16px;">Đóng gói dự án Web thành App Native (React Native/Flutter) phát hành iOS/Android.</p></div>
+                    <div><h3 style="margin-bottom:5px; color:var(--text-main);">Mobile Hybrid App</h3><p style="font-size:16px;">Đóng gói dự án Web thành App Native (React Native/Flutter) phát hành trực tiếp lên iOS/Android.</p></div>
                 </div>
                 <div class="glass-box" style="display:flex; align-items:center; gap:25px;">
                     <i class="fa-solid fa-credit-card" style="font-size:50px; color:var(--accent);"></i>
-                    <div><h3 style="margin-bottom:5px; color:var(--text-main);">Webhook Payment</h3><p style="font-size:16px;">Tích hợp Webhook VNPay/MoMo để tự động gạch nợ trạng thái hóa đơn 100%.</p></div>
+                    <div><h3 style="margin-bottom:5px; color:var(--text-main);">Webhook Payment</h3><p style="font-size:16px;">Tích hợp API Webhook của VNPay/MoMo để hệ thống tự động gạch nợ hóa đơn mà không cần duyệt tay.</p></div>
                 </div>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Phát triển App Mobile Hybrid và tích hợp Webhook gạch nợ thanh toán tự động 100%.</p></div>
         </div>
 
         
@@ -515,7 +485,6 @@
                 <p style="font-size: 16px; margin-top: 30px; color: var(--text-sub);">Nhóm kính mong nhận được các câu hỏi phản biện từ quý Thầy/Cô.</p>
                 <p style="font-size: 14px; margin-top: 40px; color: var(--primary); font-weight: bold;">Nhóm thực hiện: Đạt - Tùng - Long - Đăng</p>
             </div>
-            <div class="speaker-cue"><strong>Gợi ý thuyết trình:</strong><p>Cảm ơn Hội đồng lắng nghe. Tự tin mỉm cười chờ nhận câu hỏi phản biện.</p></div>
         </div>
 
         
