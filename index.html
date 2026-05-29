@@ -218,7 +218,7 @@
         </div>
 
         
-        <div class="slide code-slide" id="slide-6" data-step="0" data-max-steps="4">
+                <div class="slide code-slide" id="slide-6" data-step="0" data-max-steps="4">
             <h2 class="slide-title">Code: Route Guard & Observer <span class="vi-note" style="font-size:20px; font-weight:700;">(Lớp gác cổng bảo mật)</span></h2>
             <div class="code-container">
                 <div class="ide-window">
@@ -234,13 +234,38 @@
                     </div>
                 </div>
                 <div class="code-notes-area">
-                    <div class="code-note" id="note-6-1"><h4>1. Auth Observer <span class="vi-note">(Quan sát trạng thái đăng nhập)</span></h4><p>Ủy quyền cho Firebase mã hóa Token. Hàm liên tục bắt tín hiệu ngay khi phiên đăng nhập hết hạn hoặc thay đổi.</p></div>
-                    <div class="code-note" id="note-6-2"><h4>2. Chốt chặn vòng ngoài</h4><p>Nếu một người dùng vãng lai cố tình gõ URL để 'hack' vào trang /admin.html, hệ thống phát hiện biến user bằng rỗng sẽ lập tức dùng lệnh window.location để điều hướng đá văng họ về trang đăng nhập chỉ trong vài mili-giây..</p></div>
-                    <div class="code-note" id="note-6-3"><h4>3. Đối chiếu Vai trò <span class="vi-note">(Authorization)</span></h4><p>Dùng UID an toàn chọc vào Collection `users` để kiểm tra quyền hạn thực sự của tài khoản.</p></div>
-                    <div class="code-note" id="note-6-4"><h4>4. Khóa quyền Admin</h4><p>Chỉ khi biến `role` khớp với chuỗi "admin" thì giao diện quản trị (Dashboard) mới được phép hiển thị.</p></div>
+                    <div class="code-note" id="note-6-1">
+                        <h4>1. Auth Observer <span class="vi-note">(Camera giám sát ngầm)</span></h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
+                            • <b>Cơ chế:</b> Hàm <code>onAuthStateChanged</code> chạy ngầm liên tục 24/7.<br>
+                            • <b>Bản chất:</b> Hoạt động như một camera an ninh. Ngay khi phát hiện khách chưa đăng nhập hoặc tài khoản hết hạn, nó sẽ kích hoạt hệ thống báo động lập tức.
+                        </p>
+                    </div>
+                    <div class="code-note" id="note-6-2">
+                        <h4>2. Vòng bảo vệ số 1 <span class="vi-note">(Chặn khách vãng lai)</span></h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
+                            • <b>Cơ chế:</b> Nếu biến <code>user</code> rỗng, lệnh <code>window.location</code> sẽ kích hoạt.<br>
+                            • <b>Ý nghĩa:</b> Đây là **Route Guard** (Chốt chặn đường dẫn). Bất kỳ ai cố tình gõ link <i>admin.html</i> để đi cửa sau sẽ bị "đá văng" về trang Đăng nhập trong chớp mắt.
+                        </p>
+                    </div>
+                    <div class="code-note" id="note-6-3">
+                        <h4>3. Truy xuất hồ sơ <span class="vi-note">(Check thẻ định danh)</span></h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
+                            • <b>Cơ chế:</b> Dùng mã <code>uid</code> (Mã định danh độc bản) của khách để chọc vào Database rút dữ liệu.<br>
+                            • <b>Ý nghĩa:</b> Vượt qua được vòng 1 chưa chắc đã an toàn. Hệ thống phải rút hồ sơ gốc của người này từ máy chủ Google về để chuẩn bị đối chiếu.
+                        </p>
+                    </div>
+                    <div class="code-note" id="note-6-4">
+                        <h4>4. Vòng bảo vệ số 2 <span class="vi-note">(Khóa quyền Admin)</span></h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
+                            • <b>Cơ chế:</b> Kiểm tra thuộc tính <code>role</code>. Nếu không phải là "admin", lập tức đuổi về Trang chủ.<br>
+                            • <b>Ý nghĩa:</b> Bước phân quyền tối thượng. Tài khoản khách hàng bình thường dù có đăng nhập hợp lệ cũng tuyệt đối không thể nhìn thấy màn hình quản trị của Giám đốc.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+
 
         
         <div class="slide" id="slide-7" style="padding: 0;">
