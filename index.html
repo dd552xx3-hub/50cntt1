@@ -264,28 +264,23 @@
         </div>
 
         
-        <div class="slide code-slide" id="slide-8" data-step="0" data-max-steps="3">
+      <div class="slide" id="slide-8" data-step="0" data-max-steps="3">
             <h2 class="slide-title">Code: Client-side Storage <span class="vi-note" style="font-size:20px; font-weight:700;">(Lưu trữ cục bộ máy khách)</span></h2>
             <div class="code-container">
                 <div class="ide-window">
                     <div class="ide-header"><div class="mac-btn close"></div><div class="mac-btn min"></div><div class="mac-btn max"></div><span class="ide-title">tour-detail.html (addToCart)</span></div>
                     <div class="ide-body">
-                        <div class="code-line" data-step="1"><div class="line-num">1</div><div><span class="s-cm">// 1. Tạo ID biến thể (Variant ID) duy nhất</span></div></div>
-                        <div class="code-line" data-step="1"><div class="line-num">2</div><div><span class="s-kw">const</span> <span class="s-var">variantId</span> = <span class="s-var">id</span> + <span class="s-str">"_"</span> + <span class="s-var">hotel</span> + <span class="s-str">"_"</span> + <span class="s-var">trans</span>;</div></div>
-                        <div class="code-line" data-step="2"><div class="line-num">3</div><div><span class="s-cm">// 2. Đọc State từ LocalStorage</span></div></div>
-                        <div class="code-line" data-step="2"><div class="line-num">4</div><div><span class="s-kw">let</span> <span class="s-var">cart</span> = <span class="s-var">JSON</span>.<span class="s-fn">parse</span>(<span class="s-var">localStorage</span>.<span class="s-fn">getItem</span>(<span class="s-str">'cart'</span>)) || [];</div></div>
-                        <div class="code-line" data-step="2"><div class="line-num">5</div><div><span class="s-kw">let</span> <span class="s-var">idx</span> = <span class="s-var">cart</span>.<span class="s-fn">findIndex</span>(<span class="s-var">i</span> => <span class="s-var">i</span>.id === <span class="s-var">variantId</span>);</div></div>
-                        <div class="code-line" data-step="3"><div class="line-num">6</div><div><span class="s-cm">// 3. Xử lý ghi đè hoặc đẩy dữ liệu</span></div></div>
-                        <div class="code-line" data-step="3"><div class="line-num">7</div><div><span class="s-kw">if</span> (<span class="s-var">idx</span> === -1) {</div></div>
-                        <div class="code-line" data-step="3"><div class="line-num">8</div><div style="margin-left:20px;"><span class="s-var">cart</span>.<span class="s-fn">push</span>({ id: <span class="s-var">variantId</span>, ... });</div></div>
-                        <div class="code-line" data-step="3"><div class="line-num">9</div><div style="margin-left:20px;"><span class="s-var">localStorage</span>.<span class="s-fn">setItem</span>(<span class="s-str">'cart'</span>, <span class="s-var">JSON</span>.<span class="s-fn">stringify</span>(<span class="s-var">cart</span>));</div></div>
-                        <div class="code-line" data-step="3"><div class="line-num">10</div><div>}</div></div>
+                        <div class="code-line" data-step="1"><div class="line-num">1</div><div><span class="s-kw">let</span> <span class="s-var">cart</span> = <span class="s-var">JSON</span>.<span class="s-fn">parse</span>(<span class="s-var">localStorage</span>.<span class="s-fn">getItem</span>(<span class="s-str">'cart50cntt1'</span>)) || [];</div></div>
+                        <div class="code-line" data-step="2"><div class="line-num">2</div><div><span class="s-kw">if</span> (!<span class="s-var">cart</span>.<span class="s-fn">find</span>(<span class="s-var">item</span> => <span class="s-var">item</span>.id === <span class="s-var">id</span>)) {</div></div>
+                        <div class="code-line" data-step="3"><div class="line-num">3</div><div style="margin-left:20px;"><span class="s-var">cart</span>.<span class="s-fn">push</span>({ <span class="s-var">id</span>, <span class="s-var">tenTour</span>, <span class="s-var">giaTour</span>, <span class="s-var">ngayDi</span>, <span class="s-var">soLuong</span> });</div></div>
+                        <div class="code-line" data-step="3"><div class="line-num">4</div><div style="margin-left:20px;"><span class="s-var">localStorage</span>.<span class="s-fn">setItem</span>(<span class="s-str">'cart50cntt1'</span>, <span class="s-var">JSON</span>.<span class="s-fn">stringify</span>(<span class="s-var">cart</span>));</div></div>
+                        <div class="code-line" data-step="3"><div class="line-num">5</div><div>}</div></div>
                     </div>
                 </div>
                 <div class="code-notes-area">
-                    <div class="code-note" id="note-8-1"><h4>1. Thuật toán Variant ID <span class="vi-note">(Mã biến thể độc bản)</span></h4><p>Nối 3 ID (Tour, Hotel, Car) để đảm bảo một gói Option là duy nhất, ngăn chặn lỗi ghi đè sản phẩm trong giỏ hàng.</p></div>
-                    <div class="code-note" id="note-8-2"><h4>2. Client-side Storage <span class="vi-note">(Bộ nhớ trình duyệt)</span></h4><p>Thêm/bớt giỏ hàng được xử lý bằng LocalStorage thay vì đẩy lên Database, giúp tránh làm quá tải máy chủ.</p></div>
-                    <div class="code-note" id="note-8-3"><h4>3. Đóng gói JSON</h4><p>Chỉ đồng bộ trạng thái (Sync State) đẩy toàn bộ mảng dữ liệu này lên Cloud ở bước thanh toán cuối cùng.</p></div>
+                    <div class="code-note" id="note-8-1"><h4>1. Khởi tạo & Đọc Giỏ hàng</h4><p>Truy xuất dữ liệu cục bộ từ trình duyệt qua LocalStorage với khóa định danh riêng biệt `cart50cntt1` để lấy ra mảng danh sách tour hiện tại.</p></div>
+                    <div class="code-note" id="note-8-2"><h4>2. Thuật toán Kiểm tra Trùng lặp</h4><p>Sử dụng phương thức mảng `.find()` để đối chiếu ID Tour. Việc kiểm tra chạy hoàn toàn bằng RAM máy khách, phản hồi kết quả ngay tức thì.</p></div>
+                    <div class="code-note" id="note-8-3"><h4>3. Đóng gói JSON & Lưu trữ cục bộ</h4><p>Nếu tour chưa tồn tại, các trường dữ liệu (gồm Ngày đi, Số lượng) được nén thành chuỗi JSON và ghi ngược lại ổ cứng máy khách, giải phóng 100% băng thông mạng lên Server.</p></div>
                 </div>
             </div>
         </div>
