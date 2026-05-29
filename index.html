@@ -257,7 +257,7 @@
                 </div>
                 <div class="bleed-image">
                     <div class="screenshot-frame" style="border: none; border-radius: 0; box-shadow: none;">
-                        <img src="https://placehold.co/600x800/e2e8f0/475569?text=CHÈN+ẢNH+CHI+TIẾT+TOUR+(DỌC)+VÀO+ĐÂY" alt="Trang chi tiết tour">
+                        <img src="slide7.jpg" alt="Trang chi tiết tour trên Mobile">
                     </div>
                 </div>
             </div>
@@ -284,7 +284,7 @@
                 </div>
                 <div class="code-notes-area">
                     <div class="code-note" id="note-8-1"><h4>1. Thuật toán Variant ID <span class="vi-note">(Mã biến thể độc bản)</span></h4><p>Nối 3 ID (Tour, Hotel, Car) để đảm bảo một gói Option là duy nhất, ngăn chặn lỗi ghi đè sản phẩm trong giỏ hàng.</p></div>
-                    <div class="code-note" id="note-8-2"><h4>2. Client-side Storage <span class="vi-note">(Bộ nhớ trình duyệt)</span></h4><p>Thao tác thêm/bớt giỏ hàng được xử lý bằng LocalStorage thay vì đẩy lên Database, giúp tránh làm quá tải máy chủ.</p></div>
+                    <div class="code-note" id="note-8-2"><h4>2. Client-side Storage <span class="vi-note">(Bộ nhớ trình duyệt)</span></h4><p>Thêm/bớt giỏ hàng được xử lý bằng LocalStorage thay vì đẩy lên Database, giúp tránh làm quá tải máy chủ.</p></div>
                     <div class="code-note" id="note-8-3"><h4>3. Đóng gói JSON</h4><p>Chỉ đồng bộ trạng thái (Sync State) đẩy toàn bộ mảng dữ liệu này lên Cloud ở bước thanh toán cuối cùng.</p></div>
                 </div>
             </div>
@@ -451,7 +451,7 @@
                     <h3 class="text-secondary"><i class="fa-solid fa-chart-line"></i> Chỉ số Vận hành</h3>
                     <ul class="check-list" style="margin-top: 15px;">
                         <li><i class="fa-solid fa-check-double text-accent"></i> <strong>Hoàn thiện 100%:</strong> Đủ 12 module chức năng cốt lõi.</li>
-                        <li><i class="fa-solid fa-bolt text-secondary"></i> <strong>Sync Latency <span class="vi-note">(Độ trễ đồng bộ)</span>:</strong> Đạt mức <strong>< 0.2s</strong>.</li>
+                        <li><i class="fa-solid fa-bolt text-secondary"></i> <strong>Sync Latency <span class="vi-note">(Độ trễ đồng bộ)</span>:</strong> Đạt mức <strong>&lt; 0.2s</strong>.</li>
                         <li><i class="fa-solid fa-shield-virus text-primary"></i> <strong>Bảo mật:</strong> 0 lỗ hổng nhờ <strong>Security Rules</strong>.</li>
                         <li><i class="fa-solid fa-users-viewfinder text-accent"></i> <strong>Responsive:</strong> Hiển thị đa thiết bị.</li>
                     </ul>
@@ -493,31 +493,14 @@
             <span class="slide-counter" id="slide-counter">01 / 17</span>
             <button class="ctrl-btn" id="btn-next"><i class="fa-solid fa-circle-chevron-right"></i></button>
         </div>
-
-        <div id="timer-bar" style="position: absolute; bottom: 0; left: 0; height: 5px; background: var(--secondary); width: 0%; z-index: 100;"></div>
     </div>
 
     <script>
         const slides = document.querySelectorAll('.slide');
         const counter = document.getElementById('slide-counter');
-        const timerBar = document.getElementById('timer-bar');
         
         let currSlide = 0;
         let currStep = 0;
-        let autoPlayTimer;
-        const autoPlayDelay = 7000;
-
-        function startAutoPlay() {
-            timerBar.style.transition = 'none';
-            timerBar.style.width = '0%';
-            setTimeout(() => { timerBar.style.transition = `width ${autoPlayDelay}ms linear`; timerBar.style.width = '100%'; }, 50);
-            autoPlayTimer = setInterval(() => { moveNext(); }, autoPlayDelay);
-        }
-
-        function resetAutoPlay() {
-            clearInterval(autoPlayTimer);
-            startAutoPlay();
-        }
 
         function updateView() {
             slides.forEach((s, idx) => {
@@ -548,7 +531,6 @@
         }
 
         function moveNext() {
-            resetAutoPlay();
             const activeSlide = slides[currSlide];
             if (activeSlide.classList.contains('code-slide')) {
                 const maxSteps = parseInt(activeSlide.dataset.maxSteps);
@@ -561,7 +543,6 @@
         }
 
         function movePrev() {
-            resetAutoPlay();
             const activeSlide = slides[currSlide];
             if (activeSlide.classList.contains('code-slide') && currStep > 0) {
                 currStep--; activeSlide.dataset.step = currStep;
@@ -607,7 +588,7 @@
             requestAnimationFrame(drawCanvas);
         }
         initCanvas(); drawCanvas();
-        updateView(); startAutoPlay();
+        updateView();
     </script>
 </body>
 </html>
