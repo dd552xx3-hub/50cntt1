@@ -264,7 +264,8 @@
         </div>
 
         
-      <div class="slide" id="slide-8" data-step="0" data-max-steps="3">
+      <!-- Slide 8: Bản ghi chú siêu chi tiết - Chống bí từ khi nhìn máy chiếu -->
+        <div class="slide code-slide" id="slide-8" data-step="0" data-max-steps="3">
             <h2 class="slide-title">Code: Client-side Storage <span class="vi-note" style="font-size:20px; font-weight:700;">(Lưu trữ cục bộ máy khách)</span></h2>
             <div class="code-container">
                 <div class="ide-window">
@@ -278,9 +279,27 @@
                     </div>
                 </div>
                 <div class="code-notes-area">
-                    <div class="code-note" id="note-8-1"><h4>1. Khởi tạo & Đọc Giỏ hàng</h4><p>Truy xuất dữ liệu cục bộ từ trình duyệt qua LocalStorage với khóa định danh riêng biệt `cart50cntt1` để lấy ra mảng danh sách tour hiện tại.</p></div>
-                    <div class="code-note" id="note-8-2"><h4>2. Thuật toán Kiểm tra Trùng lặp</h4><p>Sử dụng phương thức mảng `.find()` để đối chiếu ID Tour. Việc kiểm tra chạy hoàn toàn bằng RAM máy khách, phản hồi kết quả ngay tức thì.</p></div>
-                    <div class="code-note" id="note-8-3"><h4>3. Đóng gói JSON & Lưu trữ cục bộ</h4><p>Nếu tour chưa tồn tại, các trường dữ liệu (gồm Ngày đi, Số lượng) được nén thành chuỗi JSON và ghi ngược lại ổ cứng máy khách, giải phóng 100% băng thông mạng lên Server.</p></div>
+                    <div class="code-note" id="note-8-1">
+                        <h4>1. Đọc và giải nén trạng thái Giỏ hàng</h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
+                            • <b>Cơ chế:</b> Sử dụng hàm <code>JSON.parse</code> để nạp và giải nén mảng dữ liệu từ LocalStorage thông qua khóa định danh <code>'cart50cntt1'</code>.<br>
+                            • <b>Ý nghĩa:</b> Khởi tạo trạng thái giỏ hàng (Client State) hoàn toàn offline, không tốn tài nguyên kết nối mạng.
+                        </p>
+                    </div>
+                    <div class="code-note" id="note-8-2">
+                        <h4>2. Thuật toán đối chiếu (Quét RAM cục bộ)</h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
+                            • <b>Cơ chế:</b> Áp dụng phương thức mảng nâng cao <code>.find()</code> quét tuyến tính để so sánh các <code>item.id</code> với mã <code>id</code> của Tour hiện tại.<br>
+                            • <b>Hiệu năng:</b> Xử lý bất đồng bộ bằng CPU máy khách, trả kết quả trùng lặp ngay lập tức với độ trễ bằng 0 (Zero-blocking).
+                        </p>
+                    </div>
+                    <div class="code-note" id="note-8-3">
+                        <h4>3. Đóng gói JSON & Đồng bộ cục bộ</h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
+                            • <b>Cơ chế:</b> Nếu tích hợp hợp lệ, cấu trúc dữ liệu gồm <i>Ngày đi, Số lượng, Tên, Đơn giá</i> được nén ngược lại thành chuỗi String qua <code>JSON.stringify</code>.<br>
+                            • <b>Tối ưu:</b> Ghi thẳng vào ổ cứng máy khách, cắt giảm 100% băng thông thừa cho máy chủ Backend, chuẩn bị sẵn dữ liệu cho luồng Checkout.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
