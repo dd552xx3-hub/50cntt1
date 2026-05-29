@@ -286,7 +286,7 @@
         </div>
 
         
-              <div class="slide code-slide" id="slide-8" data-step="0" data-max-steps="3">
+                      <div class="slide code-slide" id="slide-8" data-step="0" data-max-steps="3">
             <h2 class="slide-title">Code: Client-side Storage <span class="vi-note" style="font-size:20px; font-weight:700;">(Lưu trữ cục bộ máy khách)</span></h2>
             <div class="code-container">
                 <div class="ide-window">
@@ -301,29 +301,30 @@
                 </div>
                 <div class="code-notes-area">
                     <div class="code-note" id="note-8-1">
-                        <h4>1. Lấy dữ liệu Giỏ hàng cũ</h4>
+                        <h4>1. Khởi tạo Trạng thái (State Initialization)</h4>
                         <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
-                            • <b>Cơ chế:</b> Mở bộ nhớ của trình duyệt (LocalStorage) để lấy giỏ hàng cũ. Nếu khách chưa mua gì, tự động tạo một giỏ hàng rỗng <code>[]</code>.<br>
-                            • <b>Ý nghĩa:</b> Việc này làm hoàn toàn offline trên máy người dùng, không cần mạng Internet nên tốc độ cực nhanh.
+                            • <b>Cơ chế:</b> Sử dụng <code>JSON.parse</code> để truy xuất và giải mã mảng dữ liệu từ Web Storage API.<br>
+                            • <b>Tối ưu:</b> Phục hồi trạng thái giỏ hàng (Client State) hoàn toàn offline, giúp hệ thống sẵn sàng tiếp nhận dữ liệu mới mà không cần gọi API.
                         </p>
                     </div>
                     <div class="code-note" id="note-8-2">
-                        <h4>2. Kiểm tra trùng lặp Tour</h4>
+                        <h4>2. Xác thực Dữ liệu (Duplicate Validation)</h4>
                         <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
-                            • <b>Cơ chế:</b> Dùng lệnh <code>.find()</code> để kiểm tra xem Tour khách vừa bấm đã tồn tại trong giỏ hàng hay chưa.<br>
-                            • <b>Ý nghĩa:</b> Giúp ngăn chặn việc khách thêm nhầm 1 tour nhiều lần. Trình duyệt xử lý việc này ngay lập tức với độ trễ bằng 0.
+                            • <b>Cơ chế:</b> Tận dụng phương thức <code>.find()</code> để quét mảng và đối chiếu ID sản phẩm.<br>
+                            • <b>Hiệu năng:</b> Thuật toán chạy trực tiếp trên bộ nhớ RAM của máy khách, giúp ngăn chặn lỗi thêm trùng lặp tour với độ trễ bằng 0 (Zero-latency).
                         </p>
                     </div>
                     <div class="code-note" id="note-8-3">
-                        <h4>3. Thêm mới và Lưu trữ lại</h4>
+                        <h4>3. Đóng gói & Lưu trữ (Data Persistence)</h4>
                         <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
-                            • <b>Cơ chế:</b> Lệnh <code>.push()</code> đưa Tour mới vào giỏ. Sau đó nén thành văn bản (JSON) và cất ngược lại vào bộ nhớ trình duyệt.<br>
-                            • <b>Ý nghĩa:</b> Lưu tạm ở máy người dùng chứ chưa gửi lên Máy chủ (Server). Cách này giúp hệ thống không bị quá tải khi có đông khách truy cập.
+                            • <b>Cơ chế:</b> Đẩy đối tượng mới vào mảng <code>.push()</code>, sau đó dùng <code>JSON.stringify</code> nén thành chuỗi và ghi đè vào bộ nhớ cục bộ.<br>
+                            • <b>Ý nghĩa:</b> Giải quyết triệt để bài toán quá tải hệ thống , giải phóng 100% băng thông tải cho Máy chủ (Server).
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+
 
         
         <div class="slide code-slide" id="slide-9" data-step="0" data-max-steps="3">
