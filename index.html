@@ -218,8 +218,8 @@
         </div>
 
         
-                <div class="slide code-slide" id="slide-6" data-step="0" data-max-steps="4">
-            <h2 class="slide-title">Code: Route Guard & Observer <span class="vi-note" style="font-size:20px; font-weight:700;">(Lớp gác cổng bảo mật)</span></h2>
+                        <div class="slide code-slide" id="slide-6" data-step="0" data-max-steps="4">
+            <h2 class="slide-title">Code: Route Guard & Observer <span class="vi-note" style="font-size:20px; font-weight:700;">(Bảo mật phân quyền máy khách)</span></h2>
             <div class="code-container">
                 <div class="ide-window">
                     <div class="ide-header"><div class="mac-btn close"></div><div class="mac-btn min"></div><div class="mac-btn max"></div><span class="ide-title">admin.html (Xác thực Serverless)</span></div>
@@ -228,43 +228,40 @@
                         <div class="code-line" data-step="2"><div class="line-num">2</div><div style="margin-left:20px;"><span class="s-kw">if</span> (!<span class="s-var">user</span>) <span class="s-kw">return</span> <span class="s-var">window</span>.location.<span class="s-var">href</span> = <span class="s-str">"login.html"</span>;</div></div>
                         <div class="code-line" data-step="3"><div class="line-num">3</div><div style="margin-left:20px;"><span class="s-kw">const</span> <span class="s-var">doc</span> = <span class="s-kw">await</span> <span class="s-var">db</span>.<span class="s-fn">collection</span>(<span class="s-str">"users"</span>).<span class="s-fn">doc</span>(<span class="s-var">user</span>.uid).<span class="s-fn">get</span>();</div></div>
                         <div class="code-line" data-step="4"><div class="line-num">4</div><div style="margin-left:20px;"><span class="s-kw">if</span> (<span class="s-var">doc</span>.<span class="s-fn">data</span>().role !== <span class="s-str">"admin"</span>) {</div></div>
-                        <div class="code-line" data-step="4"><div class="line-num">5</div><div style="margin-left:40px;"><span class="s-fn">alert</span>(<span class="s-str">"Từ chối!"</span>); <span class="s-var">window</span>.location.<span class="s-var">href</span> = <span class="s-str">"index.html"</span>;</div></div>
+                        <div class="code-line" data-step="4"><div class="line-num">5</div><div style="margin-left:40px;"><span class="s-fn">alert</span>(<span class="s-str">"Từ chối truy cập!"</span>); <span class="s-var">window</span>.location.<span class="s-var">href</span> = <span class="s-str">"index.html"</span>;</div></div>
                         <div class="code-line" data-step="4"><div class="line-num">6</div><div style="margin-left:20px;">}</div></div>
                         <div class="code-line" data-step="1"><div class="line-num">7</div><div>});</div></div>
                     </div>
                 </div>
                 <div class="code-notes-area">
                     <div class="code-note" id="note-6-1">
-                        <h4>1. Auth Observer <span class="vi-note">(Camera giám sát ngầm)</span></h4>
+                        <h4>1. Real-time Auth Observer</h4>
                         <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
-                            • <b>Cơ chế:</b> Hàm <code>onAuthStateChanged</code> chạy ngầm liên tục 24/7.<br>
-                            • <b>Bản chất:</b> Hoạt động như một camera an ninh. Ngay khi phát hiện khách chưa đăng nhập hoặc tài khoản hết hạn, nó sẽ kích hoạt hệ thống báo động lập tức.
+                            Hàm <code>onAuthStateChanged</code> đóng vai trò giám sát vòng đời Token bảo mật theo thời gian thực. Tự động kích hoạt khi có thay đổi trạng thái phiên đăng nhập.
                         </p>
                     </div>
                     <div class="code-note" id="note-6-2">
-                        <h4>2. Vòng bảo vệ số 1 <span class="vi-note">(Chặn khách vãng lai)</span></h4>
+                        <h4>2. Xác thực (Authentication Guard)</h4>
                         <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
-                            • <b>Cơ chế:</b> Nếu biến <code>user</code> rỗng, lệnh <code>window.location</code> sẽ kích hoạt.<br>
-                            • <b>Ý nghĩa:</b> Đây là **Route Guard** (Chốt chặn đường dẫn). Bất kỳ ai cố tình gõ link <i>admin.html</i> để đi cửa sau sẽ bị "đá văng" về trang Đăng nhập trong chớp mắt.
+                            Ngăn chặn truy cập ẩn danh. Nếu biến <code>user</code> rỗng (chưa đăng nhập hoặc đã hết hạn Token), hệ thống ép điều hướng về trang Đăng nhập.
                         </p>
                     </div>
                     <div class="code-note" id="note-6-3">
-                        <h4>3. Truy xuất hồ sơ <span class="vi-note">(Check thẻ định danh)</span></h4>
+                        <h4>3. Truy xuất Dữ liệu Định danh</h4>
                         <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
-                            • <b>Cơ chế:</b> Dùng mã <code>uid</code> (Mã định danh độc bản) của khách để chọc vào Database rút dữ liệu.<br>
-                            • <b>Ý nghĩa:</b> Vượt qua được vòng 1 chưa chắc đã an toàn. Hệ thống phải rút hồ sơ gốc của người này từ máy chủ Google về để chuẩn bị đối chiếu.
+                            Sử dụng mã định danh <code>uid</code> để truy vấn Firebase Firestore, tiến hành trích xuất hồ sơ gốc của người dùng nhằm phục vụ cho bước phân quyền.
                         </p>
                     </div>
                     <div class="code-note" id="note-6-4">
-                        <h4>4. Vòng bảo vệ số 2 <span class="vi-note">(Khóa quyền Admin)</span></h4>
+                        <h4>4. Phân quyền (Role-based Authorization)</h4>
                         <p style="font-size: 14px; line-height: 1.5; color: var(--text-sub);">
-                            • <b>Cơ chế:</b> Kiểm tra thuộc tính <code>role</code>. Nếu không phải là "admin", lập tức đuổi về Trang chủ.<br>
-                            • <b>Ý nghĩa:</b> Bước phân quyền tối thượng. Tài khoản khách hàng bình thường dù có đăng nhập hợp lệ cũng tuyệt đối không thể nhìn thấy màn hình quản trị của Giám đốc.
+                            Xác minh thuộc tính <code>role</code>. Nếu tài khoản không có đặc quyền "admin", hệ thống từ chối hiển thị giao diện quản trị và trả người dùng về Trang chủ.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+
 
 
         
