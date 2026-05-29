@@ -235,9 +235,9 @@
                 </div>
                 <div class="code-notes-area">
                     <div class="code-note" id="note-6-1"><h4>1. Auth Observer <span class="vi-note">(Lắng nghe Real-time)</span></h4><p>Ủy quyền cho Firebase mã hóa Token. Hàm liên tục bắt tín hiệu ngay khi phiên đăng nhập hết hạn hoặc thay đổi.</p></div>
-                    <div class="code-note" id="note-6-2"><h4>2. Chốt chặn vòng ngoài</h4><p>Ngay tại trình duyệt, nếu phát hiện Token rỗng, lập tức điều hướng khách về trang đăng nhập.</p></div>
+                    <div class="code-note" id="note-6-2"><h4>2. Chốt chặn vòng ngoài</h4><p>Nếu một người dùng vãng lai cố tình gõ URL để 'hack' vào trang /admin.html, hệ thống phát hiện biến user bằng rỗng sẽ lập tức dùng lệnh window.location để điều hướng đá văng họ về trang đăng nhập chỉ trong vài mili-giây..</p></div>
                     <div class="code-note" id="note-6-3"><h4>3. Đối chiếu Vai trò <span class="vi-note">(Authorization)</span></h4><p>Dùng UID an toàn chọc vào Collection `users` để kiểm tra quyền hạn thực sự của tài khoản.</p></div>
-                    <div class="code-note" id="note-6-4"><h4>4. Khóa quyền Admin</h4><p>Chỉ khi biến `role` khớp với chuỗi "admin" thì giao diện quản trị (Dashboard) mới được phép Render.</p></div>
+                    <div class="code-note" id="note-6-4"><h4>4. Khóa quyền Admin</h4><p>Chỉ khi biến `role` khớp với chuỗi "admin" thì giao diện quản trị (Dashboard) mới được phép hiển thị.</p></div>
                 </div>
             </div>
         </div>
